@@ -1,0 +1,917 @@
+/*
+Theme Name: Sport
+Description: Sporting Club & Centre Theme
+Theme URI: http://themeforest.net/
+Author: Kenny Williams
+Author URI: http://make-lemonade.co  // http://hirekenny.com.au
+Version: 1.0
+*/
+
+
+/* ==========================================================================
+   TABLE OF CONTENTS
+   
+   01. Theme Colors
+   02. Theme Fonts
+   03. Custom Typography
+   04. Fonts Included
+
+   
+   ========================================================================== */
+
+
+
+
+/* ========================================================================== 
+	01. THEME COLOURS
+	
+	001. Body Background
+	002. Main Plate Background
+	003. General Body Text
+	004. Body Link Text
+	005. Body Link Text Hover
+	006. Main Headings
+	007. Secondary Body Text
+	008. Tertiary Body Text
+	009. Logo as Text
+	010. Feature Text 1
+	011. White Text
+	012. Pre-Header-Area Background
+	013. Pre-Header-Area Text
+	014. Pre-Header-Area Text Hover
+	015. Header-Area Background
+	016. Header-Area Text
+	017. Header-Area Text Hover
+	018. Post-Header-Area Background	
+	019. Post-Header-Area Text	
+	020. Post-Header-Area Text Hover
+	021. Sidr Background
+	022. Sidr Text
+	023. Sidr Text Hover
+	024. Sidr Borders
+	025. Fly Out Menu Background
+	026. Button 1 Background
+	027. Button 1 Hover Background
+	028. Button 1 Text
+	029. Button 1 Text Hover
+	030. Button 2 Background
+	031. Button 2 Hover Background
+	032. Button 2 Text
+	033. Button 2 Text Hover
+	034. Button 3 Background
+	035. Button 3 Hover Background
+	036. Button 3 Text
+	037. Feature Block 1 Background
+	038. Feature Block 2 Background
+	039. Lite Feature Background
+	040. Form Elements Background
+	041. Main Border Color
+	042. Breadcrumbs Background
+	043. Breadcrumbs Text
+	044. Breadcrumbs Text Hover
+	045. Footer Background
+	046. Footer Headings
+	047. Footer Text
+	048. Footer Text Hover
+	049. Footer Borders
+	050. Base Background
+	051. Base Text
+	052. Base Text Hover
+
+		
+   ========================================================================== */
+		
+		
+
+/* 
+001. BODY BACKGROUND _________________________________________________________ */
+html{
+	background: #f1f1f1;
+}
+
+
+/* 
+002. MAIN PLATE BACKGROUND ____________________________________________________ */
+.outter-wrapper, 
+.text-seperator-line h5, 
+.comment-num, 
+fieldset.boxy fieldset, 
+.mosaic-backdrop, 
+.tooltipster-default,
+ul.tab-nav li.active,
+h3.v_nav.v_active{
+	background: #fff; 
+}
+	
+
+/* 
+003. MAIN TEXT ________________________________________________________________ */  
+html, button, input, select, textarea, h3.v_nav {
+    color: #3d4942;
+}
+
+/* 
+004. LINKS ____________________________________________________________________ */  
+a, 
+.boxy blockquote cite{
+	 color: #3d4942;
+}
+
+
+/* 
+005. LINK HOVER _______________________________________________________________ */ 
+a:hover, 
+ul.tab-nav li:hover,
+ul.tab-nav li.active,
+h3.v_nav.v_active,
+h3.v_nav:hover,
+.read-more:before,
+blockquote cite,
+ul.sitemap li li a:before,
+.list-1 li:before, .list-2 li:before, .list-3 li:before, .list-4 li:before,
+#recaptcha_audio_play_again:before, #recaptcha_audio_download:before,
+.toggle-btn.active, .accordion-btn.active, a.toggle-btn:before,  a.accordion-btn:before,
+.rating > input:checked ~ label, .rating:not(:checked) > label:hover, 
+.rating:not(:checked) > label:hover ~ label,
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label,
+.star-rating > span:hover:before,
+.star-rating > span:hover ~ span:before,
+.star-rating.example span:nth-child(n+2):before,
+.price h3,  .price-cell:first-child p span, .price-cell:after,
+.boxy ul.social-link a:hover,
+.boxy .inner-box h5, .active-time a, .tooltip.fa,
+.event-table td.current-day b:first-child,
+.tooltipster-content .tt-date, .evt-price,
+ul.pagination li a.active,
+.widget-list.option-set li a.selected,
+.widget-list.option-set li a:hover,
+.paralax-block .big-count div,
+.big-count div span {
+	color: #ffba00;	
+}
+
+
+/* 
+006. MAIN HEADINGS ____________________________________________________________ */
+h1, h2, h3, h1 a, h2 a, h3 a, .big-count div{
+	color: #004720;
+}
+
+
+/* 
+007. SECONDARY BODY TEXT _______________________________________________________ */
+.lead,
+.boxy blockquote{
+	color: #1c2721;
+}
+
+
+/* 
+008. TERTIARY BODY TEXT _______________________________________________________ */
+.date, .rating:not(:checked) > label, .toggle-btn span, .rate-box strong, .star-rating > span,
+.time-table tr td:first-child, .event-table td b:first-child {
+	color: #bdbdbd;
+}
+
+
+/* 
+009. LOGO AS TEXT ____________________________________________________________ */
+.logo.text{
+	color: #ffffff;
+}
+
+
+/* 
+010. FEATURE TEXT 1 ____________________________________________________________ */
+.feat-1, 
+a.feat-1, 
+.sidr a:hover, 
+h1 span, 
+h2 span, 
+h3 span, 
+.highlight, 
+.highlight:before, 
+.highlight:after, 
+a.feat-title:hover, 
+.paging .meta, 
+.paging .col-1-2:before, 
+.paging .col-1-2:after{
+	color: #14934d;
+}
+
+
+/* 
+011. WHITE TEXT ____________________________________________________________ */
+.post-tag-cloud li a:hover,
+.mosaic-overlay *,
+.sport-rs-heading,
+.sport-rs-text,
+.corner,
+.paralax-block.outter-wrapper blockquote,
+.option-set li a:hover, .option-set li a.selected,
+.price h3 span, 
+.price-cell:first-child p,
+td.active-time b:first-child,
+.paralax-block h1, .paralax-block h2, .paralax-block h3, .paralax-block h4, .paralax-block h5,
+.paralax-block h6, .paralax-block p, .paralax-block .big-count span {
+	color: #fff;
+}
+
+
+/* 
+012. PRE HEADER AREA BACKGROUND _____________________________________________ */
+.pre-header-area, .pre-header-area ul{
+	background: #1c2721;
+}
+
+
+/* 
+013. PRE HEADER AREA TEXT ___________________________________________________ */
+.pre-header-area,  .pre-header-area a{
+	color: #ffffff;
+}
+
+
+/* 
+014. PRE HEADER AREA TEXT HOVER ______________________________________________ */
+.pre-header-area a:hover{
+	color: #ffba00;
+}
+
+
+/* 
+015. HEADER AREA BACKGROUND _________________________________________________ */
+.header-area, .header-area ul,
+.header-area .megamenu_container .megamenu li .dropdown_container,
+.header-area .megamenu_container .megamenu li .dropdown_fullwidth,
+.header-area .megamenu_container .megamenu li .dropdown_flyout li ul{
+	background: #00632c;	
+}
+
+
+/* 
+016. HEADER AREA TEXT _______________________________________________________ */
+.header-area, .header-area a,
+.header-area .megamenu_container .megamenu li .dropdown_container *,
+.header-area .megamenu_container .megamenu li .dropdown_fullwidth *,
+.header-area .megamenu_container .megamenu li .dropdown_flyout li ul,
+.header-area .megamenu_container a{
+	color: #ffffff;	
+}
+
+
+/* 
+017. HEADER AREA TEXT HOVER___________________________________________________ */
+.header-area a:hover, .sport-rs-heading div,
+.header-area .megamenu_container .megamenu a:hover,
+.header-area .megamenu_container .megamenu li .dropdown_container h3.mega-title,
+.header-area .megamenu_container .megamenu li .dropdown_fullwidth h3.mega-title{
+	color: #ffba00;
+}
+
+
+
+/* 
+018. HEADER AREA BORDERS ___________________________________________________ */
+.outter-wrapper.header-area *{
+	border-color: #11793f!important;
+}
+
+
+/* 
+018. POST HEADER AREA BACKGROUND ____________________________________________ */
+.post-header-area, .post-header-area ul,
+.time-table tr td:first-child, .time-table tr:nth-child(n+1):nth-child(even) td:first-child,
+.post-header-area .megamenu_container .megamenu li .dropdown_container,
+.post-header-area .megamenu_container .megamenu li .dropdown_fullwidth,
+.post-header-area .megamenu_container .megamenu li .dropdown_flyout li ul{
+	background: #004720;
+}
+
+
+/* 
+019. POST HEADER AREA TEXT __________________________________________________ */
+.post-header-area, .post-header-area a,
+.post-header-area .megamenu_container .megamenu li .dropdown_container,
+.post-header-area .megamenu_container .megamenu li .dropdown_fullwidth,
+.post-header-area .megamenu_container .megamenu li .dropdown_flyout li ul,
+.post-header-area .megamenu_container a {
+	color: #ffffff;
+}
+@media only screen and (max-width: 767px) {
+	.time-table tr td:first-child{
+		color: #ffffff;
+	}
+}
+
+
+/* 
+020. POST HEADER AREA TEXT HOVER ____________________________________________ */
+.post-header-area a:hover,
+.post-header-area .megamenu_container .megamenu a:hover,
+.post-header-area .megamenu_container .megamenu li .dropdown_container h3.mega-title,
+.post-header-area .megamenu_container .megamenu li .dropdown_fullwidth h3.mega-title{
+	color: #ffba00;
+}
+
+
+/* 
+018. HEADER AREA BORDERS ___________________________________________________ */
+.outter-wrapper.post-header-area *{
+	border-color: #0c6333!important;
+}
+
+
+/* 
+021. SIDR BACKGROUND _______________________________________________________ */
+.sidr{
+	background: #1c2721;
+}
+
+
+/* 
+022. SIDR TEXT _____________________________________________________________ */
+.sidr, .sidr a, .sidr .sidr-class-dropdown_fullwidth *{
+	color: #ffffff;
+}
+
+
+/* 
+023. SIDR TEXT HOVER _______________________________________________________ */
+.sidr a:hover,
+.sidr .sidr-class-list-2 li:before{
+	color: #ffba00;
+}
+
+
+/* 
+024. SIDR BORDERS ___________________________________________________________ */
+.sidr ul, .sidr ul li{
+	border-color: #2d3a33;
+}
+
+
+/* 
+025. FLY OUT MENU BACKGROUND _________________________________________________ */
+.pre-header-area ul > li > ul > li ul,
+.header-area ul > li > ul > li ul,
+.post-header-area ul > li > ul > li ul{
+	background: #003919;
+}
+/* FLY OUT MENU NIB */
+.pre-header-area ul > li > ul > li ul:before,
+.header-area ul > li > ul > li ul:before,
+.post-header-area ul > li > ul > li ul:before{
+	border-color:transparent #003919 transparent transparent;
+}
+
+
+/* 
+026. BUTTON 1 BACKGROUND  _________________________________________________ */
+a.btn, 
+input[type=button], 
+input[type=submit], 
+button,
+.price h3, .price-cell:first-child, 
+table td.active-time, .time-table tr:nth-child(n+1):nth-child(even) td.active-time,
+.event-table tr:nth-child(n+1):nth-child(even) td.active-time,
+.owl-controls .owl-page span{
+	background-color: #00632c;
+}
+
+
+/* 
+027. BUTTON 1 HOVER BACKGROUND  ___________________________________________ */
+a.btn:hover, 
+input[type=button]:hover, 
+input[type=submit]:hover, 
+button:hover,
+.post-tag-cloud li a:hover{
+	background: #1c2721;
+}
+
+
+/* 
+028. BUTTON 1 TEXT  _______________________________________________________ */
+a.btn, 
+input[type=button], 
+input[type=submit], 
+button, .active-time, .active-time a:hover, .active-time .evt-date{
+	color: #ffffff;
+}
+
+
+/* 
+029. BUTTON 1 HOVER TEXT  _________________________________________________ */
+a.btn:hover, 
+input[type=button]:hover, 
+input[type=submit]:hover, 
+button:hover{
+	color: #ffffff;
+}
+
+
+/* 
+030. BUTTON 2 BACKGROUND  _________________________________________________ */
+a.btn-2,
+input[type=button].btn-2, 
+input[type=submit].btn-2, 
+button.btn-2{
+	background-color: #ffba00;
+}
+
+
+/* 
+031. BUTTON 2 HOVER BACKGROUND  ____________________________________________ */
+a.btn-2:hover,
+input[type=button].btn-2:hover, 
+input[type=submit].btn-2:hover, 
+button.btn-2:hover{
+	background-color: #00632c;
+}
+
+
+/* 
+032. BUTTON 2 TEXT  _______________________________________________________ */
+a.btn-2{
+	color: #ffffff;
+}
+
+
+/* 
+033. BUTTON 2 HOVER TEXT  _________________________________________________ */
+.btn-2:hover, .btn-3:hover{
+	color: #ffffff;
+}
+
+
+/* 
+034. BUTTON 3 BACKGROUND  _________________________________________________ */
+.option-set li a, .btn-3{
+	background-color: #eaeaea;
+}
+
+
+/* 
+035. BUTTON 3 HOVER BACKGROUND  ___________________________________________ */
+.owl-controls .owl-page span:hover, .option-set li a:hover, .option-set li a.selected, .btn-3:hover,
+.owl-page.active span{
+	background-color: #ffba00;
+}
+
+
+/* 
+036. BUTTON 3 TEXT  _______________________________________________________ */
+.owl-controls .owl-page span, .option-set li a{
+	color: #505a54;
+}
+
+
+/* 
+037. FEATURE BLOCK 1 BACKGROUND  ___________________________________________ */
+.feat-block-1, .social-block{
+	background: #f4f4f4;
+}
+
+
+/* 
+038. FEATURE BLOCK 2 BACKGROUND  ___________________________________________ */
+.feat-block-2, .divider{
+	background: #ececec;
+}
+
+
+/* 
+039. LITE FEATURES BACKGROUND  ____________________________________________ */
+table.table-style-1 tr:nth-child(2n+2), 
+table.table-style-1 th, 
+.boxy, 
+.message.promo, 
+.post-container 
+.boxy, 
+.boxy.author,
+ul.comments .odd, 
+.post-tag-cloud li a,
+.box-content,
+.price, .price-table, .price-cell:after,
+.time-table tr:nth-child(n+1):nth-child(even) td,
+.event-table tr:nth-child(n+1):nth-child(even) td,
+.mobile-table tr:nth-child(n+1):nth-child(even) td,
+.post-excerpt blockquote, 
+ul.tab-nav li,
+h3.v_nav{
+	background-color: #f6f6f6;
+}
+
+
+/* 
+040. FORM ELEMENTS BACKGROUND  ____________________________________________ */
+input[type=text],  
+input[type=email], 
+input[type=password], 
+textarea, 
+input[type=tel],  
+input[type=range],
+input[type=url], 
+input[type=number]{
+	background-color: #f6f6f6;
+}
+
+
+/* 
+041. MAIN BORDER COLOR  ___________________________________________________ */
+.tab-contents, .body-wrapper ul.thumb-list li, .body-wrapper ul.wiget-comment-list li, hr, .text-seperator-line div,
+blockquote.right, blockquote.left, pre, table.table-style-1, table.table-style-1 th, table.table-style-1 td, table.table-style-2, table.table-style-2 th, table.table-style-2 td, .post-container, .sitemap div > ul, .wp-caption-text, .page-heading, .thumb-list.archive, ul.comments, .post-tag-cloud, .paging, .paging .col-1-2.prev,
+
+input[type=text],  input[type=email], input[type=password], textarea, input[type=tel],  input[type=range], input[type=url],
+input[type=number], .widget-event-list li, ul.widget-list li, ul.toggle li, ul.accordion li, .price-detail ul li, .price-detail ul li:last-child,
+.price-cell, .boxy ul.social-link, .time-table td, .time-table th, .event-table th, .event-table td, .event-table, .evt-month, .evt-single-date,
+.evt-paging, .post-excerpt, aside .widget, .tag-cloud a, .gallery-section, fieldset, ul.tab-nav, ul.tab-nav li, h3.v_nav,
+.borderit{
+	border-color: #eaeaea!important;	
+}
+
+
+/* 
+042. BREADCRUMB BACKGROUND _________________________________________________ */
+.breadcrumb-wrapper{
+	background: #f4f4f4;
+}
+
+
+/* 
+043. BREADCRUMB TEXT ______________________________________________________ */
+.breadcrumb-wrapper *{
+	color: #bdbdbd;
+}
+
+
+/* 
+044. BREADCRUMB TEXT HOVER _________________________________________________ */
+.breadcrumb-wrapper a:hover{
+	color: #ffba00;
+}
+
+
+/* 
+045. FOOTER BACKGROUND ___________________________________________________ */
+.footer-wrapper {
+	background: #004720;
+}
+
+
+/* 
+046. FOOTER HEADINGS _____________________________________________________ */
+.footer-wrapper h1, .footer-wrapper h2, .footer-wrapper h3, .footer-wrapper strong {
+	color: #ffffff;
+}
+
+
+/* 
+047. FOOTER TEXT _________________________________________________________ */
+.footer-wrapper, .footer-wrapper a {
+	color: #f0f6f3;
+}
+
+
+/* 
+048. FOOTER TEXT HOVER ____________________________________________________ */
+.footer-wrapper a:hover, .footer-wrapper ul li:before{
+	color: #ffba00;
+}
+
+
+/* 
+049. FOOTER BORDERS _______________________________________________________ */
+.footer-wrapper .tag-cloud a, 
+.footer-wrapper .col-1-5, 
+.footer-wrapper ul.list-1 li, 
+.footer-wrapper ul.list-2 li, 
+.footer-wrapper ul.list-3 li,
+.footer-wrapper .wrapper > .col-1-2, .footer-wrapper .wrapper > .col-1-3, .footer-wrapper .wrapper > .col-1-4, .footer-wrapper .wrapper > .col-1-5,
+.footer-wrapper .wrapper > .col-2-3, .footer-wrapper .wrapper > .col-3-4, .footer-wrapper .wrapper > .col-2-5, .footer-wrapper .wrapper > .col-3-5,
+.footer-wrapper .wrapper > .col-4-5{
+	border-color: #255f3f;
+}
+
+
+/* 
+050. BASE BACKGROUND _______________________________________________________ */
+.base-wrapper{
+	background: #1c2721;
+}
+
+
+/* 
+051. BASE TEXT _____________________________________________________________ */
+.base-wrapper *{
+	color: #ffffff;
+}
+
+
+/* 
+052. BASE TEXT HOVER  ______________________________________________________ */
+.base-wrapper a:hover{
+	color: #ffba00;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================================   
+   02. THEME FONTS
+   
+   001. Body General
+   002. Main Headings
+   003. Navigation
+   004. Logo as Text
+   005. Bold Text
+   006. Buttons Text
+   006. Quote Text
+   007. Medium Weight Text
+   
+   ========================================================================== */
+
+
+/* 
+01. BODY GENERAL _____________________________________________________________ */
+body, .sport-rs-text{
+	font-family: 'robotolight';
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased; 
+	font-smooth: always; 
+	-moz-osx-font-smoothing: grayscale;
+}
+
+
+/* 
+02. MAIN HEADINGS ____________________________________________________________ */
+h1, h2, h3, .sport-rs-heading, cite, .price-cell:first-child p span, .big-count{
+	font-family: 'chunkfiveregular';
+	font-weight: normal;
+}
+   
+   
+/* 
+03. NAVIGATION _______________________________________________________________ */
+.nav a,  #navigation a, h4, h5, h6, .price h3 span, .price-cell:first-child, table th, .event-table .evt-date,
+.evt-price, .pagination,  .reply, .big-count div span {
+	font-family: 'robotobold';
+	font-weight: normal;
+}
+
+
+/* 
+04. LOGO AS TEXT ____________________________________________________________ */
+.logo.text{
+	font-family: 'chunkfiveregular';
+	font-weight: normal;
+}
+
+
+/* 
+05. BOLD TEXT _______________________________________________________________ */  
+strong, b, .breadcrumb-wrapper *, #responsive-menu-button, .corner, .date, .read-more, ul.sitemap > li > a,
+#recaptcha_audio_play_again, #recaptcha_audio_download, a.toggle-btn, a.accordion-btn, .time-table td:before, .time-table tr td:first-child,
+.event-table td:before, .mobile-table td:before{
+	font-family: 'robotomedium';
+	font-weight: normal;
+}
+
+
+/* 
+05. BUTTONS TEXT _______________________________________________________________ */  
+.btn, .btn-2, .btn-3, input[type=button], input[type=submit], button, .option-set li a, .tab-nav li,  h3.v_nav{
+	font-family: 'robotomedium';
+	font-weight: normal;
+}   
+
+
+/* 
+06. QUOTE TEXT _______________________________________________________________ */ 
+blockquote{
+	font-family: 'antic_slabregular';
+	font-weight: normal;
+}
+
+
+/* 
+07. MED WEIGHT TEXT _______________________________________________________________ */ 
+.active-time, .event-table td, .tooltipster-content .tt-date {
+	font-family: 'robotoregular';
+	font-weight: normal;
+}
+
+
+
+/* FONT AWESOME */
+.fa, a.fa, .read-more:before, .meta a:before, ul.comments li .more:before, .paging .col-1-2.prev:before, .paging .col-1-2.next:after,
+ .outter-wrapper .wrapper ul.social-links li a, .corner-date:before, .date:before, ul.sitemap li li a:before,
+a.toggle-btn:before,  a.accordion-btn:before{
+	font-family: "FontAwesome";
+	font-weight: normal;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+ 	03. CUSTOM TYPOGRAPHY
+   ========================================================================== */
+   
+.logo.text{
+	line-height: 1;
+	font-size: 52px;
+	text-decoration: none;
+}
+
+h6.meta, .meta h6, .corner, .date, .rate-tab i, .comment-num,
+.reply {
+	text-transform: uppercase;
+}
+
+h6.meta, .meta h6, .corner, .date, .reply {
+	letter-spacing: 1px;
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+ 	04. Fonts Included
+   ========================================================================== */
+
+@font-face {
+    font-family: 'chunkfiveregular';
+    src: url('../fonts/chunkfive-webfont.eot');
+    src: url('../fonts/chunkfive-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/chunkfive-webfont.woff') format('woff'),
+         url('../fonts/chunkfive-webfont.ttf') format('truetype'),
+         url('../fonts/chunkfive-webfont.svg#chunkfiveregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'robotomedium_italic';
+    src: url('../fonts/roboto-mediumitalic-webfont.eot');
+    src: url('../fonts/roboto-mediumitalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto-mediumitalic-webfont.woff') format('woff'),
+         url('../fonts/roboto-mediumitalic-webfont.ttf') format('truetype'),
+         url('../fonts/roboto-mediumitalic-webfont.svg#robotomedium_italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'antic_slabregular';
+    src: url('../fonts/anticslab-regular-webfont.eot');
+    src: url('../fonts/anticslab-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/anticslab-regular-webfont.woff') format('woff'),
+         url('../fonts/anticslab-regular-webfont.ttf') format('truetype'),
+         url('../fonts/anticslab-regular-webfont.svg#antic_slabregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'robotobold';
+    src: url('../fonts/roboto-bold-webfont.eot');
+    src: url('../fonts/roboto-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto-bold-webfont.woff') format('woff'),
+         url('../fonts/roboto-bold-webfont.ttf') format('truetype'),
+         url('../fonts/roboto-bold-webfont.svg#robotobold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'robotobold_italic';
+    src: url('../fonts/roboto-bolditalic-webfont.eot');
+    src: url('../fonts/roboto-bolditalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto-bolditalic-webfont.woff') format('woff'),
+         url('../fonts/roboto-bolditalic-webfont.ttf') format('truetype'),
+         url('../fonts/roboto-bolditalic-webfont.svg#robotobold_italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'robotoitalic';
+    src: url('../fonts/roboto-italic-webfont.eot');
+    src: url('../fonts/roboto-italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto-italic-webfont.woff') format('woff'),
+         url('../fonts/roboto-italic-webfont.ttf') format('truetype'),
+         url('../fonts/roboto-italic-webfont.svg#robotoitalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'robotomedium';
+    src: url('../fonts/roboto-medium-webfont.eot');
+    src: url('../fonts/roboto-medium-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto-medium-webfont.woff') format('woff'),
+         url('../fonts/roboto-medium-webfont.ttf') format('truetype'),
+         url('../fonts/roboto-medium-webfont.svg#robotomedium') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'robotoregular';
+    src: url('../fonts/roboto-regular-webfont.eot');
+    src: url('../fonts/roboto-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto-regular-webfont.woff') format('woff'),
+         url('../fonts/roboto-regular-webfont.ttf') format('truetype'),
+         url('../fonts/roboto-regular-webfont.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'robotolight';
+    src: url('../fonts/roboto-light-webfont.eot');
+    src: url('../fonts/roboto-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto-light-webfont.woff') format('woff'),
+         url('../fonts/roboto-light-webfont.ttf') format('truetype'),
+         url('../fonts/roboto-light-webfont.svg#robotolight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'robotolight_italic';
+    src: url('../fonts/roboto-lightitalic-webfont.eot');
+    src: url('../fonts/roboto-lightitalic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto-lightitalic-webfont.woff') format('woff'),
+         url('../fonts/roboto-lightitalic-webfont.ttf') format('truetype'),
+         url('../fonts/roboto-lightitalic-webfont.svg#robotolight_italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'star';
+    src: url('../fonts/star.eot');
+    src: url('../fonts/star.eot?#iefix') format('embedded-opentype'), 
+    	 url('../fonts/star.woff') format('woff'), 
+    	 url('../fonts/star.ttf') format('truetype'), 
+    	 url('../fonts/star.svg#star') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

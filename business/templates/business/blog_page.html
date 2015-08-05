@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+
+{% block content %}
+  <div class="container">
+
+    <div class="jumbotron">
+      <h2>
+        {{ self.title }}
+      </h2>
+      <h4 class="muted">{% if self.date %}<small>{{ self.date }}</small>{% endif %}</h4>
+    </div>
+    <div class="pull-right">
+      {% for tag in self.tags.all %}
+        <a href="{% pageurl self.blog_index %}?tag={{ tag }}"
+           class="btn btn-primary btn-xs">
+          <i class="glyphicon glyphicon-tag"></i> {{ tag }}
+        </a>
+      {% endfor %}
+    </div>
+
+    
+    <article>
+    
+    <blockquote>
+              <p>There are 12 teams and it's gonna be awesome.</p>
+              <small>Steve Montgomery, CEO TTW</small>
+            </blockquote>
+
+    {% for block in self.body %}
+      {% if block.block_type == 'image' %}
+          <figure>
+            {% image block.value width-1170 class="img-responsive" %}
+          </figure>
+          <caption>{{ block.value.title }}</caption>
+        {% else %}
+            <section class="block-{{ block.block_type }}">
+                {{ block }}
+            </section>
+        {% endif %}
+    {% endfor %}
+
+    
+
+  </article>
+    {% include "business/includes/related_links.html" with related_links=self.related_links.all only %}
+</div>
+{% endblock %}
+

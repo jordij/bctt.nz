@@ -1,0 +1,102 @@
+{% load compress static wagtailuserbar wagtailcore_tags wagtailimages_tags core_tags %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        
+        <title>{% block title %}{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}{% endblock %}{% block title_suffix %}{% endblock %}</title>
+        <meta name="description" content="{% if self.search_description %}{{ self.search_description }}{% elif self.intro %}{{ self.intro }}{% elif self.body_excerpt %}{{ self.body_excerpt|truncatewords:40 }}{% else %}{{ self.title }}{% endif %}" />
+
+        <!-- open graph -->
+        <meta property="og:url" content="{{ BASE_URL }}{% if self %}{% pageurl self %}{% endif %}" />
+        <meta property="og:title" content="{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}" />
+        <meta property="og:description" content="{% if self.search_description %}{{ self.search_description }}{% elif self.intro %}{{ self.intro }}{% elif self.body_excerpt %}{{ self.body_excerpt|truncatewords:40 }}{% else %}{{ self.title }}{% endif %}" />
+        {% block og_images %}
+            {% if self.og_image and self.og_image.image %}
+                {% image self.og_image.image width-400 as tmp_og_image %}
+                <meta property="og:image" content="{{ BASE_URL }}{{ tmp_og_image.url }}" />
+                <meta property="og:image:width" content="{{ tmp_og_image.width }}">
+                <meta property="og:image:height" content="{{ tmp_og_image.height }}">
+                <meta property="og:image:type" content="image/{{ self.og_image.type }}">
+            {% else %}
+                <meta property="og:image" content="{{ BASE_URL }}{% static 'images/springtail.png' %}">
+                <meta property="og:image:type" content="image/png">
+                <meta property="og:image:width" content="400">
+                <meta property="og:image:height" content="400">
+                <meta property="og:image:type" content="image/png">
+            {% endif %}
+        {% endblock %}
+        <!-- end:open graph -->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        
+        {% compress css %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/jquery_002.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/mediaelementplayer.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/owl.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/mosaic.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/rs-plugin.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/settings.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/tooltipster.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/mega.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/skin1.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/full.css' %}">
+        {% endcompress %}
+
+        {% block extra_css %}{% endblock %}
+
+        {% if GOOGLE_ANALYTICS_KEY %}
+            <!-- Google Analytics -->
+            <!-- End Google Analytics -->
+        {% endif %}
+    </head>
+    <body class="{% block body_class %}{% endblock %}">
+        {% if GOOGLE_TAG_MANAGER %}
+            <!-- Google Tag Manager -->
+            <!-- End Google Tag Manager -->
+        {% endif %}
+        
+        {% wagtailuserbar %}
+
+        {% include "core/includes/header.html" %}
+
+        {% block content %}{% endblock %}
+        {% compress js %}
+            <!--<script src="{% static 'js/modernizr-2.js' %}"/>
+            <script src="{% static 'js/buttons.js' %}"/>
+            <script src="{% static 'js/jquery-1.js' %}"/>
+            <script src="{% static 'js/jquery_010.js' %}"/>
+            <script src="{% static 'js/jquery_003.js' %}"/>
+            <script src="{% static 'js/jquery_002.js' %}"/>
+            <script src="{% static 'js/jquery_007.js' %}"/>
+            <script src="{% static 'js/cleantabs.js' %}"/>
+            <script src="{% static 'js/fitvids.js' %}"/>
+            <script src="{% static 'js/jquery_009.js' %}"/>
+            <script src="{% static 'js/owl.js' %}"/>
+            <script src="{% static 'js/selectivizr-min.js' %}"/>
+            <script src="{% static 'js/placeholder.js' %}"/>
+            <script src="{% static 'js/jquery_005.js' %}"/>
+            <script src="{% static 'js/mosaic.js' %}"/>
+            <script src="{% static 'js/jquery_006.js' %}"/>
+            <script src="{% static 'js/toggle.js' %}"/>
+            <script src="{% static 'js/jquery_008.js' %}"/>
+            <script src="{% static 'js/jquery_004.js' %}"/>
+            <script src="{% static 'js/jquery.js' %}"/>
+            <script src="{% static 'js/html5media.js' %}"/>
+            <script src="{% static 'js/slider-1.js' %}"/>
+            <script src="{% static 'js/main.js' %}"/> !-->
+            
+        {% endcompress %}
+        {% block extra_js %}
+        {% endblock %}
+    </body>
+</html>

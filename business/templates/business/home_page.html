@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-{{ self.get_verbose_name|slugify }}{% endblock %}
+
+{% block content %}
+
+    {% include "business/includes/carousel.html" with carousel_items=self.carousel_items.all only %}
+
+{% endblock %}

@@ -1,0 +1,171 @@
+/*
+	Mosaic - Sliding Boxes and Captions jQuery Plugin
+	Version 1.0.1
+	www.buildinternet.com/project/mosaic
+	
+	By Sam Dunn / One Mighty Roar (www.onemightyroar.com)
+	Released under MIT License / GPL License
+*/
+
+* {
+	margin:0;
+	padding:0;
+	border:none;
+	outline:none;
+}
+
+/*General Mosaic Styles*/
+
+/*
+.mosaic-block {
+	float:left;
+	position:relative;
+	overflow:hidden;
+	margin:10px;
+	background:#111 url(../img/progress.gif) no-repeat center center;
+}
+
+.mosaic-backdrop {
+	display:none;
+	position:absolute;
+	top:0;
+	height:100%;
+	width:100%;
+	background:#111;
+}
+
+.mosaic-overlay {
+	display:none;
+	z-index:5;
+	position:absolute;
+	width:100%;
+	height:100%;
+	background:#111;
+}
+*/
+
+
+.mosaic-block {
+	position:relative;
+	overflow:hidden;
+	background:#ffffff url(../img/progress.gif) no-repeat center center;
+	border: none;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	display: block!important;
+	margin-top: 0;
+	margin-bottom: 1em;
+}
+.mosaic-block img{
+	margin: 0;
+	border: none;
+	width: 100%;
+	height: auto;
+}
+.mosaic-backdrop {
+	display:none;
+	top:0;
+	height:100%;
+	min-height: 100%;
+	width:100%;
+	background:#fff;
+}	
+.mosaic-overlay {
+	display:none;
+	z-index:5;
+	position:absolute;
+	width:100%;
+	height:100%;
+	background:#111;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	text-decoration: none;
+}
+
+
+
+	
+/*** Custom Animation Styles (You can remove/add any styles below) ***/
+.circle .mosaic-overlay {
+	background:url(../img/hover-magnify.png) no-repeat center center;
+	opacity:0;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=00)";
+	filter:alpha(opacity=00);
+	display:none;
+	background-color: rgba(0, 0, 0, .4);
+}
+
+.circle .mosaic-overlay.link {
+	background:url(../img/hover-gotopost.png) no-repeat center center;
+	background-color: rgba(0, 0, 0, .4);
+	opacity:0;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=00)";
+	filter:alpha(opacity=00);
+	display:none;
+}
+
+/* Fade Effect */
+.fade .mosaic-overlay {
+	opacity:0;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=00)";
+	filter:alpha(opacity=00);
+	background:url(../img/bg-black.png);
+	text-align: center;
+	vertical-align: middle;
+}
+.fade .mosaic-overlay *{
+	line-height: 140%;
+	margin: 0;
+}
+.fade .mosaic-overlay .details{
+	position: absolute;
+	bottom: 50%;
+	margin-bottom: -20px;
+	text-align: center;
+	width: 100%;
+}
+
+
+/* Bar Effect */
+.bar .mosaic-overlay {
+	bottom:-85px;
+	height:85px;
+	background:url(../img/bg-black.png);
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-top: 1em;
+}
+.bar .mosaic-overlay *{
+	line-height: 140%;
+	margin: 0;
+}
+
+
+/* Bar Effect 2*/
+.bar2 .mosaic-overlay {
+	bottom:-40px;
+	height:85px;
+	opacity:1;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	filter:alpha(opacity=100);
+	background:url(../img/bg-black.png);
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-top: .5em;
+}
+.bar2 .mosaic-overlay:hover {
+	opacity:1;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	filter:alpha(opacity=100);
+}
+.bar2 .mosaic-overlay *{
+	line-height: 150%;
+	margin: 0;
+}
+.bar2 .mosaic-overlay .title{
+	margin-bottom: 5px;
+}
+
+/*** End Animation Styles ***/

@@ -1,0 +1,540 @@
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+
+
+@media only screen and (max-width: 1140px) { }
+
+@media only screen and (max-width: 1024px) { }
+
+
+
+
+/* ==========================================================================
+   MIN 768
+   ========================================================================== */
+   
+@media only screen and (min-width: 767px) {
+	.time-table tr td:first-child, .time-table tr th:first-child{
+		background: none!important;
+	}
+}
+
+
+
+
+/* ==========================================================================
+   MAX 768
+   ========================================================================== */
+   
+@media only screen and (max-width: 767px) {
+
+	.body-wrapper{
+		padding-top: 0;
+	}
+	
+	
+	.mobile-show{
+		display: block;
+	}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+   	
+	.post-container .title *{
+		margin-top: .75em;
+	}
+	
+	
+/* ==========================================================================
+   Navigation
+   ========================================================================== */
+   	
+	#mobile-header, .menuHideBtn {
+	    display: block;
+	}
+	
+	#navigation{
+		display: none;
+	}
+
+
+
+
+/* ==========================================================================
+   Header Variation
+   ========================================================================== */
+   	
+	.header-container .wrapper{
+		padding-bottom: 0;
+	}
+	
+
+
+/* ==========================================================================
+   Columns
+   ========================================================================== */	
+	.full, .half, .third, .fourth, .fifth, .two-thirds, .three-fourths, .two-fifths, .three-fifths, .four-fifths,
+	.col-1-1, .col-1-2, .col-1-3, .col-1-4, .col-1-5, .col-2-3, .col-3-4, .col-2-5, .col-3-5, .col-4-5, .paralax-block.outter-wrapper blockquote {
+		width: 100%;
+		float: none;
+		margin-right: 0;
+	}
+	
+	.footer-wrapper .wrapper > .col-1-2, .footer-wrapper .wrapper > .col-1-3, .footer-wrapper .wrapper > .col-1-4, .footer-wrapper .wrapper > .col-1-5,
+	.footer-wrapper .wrapper > .col-2-3, .footer-wrapper .wrapper > .col-3-4, .footer-wrapper .wrapper > .col-2-5, .footer-wrapper .wrapper > .col-3-5,
+	.footer-wrapper .wrapper > .col-4-5{
+		border-bottom-style: solid;
+		border-bottom-width: 3px;
+		padding-bottom: .75em;
+		margin-bottom: 1em;
+	}
+	
+	.footer-wrapper .wrapper .last{
+		border: none;
+	}
+	
+	 .pad-right, .pad-left{
+		margin: 0em;	
+	}
+	
+	.block-column{
+		margin-bottom: 2.5em;
+	}
+	
+	.block-column.last{
+		margin-bottom: 0;
+	}
+	 
+	
+	
+	/* ==========================================================================
+	   Time Tables 
+	   ========================================================================== */
+	   
+	table.time-table, .time-table thead, .time-table tbody, .time-table th, .time-table td, .time-table tr { 
+		display: block; 
+	}
+
+	.time-table thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	.time-table td { 
+		position: relative;
+		padding: .5em; 
+		padding-left: 40%;
+		text-align: left;
+		width: 100%;
+		line-height: 24px;
+		min-height: 50px;
+	}
+	
+	.time-table tr td:first-child, .time-table tr th:first-child{
+		border-bottom-style: solid;
+		border-bottom-width: 1px;
+		border-top-style: solid;
+		border-top-width: 0px;
+		margin-top: 20px;
+	}
+	
+	.time-table tr td:last-child{
+		border-bottom: none;
+	}
+	
+	.time-table td:before { 
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		width: 42%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	
+	.time-table th{
+		text-align: left;	
+	}
+	
+
+
+/* ==========================================================================
+   Event Tables 
+   ========================================================================== */	
+	
+	table.event-table, .event-table thead, .event-table tbody, .event-table th, .event-table td, .event-table tr { 
+		display: block; 
+	}
+	
+	.event-table{
+		border-top-style: solid;
+		border-top-width: 1px;	
+	}
+	
+	.event-table thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	.event-table td { 
+		position: relative;
+		padding: .5em; 
+		padding-left: 40%;
+		text-align: left;
+		width: 100%;
+		line-height: 24px;
+		min-height: 40px;
+		border-top: none;
+	}		
+	
+	.event-table td:before { 
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		width: 42%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	
+	.event-table td b:first-child{
+		float: right;
+		line-height: 24px;	
+	}
+	
+	.evt {
+		min-height: 0;
+	}
+		 
+
+
+
+
+/* ==========================================================================
+   Mobile Tables 
+   ========================================================================== */
+	table.mobile-table, .mobile-table thead, .mobile-table tbody, .mobile-table th, .mobile-table td, .mobile-table tr 	{
+		display: block;
+	}
+	
+	.mobile-table{
+		border: none;
+		border-top-style: solid;
+		border-top-width: 1px;	
+	}
+	
+	.mobile-table thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+	
+	.mobile-table td { 
+		position: relative;
+		padding: .5em; 
+		padding-left: 40%;
+		text-align: left;
+		line-height: 24px;
+		min-height: 40px;
+		border-top: none;
+	}		
+	
+	.mobile-table td:before { 
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		width: 42%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	
+	.mobile-table td b:first-child{
+		float: right;
+		line-height: 24px;	
+	}
+
+
+
+
+
+
+	
+/* ==========================================================================
+   Tabs
+   ========================================================================== */	
+	.tab-nav {display: none;}
+		
+	h3.v_nav {
+		font-size: 16px;
+		padding: .5em;
+		-webkit-box-sizing: border-box; 
+		-moz-box-sizing: border-box; 
+		box-sizing: border-box;
+		margin: 0;
+		text-align:center;
+		margin-top: 2px;
+		display: block;
+		cursor: pointer;
+		border-style: solid;
+		border-width: 1px;
+		-webkit-border-radius: 2px;
+		border-radius: 2px;
+		-webkit-touch-callout: none;
+		-webkit-user-select: none;
+		 -khtml-user-select: none;
+		   -moz-user-select: none;
+			-ms-user-select: none;
+				user-select: none;
+	}
+
+	h3.v_nav:first-child {
+		margin-top: 0;
+	}
+
+	h3.v_nav:hover {
+		text-decoration:none;
+	}
+
+	h3.v_active {
+		z-index:50;
+	}
+	
+	
+	.toggle-btn span{
+		float: none;
+	}
+	
+	
+	
+	
+	/* ==========================================================================
+	   Carousel
+	   ========================================================================== */
+	
+	.customNavigation{
+		opacity: 1;
+	}
+
+	
+	
+	/* ==========================================================================
+	   Sitemap
+	   ========================================================================== */
+	ul.sitemap{
+		display: inline;
+		width: 100%;
+	}
+	
+	ul.sitemap li{
+		display: block;
+		padding-left: 0;
+		padding: 1px;
+	}
+	
+	
+	/* ==========================================================================
+	   Block Elements
+	   ========================================================================== */
+	
+	.page-heading{
+		margin-bottom: 2em;
+	}
+	
+	ul.pagination{
+		margin-bottom: 3em;
+	}
+	
+	ul.timeline{
+		width: 100%;
+	}
+	
+	ul.timeline > li{
+		width: 100%;
+		float: none!important;
+	}
+	
+	.related-posts .thumb-list.archive.last{
+		border: none;
+	}
+	
+	.paging .col-1-2.prev{
+		border-right: none;
+		border-bottom-style: solid;
+		border-bottom-width: 1px;
+	}
+	
+	.price-feature{
+		top: 0em;
+	}
+	
+	/* Price Alt */
+	.price-table{
+		margin-bottom: 0;
+		margin-top: 1.5em;	
+	}
+	
+	.price-cell{
+		display: block;
+		border-right: none;
+		border-bottom-style: solid;
+		border-bottom-width: 1px;
+	}
+	
+	.price-cell:first-child, .price-cell:last-child{
+		min-width: 100%;
+	}
+	
+	.price-cell:after{
+		right: 49%;
+		top: 100%;
+	}
+	
+	.header-container .nav li .flag{
+		background-position: 0 2px;
+	}
+
+}
+
+
+
+
+@media only screen and (max-width: 480px) {
+	
+	html {
+		padding: 0;
+	}
+	
+	iframe{
+		max-height: 320px;
+	}
+	
+	#responsive-menu-button{
+		position: relative;
+		left: .5em;
+	}
+	
+	.outter-wrapper, .pre-outter-wrapper{
+		max-width: 100%;
+	}
+	
+	.pre-outter-wrapper .social-links{
+		right: .5em;
+	}
+	
+	.post h6.feat-1.meta{
+		margin-top: 0;	
+	}
+	
+	.comments img{
+		max-width: 45px;
+	}
+	
+	ul.comments li .more {
+	    display: inline;
+	    padding-left: 5px;
+	}
+	
+	.text-seperator-bar{
+		text-align: center;
+	}
+	
+	.base-wrapper{
+		text-align: center;
+		line-height: 200%;
+	}
+	
+	.ad-pad.wrapper{
+		padding-top: 1em;
+		padding-bottom: 1.5em;	
+	}
+	
+	.ad-padx2.wrapper{
+		padding-top: 1.5em;
+		padding-bottom: 2.5em;
+	}
+	
+	.rate-box .rating, .rate-box .star-rating{
+		margin-top: 1em;
+		margin-bottom: 1em;
+	}
+	
+	.rate-box .btn.right{
+		clear: left;
+	}
+	
+	/* ==========================================================================
+	   Header Variations
+	   ========================================================================== */
+	.pre-header-area .wrapper ul, 
+	.pre-header-area,
+	.header-area,
+	.post-header-area{
+		display: block;
+		text-align: center;
+	}
+	
+	/* ==========================================================================
+	   Forms
+	   ========================================================================== */
+	
+	input[type=text],  input[type=email], input[type=password], textarea, a.btn, .btn, a.btn-2, .btn-2, a.btn-3, .btn-3, input[type=button], input[type=submit],
+	#recaptcha_response_field{
+		width: 100%;
+		max-width: 100%;
+	}
+	a.btn, input[type=button]{
+		text-align: center;
+	}
+	
+	   
+	.body-wrapper .search-404{
+		margin-bottom: 3em;
+		-webkit-appearance: none;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		padding-right: 1em;
+		position: relative;
+	}
+	
+	.body-wrapper .search-404 input{
+		margin-bottom: .5em;
+	}
+	
+	.body-wrapper .search-404 .btn{
+		position: relative;
+		right: inherit;
+		top: inherit;
+		margin: 0;
+	}
+	
+	
+	.isotope-item.col-1-1, .isotope-item.col-1-2, .isotope-item.col-1-3, .isotope-item.col-1-4, .isotope-item.col-1-5,
+	.isotope-item.col-2-3, .isotope-item.col-3-4, .isotope-item.col-2-5, .isotope-item.col-3-5, .isotope-item.col-4-5{
+		float: none;
+		width: 100%;
+	}
+	
+	.option-set{
+		margin-top: 15px;
+	}
+	
+	/* ==========================================================================
+	   Helper classes
+	   ========================================================================== */
+	.left, .right{
+		float: none;
+	}
+	
+	.left.stay{
+		float: left;
+	}
+	
+	.right.stay{
+		float: right;
+	}
+	
+}
+

@@ -1,0 +1,35 @@
+html {
+	padding: 1.5em 1em 2em;
+	background: url(../img/grass.jpg) repeat 0 0 #eaeaea;
+}
+
+.outter-wrapper, .tp-banner-container, .forcefullwidth_wrapper_tp_banner{
+	max-width: 1480px; 
+	margin: 0 auto; 
+	padding: 0em;
+}
+
+.tp-banner-container{
+	left: 0!important;
+	background: #eaeaea;
+}
+
+#page-sticky{
+	left: 0;
+}
+
+.wrapper { 
+	max-width: 1160px; 
+	margin: 0 auto;
+	-webkit-box-sizing: border-box; 
+	-moz-box-sizing: border-box; 
+	box-sizing: border-box;
+	padding: 1em 20px;
+}
+
+
+@media only screen and (max-width: 1480px) {
+	html {
+		padding: 0;
+	}	
+}

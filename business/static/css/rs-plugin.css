@@ -1,0 +1,71 @@
+/*-----------------------------------------------------------------------------
+
+KENBURNER RESPONSIVE BASIC STYLES OF HTML DOCUMENT
+
+Screen Stylesheet
+
+version:   	1.0
+date:      	07/27/11
+author:		themepunch
+email:     	support@themepunch.com
+website:   	http://www.themepunch.com
+-----------------------------------------------------------------------------*/
+
+
+
+.boxedcontainer	{	
+	max-width: 1120px; 
+	margin:auto; 
+	padding: 0px 20px;
+}
+
+
+/*********************************************
+	-	SETTINGS FOR BANNER CONTAINERS	-
+**********************************************/
+
+.tp-banner-container{
+	width:100%;
+	position:relative;
+	padding:0;
+
+}
+
+.tp-banner{
+	width:100%;
+	position:relative;
+}
+
+.tp-banner-fullscreen-container {
+	width:100%;
+	position:relative;
+	padding:0;
+}
+
+
+
+
+
+/***********************************
+	-	SPORT THEME CAPTIONS	-
+************************************/
+
+.sport-rs-heading{
+	font-size: 42px;
+	line-height: 1;
+}
+
+.sport-rs-heading div{
+	font-size: 50%;
+	display: inline-block;
+}
+
+.sport-rs-text{
+	font-size: 18px;
+}
+
+.sport-rs-boxed{
+	background-color: rgba(0, 0, 0, .5);
+	border-radius: 2px;
+	padding: 12px;
+}
