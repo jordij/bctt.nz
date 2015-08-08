@@ -1,35 +1,45 @@
 {% load wagtailcore_tags %}
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+
+
+<div class="navbar-wrapper">
+      
+      <div class="container">
+
+        <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+          
+          <!--<div class="container">-->
+            
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-                <span class="icon-bar"></span>  
-            </button>
-            <a class="navbar-brand" href="/"><i>TTW</i> {{ "Business Class" }}</a>
-        </div>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/"><i>TTW</i> {{ "Business Class" }}</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav ">
+                    {% for link in links %}
+                        <li class="{% if link.is_active %}active {% endif %}"><a href="{{ link.url }}">{{ link.title|upper }}</a></li>
+                    {% endfor %}
+                </ul>
+                <form class="navbar-form navbar-right" method="get" action="{% url 'wagtailsearch_search' %}" role="search">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" name="q"{% if query_string %} value="{{ query_string }}"{% endif %} class="form-control" type="search" placeholder="Search">
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn"><span class="fui-search"></span></button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+          
+          <!--</div>-->
 
-        <div id="navbar" class="navbar-collapse collapse navbar-right">
-            <ul class="nav navbar-nav">
-                {% for link in links %}
-                    <li class="{% if link.is_active %}active {% endif %}"><a href="{{ link.url }}">{{ link.title|upper }}</a></li>
-                {% endfor %}
-            </ul>
-            <form class="navbar-form navbar-right" method="get" action="{% url 'wagtailsearch_search' %}" role="search">
-                <div class="form-group">
-                  <div class="input-group">
-                    <input type="text" name="q"{% if query_string %} value="{{ query_string }}"{% endif %} class="form-control" type="search" placeholder="Search">
-                    <span class="input-group-btn">
-                        <button type="submit" class="btn"><span class="fui-search"></span></button>
-                    </span>
-                  </div>
-                </div>
-              </form>
-        </div>
+        </nav>
 
+      </div>
     </div>
-</nav>

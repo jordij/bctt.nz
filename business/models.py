@@ -1,7 +1,4 @@
-from datetime import timedelta, date
-
 from django.db import models
-from django.core.exceptions import ObjectDoesNotExist
 import django.db.models.options as options
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -12,7 +9,7 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailcore import blocks
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtailcore.fields import StreamField
-
+from wagtail.wagtailembeds.blocks import EmbedBlock
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 
 
@@ -25,6 +22,7 @@ from bs4 import BeautifulSoup
 
 from .utilities import *
 from .snippets import *
+from .blocks import *
 from .forms import *
 
 options.DEFAULT_NAMES = options.DEFAULT_NAMES + ('description',)
@@ -63,29 +61,9 @@ class HomePage(Page):
 
     search_fields = ()
 
-    def get_context(self, request):
-        # Get pages
-        pages = self.get_children().live()
-
-        # Filter by tag
-        tag = request.GET.get('tag')
-        if tag:
-            pages = pages.filter(tags__name=tag)
-
-        # Pagination
-        page = request.GET.get('page')
-        paginator = Paginator(pages, 10)  # Show 10 pages per page
-        try:
-            pages = paginator.page(page)
-        except PageNotAnInteger:
-            pages = paginator.page(1)
-        except EmptyPage:
-            pages = paginator.page(paginator.num_pages)
-
-        # Update template context
-        context = super(HomePage, self).get_context(request)
-        context['pages'] = pages
-        return context
+    def blogs(self):
+        # Get latest blogs
+        return BlogPage.objects.live().order_by('-date')[:3]
 
     class Meta:
         description = "The top level homepage for your site"
@@ -111,6 +89,8 @@ HomePage.promote_panels = [
 class PageCarouselItem(Orderable, CarouselItem):
     page = ParentalKey('HomePage', related_name='carousel_items')
 
+
+# BlogIndex page
 
 class BlogIndexPage(Page):
     intro = RichTextField(blank=True)
@@ -158,8 +138,6 @@ BlogIndexPage.content_panels = [
     FieldPanel('intro', classname="full"),
 ]
 
-BlogIndexPage.promote_panels = Page.promote_panels
-
 
 # Blog page
 
@@ -186,10 +164,11 @@ class BlogPageTag(TaggedItemBase):
 class BlogPage(Page):
     date = models.DateField("Post date")
     body = StreamField([
-        ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
+        ('embed', EmbedBlock()),
     ])
+    intro = models.TextField(blank=True)
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
     feed_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -218,6 +197,7 @@ class BlogPage(Page):
 BlogPage.content_panels = [
     FieldPanel('title', classname="full title"),
     FieldPanel('date'),
+    FieldPanel('intro'),
     SnippetChooserPanel('author', Author),
     StreamFieldPanel('body'),
     InlinePanel(BlogPage, 'related_links', label="Related links"),
@@ -226,4 +206,106 @@ BlogPage.content_panels = [
 BlogPage.promote_panels = Page.promote_panels + [
     ImageChooserPanel('feed_image'),
     FieldPanel('tags'),
+]
+
+
+class CompIndexPage(Page):
+    intro = RichTextField(blank=True)
+
+    search_fields = Page.search_fields + (
+        index.SearchField('intro'),
+    )
+
+    @property
+    def pages(self):
+        # Get list of live comp pages that are descendants of this page
+        pages = CompPage.objects.live().descendant_of(self)
+
+        # Order by most recent date first
+        pages = pages.order_by('-year')
+
+        return pages
+
+    def get_context(self, request):
+        # Get pages
+        pages = self.pages
+
+        # Pagination
+        page = request.GET.get('page')
+        paginator = Paginator(pages, 10)  # Show 10 pages per page
+        try:
+            pages = paginator.page(page)
+        except PageNotAnInteger:
+            pages = paginator.page(1)
+        except EmptyPage:
+            pages = paginator.page(paginator.num_pages)
+
+        # Update template context
+        context = super(CompIndexPage, self).get_context(request)
+        context['pages'] = pages
+        return context
+
+BlogIndexPage.content_panels = [
+    FieldPanel('title', classname="full title"),
+    FieldPanel('intro', classname="full"),
+]
+
+
+# Comp page
+
+class CompPage(Page):
+    year = models.IntegerField("Post date")
+    body = StreamField([
+        ('paragraph', blocks.RichTextBlock()),
+        ('image', ImageChooserBlock()),
+        ('embed', EmbedBlock()),
+        ('day', CompDayBlock()),
+    ])
+    feed_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    search_fields = Page.search_fields + (
+        index.SearchField('body'),
+    )
+
+    @property
+    def comp_index(self):
+        # Find closest ancestor which is a comp index
+        return self.get_ancestors().type(CompIndexPage).last()
+
+CompPage.content_panels = [
+    FieldPanel('title', classname="full title"),
+    FieldPanel('year'),
+    StreamFieldPanel('body'),
+]
+
+CompPage.promote_panels = Page.promote_panels + [
+    ImageChooserPanel('feed_image'),
+]
+
+
+# Simple page
+
+class SimplePage(Page):
+    intro = RichTextField(blank=True)
+    body = RichTextField(blank=True)
+    search_fields = Page.search_fields + (
+        index.SearchField('intro'),
+        index.SearchField('body'),
+    )
+
+    @property
+    def pages(self):
+        # Get list of live comp pages that are descendants of this page
+        return SimplePage.objects.live().descendant_of(self)
+
+
+SimplePage.content_panels = [
+    FieldPanel('title', classname="full title"),
+    FieldPanel('intro', classname="full"),
+    FieldPanel('body', classname="full"),
 ]

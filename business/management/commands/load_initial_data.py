@@ -8,7 +8,7 @@ from django.core.management import call_command
 
 class Command(NoArgsCommand):
     def handle_noargs(self, **options):
-        fixtures_dir = os.path.join(settings.PROJECT_ROOT, settings.SITE_NAME, 'core', 'fixtures')
+        fixtures_dir = os.path.join(settings.PROJECT_ROOT, settings.SITE_NAME, 'business', 'fixtures')
         fixture_file = os.path.join(fixtures_dir, 'initial_data.json')
         image_src_dir = os.path.join(fixtures_dir, 'images')
         # Uncomment all commented lines if you'd like to copy your initial images from the original folder to the dest folder

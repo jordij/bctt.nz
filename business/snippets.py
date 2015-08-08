@@ -191,7 +191,7 @@ class Author(models.Model):
     """
     name = models.CharField(max_length=255, blank=False)
     title = models.CharField(max_length=255, blank=True)
-    bio = models.TextField(max_length=1020, blank=True)
+    bio = models.TextField(blank=True)
     image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -213,4 +213,79 @@ class Author(models.Model):
         FieldPanel('title'),
         FieldPanel('bio'),
         ImageChooserPanel('image'),
+    ]
+
+
+@register_snippet
+class Player(models.Model):
+
+    """
+    Short bio and profile pic for a player
+    """
+    name = models.CharField(max_length=255, blank=False)
+    title = models.CharField(max_length=255, blank=True)
+    bio = models.TextField(blank=True)
+    image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    class Meta:
+        verbose_name = "Player profile"
+        description = "Player profile"
+
+    def __unicode__(self):
+        return self.name
+
+    panels = [
+        FieldPanel('name'),
+        FieldPanel('title'),
+        FieldPanel('bio'),
+        ImageChooserPanel('image'),
+    ]
+
+
+class TeamPlayer(Orderable, Player):
+    parent = ParentalKey(to='Team', related_name='players')
+
+
+class TeamManager(models.Manager):
+
+    def get_by_natural_key(self, name):
+        return self.get(menu_name=name)
+
+
+@register_snippet
+class Team(models.Model):
+
+    """
+    Team for player
+    """
+    name = models.CharField(max_length=255, blank=False)
+    url = models.URLField(blank=True)
+    bio = models.TextField(max_length=1020, blank=True)
+    image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    class Meta:
+        verbose_name = "Team profile"
+        description = "Team profile"
+
+    def __unicode__(self):
+        return self.name
+
+    panels = [
+        FieldPanel('name'),
+        FieldPanel('url'),
+        FieldPanel('bio'),
+        ImageChooserPanel('image'),
+        InlinePanel('players', label="Players", help_text='Set the players for this team.')
     ]

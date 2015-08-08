@@ -6,4 +6,10 @@
 
     {% include "business/includes/carousel.html" with carousel_items=self.carousel_items.all only %}
 
+    <div class="container">
+	    <div class="row">
+	    	{% include "business/includes/blog_thumbnails.html" with request=request items=self.blogs class="col-lg-4" only %}
+	    </div>
+	</div>
+
 {% endblock %}

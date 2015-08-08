@@ -24,8 +24,8 @@
             {% else %}
 
                 <div class="item {% if forloop.first %} active{% endif %}">
-                    {% image item.image fill-1600x500-c100 as carouselimagedata %}
-                    <img src="{{ carouselimagedata.url }}" style="width: 100%;" alt="{{ carouselimagedata.alt }}" />
+                    {% image item.image original as carouselimagedata %}
+                    <img src="{{ carouselimagedata.url }}" alt="{{ carouselimagedata.alt }}" />
                     <div class="container">
                         <div class="carousel-caption">
                             <h1>{{ item.content }}</h1>
