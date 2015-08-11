@@ -254,7 +254,7 @@ BlogIndexPage.content_panels = [
 # Comp page
 
 class CompPage(Page):
-    year = models.IntegerField("Post date")
+    year = models.IntegerField("Year")
     body = StreamField([
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
