@@ -1,0 +1,6 @@
+<h3 class="footer-title">{{ title }}</h3>
+<ul>
+{% for link in links  %}
+    <li><a href="{{ link.url }}" title="{{ link.title }}">{{ link.title }}</a></li>
+{% endfor %}
+</ul>

@@ -1,0 +1,9 @@
+{% load wagtailimages_tags %}
+
+<h3 class="footer-title">Sponsors</h3>
+<p>Business class is brought to you by:</p>
+<ul class="list-inline">
+    {% for sponsor in sponsors  %}
+        <li><a href="{{ sponsor.url }}" title="{{ sponsor.name }}">{% image sponsor.image fill-125x125 class="img-circle" %}</a></li>
+    {% endfor %}
+</ul>

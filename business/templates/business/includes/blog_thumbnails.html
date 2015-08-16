@@ -1,10 +1,16 @@
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags%}
 
 {% for item in items %}
-	<div class="{{ class }}">
-        <h3>{{ item.title }}</h3>
-        <p class="text-left">{{ item.date|date:"j M, Y" }}</p>
-        <p class="text-justify">{{ item.intro }}</p>
-        <p><a class="btn btn-secondary" href="{% pageurl item %}" role="button">Read more &raquo;</a></p>
+	<div class="{{ class }} card__blog">
+        <a href="{% pageurl item %}">
+          <div class="caption">
+            {% if item.feed_image %}
+                {% image item.feed_image fill-360x200 class="img-responsive" %}
+            {% endif %}
+            <h4>{{ item.title }}</h4>
+            <p class="text-left text-muted">{{ item.date|date:"j M Y" }}</p>
+            <p class="text-justify">{{ item.intro }}</p>
+          </div>
+        </a>
     </div>
 {% endfor %}

@@ -1,0 +1,43 @@
+//
+// Business Class css tweaks
+// --------------------------------------------------
+
+.page-container {
+    margin-top:100px;
+}
+
+.inversed-container {
+    //background-color: @brand-primary;
+    background-color: mix(@brand-primary, @inverse, 9%);
+    //color: @inverse;
+}
+
+.card__blog {
+    
+    a {
+        .caption{
+
+            &:hover {
+
+                img {
+                    opacity:0.75;
+                    filter:alpha(opacity=75);
+                }
+            }
+        }
+    }
+}
+
+.media {
+
+    &:hover {
+
+        .media-left {
+            img {
+                opacity:0.75;
+                filter:alpha(opacity=75);
+            }
+        }
+    }
+
+}

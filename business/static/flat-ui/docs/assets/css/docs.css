@@ -182,7 +182,7 @@ ol.linenums {
   margin-left: 0;
 }
 .demo-content.demo-content-article li {
-  line-height: 35px;
+  line-height: 31px;
   padding: 0 0 5px;
 }
 .demo-content-wide {
@@ -291,7 +291,7 @@ ol.linenums {
   display: inline-block;
 }
 .demo-labels {
-  font-size: 19px;
+  font-size: 16px;
 }
 .demo-labels .visible-lg {
   display: inline !important;
@@ -369,7 +369,7 @@ ol.linenums {
   padding: 0;
 }
 .demo-sidebar {
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.214;
   height: 100%;
   left: 0;
@@ -412,7 +412,7 @@ ol.linenums {
     width: auto;
   }
   .demo-headline {
-    font-size: 65px !important;
+    font-size: 58px !important;
     text-align: left;
     padding-left: 15px;
     padding-right: 15px;

@@ -3,7 +3,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.safestring import mark_safe
 from wagtail.wagtailcore.rich_text import expand_db_html
 
-from business.snippets import NavigationMenu
+from business.snippets import NavigationMenu, Sponsor
 from business.utilities import *
 
 register = template.Library()
@@ -49,6 +49,36 @@ def menu(context, name=None, current_page=None):
     return {
         'links': menu_items,
         'request': context['request'],
+    }
+
+
+@register.inclusion_tag('business/includes/footer_menu.html')
+def footer_menu(name=None):
+    """
+    Retrieves the MenuElement(s) under the NavigationMenu with given menu_name
+    """
+    if name is None:
+        return None
+    try:
+        menu_items = NavigationMenu.objects.get(menu_name=name).items
+    except ObjectDoesNotExist:
+        return None
+
+    return {
+        'title': name,
+        'links': menu_items,
+    }
+
+
+@register.inclusion_tag('business/includes/sponsors.html')
+def sponsors_menu():
+    """
+    Retrieves all the sponsors
+    """
+    sponsors = Sponsor.objects.all()
+
+    return {
+        'sponsors': sponsors,
     }
 
 

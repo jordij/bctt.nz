@@ -1,10 +1,67 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 {% block body_class %}template-{{ self.get_verbose_name|slugify }}{% endblock %}
 
 {% block content %}
 
     {% include "business/includes/carousel.html" with carousel_items=self.carousel_items.all only %}
+
+    {% if current_comp %}
+        <div class="inversed-container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Lastest in {{ current_comp.title }} comp</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>{{ current_comp.get_next_results_by_date.0.date|date:"j M Y" }}</h6>
+
+                        {% if current_comp.get_next_date.1 %}
+                            caca
+                        {% else %}
+
+                            <table class="table table-striped">
+                                <thead>
+                                </thead>
+                                {% for team in current_comp.get_next_results_by_date %}
+                                    <tr>
+                                        <td>{% image team.team_one.image fill-50x50 class="img-circle" %}</td>
+                                        <td class="hidden-xs">{{ team.team_one.name }}</td>
+                                        <td>vs</td>
+                                        <td>{% image team.team_two.image fill-50x50 class="img-circle" %}</td>
+                                        <td class="hidden-xs">{{ team.team_two.name }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+
+                    <div class="row">
+                        {% include "business/includes/classification_table.html" with items=current_comp.get_stats.items class="col-md-6" simple=True only %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a href="/competition#results" class="pull-right btn btn-primary"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span> Full results</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4>What's new</h4>
+            </div>
+        </div>
+    </div>
 
     <div class="container">
 	    <div class="row">

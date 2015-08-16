@@ -216,7 +216,6 @@ class Author(models.Model):
     ]
 
 
-@register_snippet
 class Player(models.Model):
 
     """
@@ -288,4 +287,34 @@ class Team(models.Model):
         FieldPanel('bio'),
         ImageChooserPanel('image'),
         InlinePanel('players', label="Players", help_text='Set the players for this team.')
+    ]
+
+
+@register_snippet
+class Sponsor(models.Model):
+
+    """
+    Team for player
+    """
+    name = models.CharField(max_length=255, blank=False)
+    url = models.URLField(blank=True)
+    image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    class Meta:
+        verbose_name = "Sponsor profile"
+        description = "Business class sponsor"
+
+    def __unicode__(self):
+        return self.name
+
+    panels = [
+        FieldPanel('name'),
+        FieldPanel('url'),
+        ImageChooserPanel('image'),
     ]

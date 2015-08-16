@@ -1,6 +1,9 @@
+from datetime import date
+
 from django.db import models
-import django.db.models.options as options
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import redirect
+import django.db.models.options as options
 
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page, Orderable
@@ -11,6 +14,7 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailembeds.blocks import EmbedBlock
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
+from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
 
 
 from wagtail.wagtailsearch import index
@@ -18,7 +22,6 @@ from wagtail.wagtailsearch import index
 from modelcluster.fields import ParentalKey
 from modelcluster.tags import ClusterTaggableManager
 from taggit.models import TaggedItemBase
-from bs4 import BeautifulSoup
 
 from .utilities import *
 from .snippets import *
@@ -64,6 +67,20 @@ class HomePage(Page):
     def blogs(self):
         # Get latest blogs
         return BlogPage.objects.live().order_by('-date')[:3]
+
+    def get_context(self, request):
+
+        context = super(HomePage, self).get_context(request)
+
+        # Get current comp
+        try:
+            current_comp = CompPage.objects.live().filter(current=True)[0]
+        except:
+            return context
+
+        # Update template context
+        context['current_comp'] = current_comp
+        return context
 
     class Meta:
         description = "The top level homepage for your site"
@@ -162,7 +179,7 @@ class BlogPageTag(TaggedItemBase):
 
 
 class BlogPage(Page):
-    date = models.DateField("Post date")
+    date = models.DateField("Post date", default=date.today)
     body = StreamField([
         ('paragraph', blocks.RichTextBlock()),
         ('image', ImageChooserBlock()),
@@ -226,6 +243,16 @@ class CompIndexPage(Page):
 
         return pages
 
+    def serve(self, request, *args, **kwargs):
+        """
+        Override if there's a current comp
+        """
+        try:
+            current_competition = CompPage.objects.live().descendant_of(self).filter(current=True)[0]
+            return redirect(current_competition.url, *args, **kwargs)
+        except:
+            return super(CompIndexPage, self).serve(request, *args, **kwargs)
+
     def get_context(self, request):
         # Get pages
         pages = self.pages
@@ -254,13 +281,17 @@ BlogIndexPage.content_panels = [
 # Comp page
 
 class CompPage(Page):
+    current = models.BooleanField(default=False, help_text="Is this the current competition?")
     year = models.IntegerField("Year")
-    body = StreamField([
-        ('paragraph', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
-        ('embed', EmbedBlock()),
-        ('day', CompDayBlock()),
-    ])
+    winner = models.ForeignKey(
+        'business.Team',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='winner_of'
+    )
+    body = RichTextField(blank=True)
+
     feed_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -273,19 +304,185 @@ class CompPage(Page):
     )
 
     @property
+    def get_next_results_by_date(self):
+        cur_date = self.get_next_date
+        return self.related_results.all().filter(date=cur_date[0])
+
+    @property
+    def get_next_date(self):
+        """
+        Get either next date of the comp or last recent result date
+        """
+        dates = self.get_related_results().order_by('date').values('date').annotate(models.Count('date'))
+        for _date in dates:
+            if _date['date'] > date.today():
+                return (_date['date'], False)
+        try:
+            return (self.get_related_results().order_by('date').reverse()[0].date, True)
+        except:
+            return None
+
+    @property
+    def get_grouped_results(self):
+        dates = self.get_related_results().values('date').annotate(models.Count('date'))
+        values = dict(((str(date['date']), self.get_related_results().filter(date=date['date'])) for date in dates if date['date__count']))
+        return values
+
+    @property
+    def get_grouped_teams(self):
+        groups = self.get_related_teams().values('group').annotate(models.Count('group'))
+        values = dict(((str(group['group']), self.get_related_teams().filter(group=group['group'])) for group in groups if group['group__count']))
+        return values
+
+    @property
+    def get_stats(self):
+        """
+        Get team totals, by group and ordered by wins
+        """
+        teams = self.get_related_teams()
+
+        groups = self.get_related_teams().values('group').annotate(models.Count('group'))
+
+        results_group = dict()
+
+        for group in groups:
+            results_group[str(group['group'])] = list()
+
+        for team_group in teams:
+            team_group.team
+            team_results_a = self.get_related_results().filter(team_one=team_group.team)
+            team_results_b = self.get_related_results().filter(team_two=team_group.team)
+            team_group.team.wins = 0
+            team_group.team.losts = 0
+            team_group.team.points = 0
+
+            for result_a in team_results_a:
+                team_group.team.wins += result_a.team_one_games
+                team_group.team.losts += result_a.team_two_games
+                team_group.team.points += result_a.team_one_games
+
+                if result_a.team_one_games > result_a.team_two_games:
+                    team_group.team.points += 2
+
+            for result_b in team_results_b:
+                team_group.team.wins += result_b.team_two_games
+                team_group.team.losts += result_a.team_one_games
+                team_group.team.points += result_b.team_two_games
+
+                if result_b.team_two_games > result_b.team_one_games:
+                    team_group.team.points += 2
+
+            results_group[str(team_group.group)].append(team_group.team)
+
+        for group in groups:
+            results_group[str(group['group'])].sort(key=lambda x: x.points, reverse=True)
+
+        return results_group
+
+    def get_related_teams(self):
+        return self.related_teams.all().order_by('group', 'team__name')
+
+    def get_related_results(self):
+        return self.related_results.all().order_by('date')
+
+    @property
     def comp_index(self):
         # Find closest ancestor which is a comp index
         return self.get_ancestors().type(CompIndexPage).last()
 
-CompPage.content_panels = [
-    FieldPanel('title', classname="full title"),
-    FieldPanel('year'),
-    StreamFieldPanel('body'),
-]
+    content_panels = [
+        FieldPanel('title', classname="full title"),
+        FieldPanel('current'),
+        FieldPanel('year'),
+        FieldPanel('body', classname="full"),
+    ]
+
+    team_panels = [
+        InlinePanel(
+            'related_teams',
+            label="Teams competing",
+            help_text="Add the teams involved on this competition."
+        ),
+    ]
+
+    results_panels = [
+        InlinePanel(
+            'related_results',
+            label="Results",
+            help_text="Add the matches, with or without results, involved on this competition."
+        ),
+    ]
+
+    edit_handler = TabbedInterface([
+        ObjectList(content_panels, heading='Content'),
+        ObjectList(team_panels, heading='Teams'),
+        ObjectList(results_panels, heading='Results'),
+        ObjectList(Page.promote_panels, heading='Promote'),
+        ObjectList(Page.settings_panels, heading='Settings', classname="settings"),
+    ])
+
 
 CompPage.promote_panels = Page.promote_panels + [
     ImageChooserPanel('feed_image'),
 ]
+
+
+class TeamGroup(models.Model):
+    team = models.ForeignKey(
+        'Team',
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+        related_name='competitions'
+    )
+    group = models.IntegerField(default=0)
+    panels = [
+        FieldPanel('group'),
+        SnippetChooserPanel('team', Team),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class CompPageTeam(Orderable, TeamGroup):
+    page = ParentalKey('CompPage', related_name='related_teams')
+
+
+class MatchResult(models.Model):
+    date = models.DateField(default=date.today)
+    team_one = models.ForeignKey(
+        'Team',
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+        related_name='competitions_as_one'
+    )
+    team_two = models.ForeignKey(
+        'Team',
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+        related_name='competitions_as_two'
+    )
+    team_one_games = models.IntegerField(default=0)
+    team_two_games = models.IntegerField(default=0)
+
+    panels = [
+        FieldPanel('date'),
+        FieldPanel('team_one'),
+        FieldPanel('team_two'),
+        FieldPanel('team_one_games'),
+        FieldPanel('team_two_games'),
+    ]
+
+    class Meta:
+        abstract = True
+
+
+class CompPageResult(Orderable, MatchResult):
+
+    page = ParentalKey('CompPage', related_name='related_results')
 
 
 # Simple page

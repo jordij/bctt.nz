@@ -1,4 +1,4 @@
-{% load wagtailimages_tags wagtailembeds_tags %}
+{% load wagtailimages_tags wagtailembeds_tags core_tags%}
 <!-- Carousel
     ================================================== -->
     <div id="carousel" class="carousel slide" data-ride="carousel">
@@ -22,16 +22,15 @@
                   {{ item.embed_url|embed:1000 }}
                 </div>
             {% else %}
-
-                <div class="item {% if forloop.first %} active{% endif %}">
-                    {% image item.image original as carouselimagedata %}
-                    <img src="{{ carouselimagedata.url }}" alt="{{ carouselimagedata.alt }}" />
-                    <div class="container">
-                        <div class="carousel-caption">
-                            <h1>{{ item.content }}</h1>
-                            <p><a class="btn btn-lg btn-primary" href="{{ item.link }}" role="button">{{ item.button }}</a></p>
+                {% image item.image original as carouselimagedata %}
+                <div style='background-image: url("{{ carouselimagedata.url }}");' class="item {% if forloop.first %} active{% endif %}">
+                    <a href="{{ item.link }}" title="{{ item.content }}">
+                        <div class="container">
+                            <div class="carousel-caption">
+                                <h2>{{ item.content }}</h2>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             {% endif %}
 
