@@ -4,7 +4,7 @@
 
 {% block content %}
 
-    <div class="container">
+    <div class="container page-container">
         
         <div class="jumbotron">
             <h1>{{ self.title }}</h1>
@@ -19,8 +19,8 @@
             {% for field in form %}
                 {% if field.errors %}
                     <div class="form-group has-error">
-                        <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
-                        <div class="col-sm-6">
+                        <label class="col-sm-4 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                        <div class="col-sm-4">
                             {{ field|attr:"class:form-control" }}
                             <span class="help-block">
                                 {% for error in  field.errors %}{{ error }}{% endfor %}
@@ -29,8 +29,8 @@
                     </div>
                 {% else %}
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
-                        <div class="col-sm-6">
+                        <label class="col-sm-4 control-label" for="id_{{ field.name }}">{{ field.label }}</label>
+                        <div class="col-sm-4">
                             {{ field|attr:"class:form-control" }}
                             {% if field.help_text %}
                                 <p class="help-block"><small>{{ field.help_text }}</small></p>
@@ -40,11 +40,13 @@
                 {% endif %}
             {% endfor %}
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
+                <div class="col-sm-offset-4 col-sm-8">
                     <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
                 </div>
             </div>
         </form>
 
+
     </div>
+    
 {% endblock %}

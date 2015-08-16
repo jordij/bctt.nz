@@ -4,14 +4,17 @@
 {% block content %}
     <div class="container page-container">
 
-        <h1>{{ self.title }}</h1>
-
         {% if self.related_teams.all %}
 
-            <div class="row">
-                <div class="col-md-9">
+        <div class="jumbotron">
+
+        <h1>{{ self.title }}</h1>
+
+
+            <!--<div class="row">
+                <div class="col-md-9">-->
                     {{ self.body|richtext }}
-                </div>
+                <!--</div>
                 <div class="col-md-3">
                     <ul class="list-group">
                       <li class="list-group-item" role="presentation"><a href="#teams" id="teams">Teams</a></li>
@@ -19,7 +22,20 @@
                       <li class="list-group-item" role="presentation"><a href="#stats">Classification and stats</a></li>
                     </ul>
                 </div>
+            </div>-->
+
+
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+            <ul class="nav nav-pills">
+              <li role="presentation"><a href="#teams" id="teams">Teams</a></li>
+              <li  role="presentation"><a href="#results">Results</a></li>
+              <li role="presentation"><a href="#stats">Classification and stats</a></li>
+            </ul>
+            <hr/>
             </div>
+        </div>
 
             <div class="row" id="teams">
 

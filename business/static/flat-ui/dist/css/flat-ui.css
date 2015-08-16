@@ -5869,8 +5869,8 @@ fieldset[disabled] .navbar-inverse .navbar-btn.active {
   }
 }
 footer {
-  background-color: #ebf1f3;
-  color: #b4cbd0;
+  background-color: #216775;
+  color: #d3e1e3;
   font-size: 15px;
   padding: 0;
 }
@@ -5888,6 +5888,7 @@ footer p {
   padding-top: 21px;
   font-size: 24px;
   line-height: 40px;
+  color: #ffffff;
 }
 .footer-brand {
   display: block;
@@ -5900,7 +5901,7 @@ footer p {
 .footer-banner {
   background-color: #216775;
   color: #d3e1e3;
-  margin-left: 42px;
+  margin-left: 0px;
   min-height: 316px;
   padding: 0 30px 30px;
 }

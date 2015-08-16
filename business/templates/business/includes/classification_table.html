@@ -23,7 +23,7 @@
                 {% if not simple %}                
                 <td>{{ forloop.counter }}</td>
                 {% endif %}
-                <td>{% if team.image %}{% image team.image fill-50x50 class="img-circle" %}{% else %}<img class="img-circle" src="{% static 'images/placeholder.png' %}" width="50" height="50"> {% endif %}</td>
+                <td>{% if team.image %}{% image team.image fill-50x50 class="img-circle" %}{% else %}<img class="img-circle" src="{% static 'images/placeholder.png' %}" width="50" height="50">{% endif %}</td>
                 <td class="hidden-xs">{{ team.name }}</td>
                 {% if not simple %}                
                 <td>{{ team.wins }}</td>

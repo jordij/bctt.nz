@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags static %}
 {% block body_class %}template-{{ self.get_verbose_name|slugify }}{% endblock %}
 
 {% block content %}
@@ -27,10 +27,10 @@
                                 </thead>
                                 {% for team in current_comp.get_next_results_by_date %}
                                     <tr>
-                                        <td>{% image team.team_one.image fill-50x50 class="img-circle" %}</td>
+                                        <td>{% if team.team_one.image %}{% image team.team_one.image fill-50x50 class="img-circle" %}{% else %}<img class="img-circle" src="{% static 'images/placeholder.png' %}" width="50" height="50"> {% endif %}</td>
                                         <td class="hidden-xs">{{ team.team_one.name }}</td>
                                         <td>vs</td>
-                                        <td>{% image team.team_two.image fill-50x50 class="img-circle" %}</td>
+                                        <td>{% if team.team_two.image %}{% image team.team_two.image fill-50x50 class="img-circle" %}{% else %}<img class="img-circle" src="{% static 'images/placeholder.png' %}" width="50" height="50"> {% endif %}</td>
                                         <td class="hidden-xs">{{ team.team_two.name }}</td>
                                     </tr>
                                 {% endfor %}
@@ -59,6 +59,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h4>What's new</h4>
+                <hr/>
             </div>
         </div>
     </div>
