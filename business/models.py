@@ -2,7 +2,8 @@ from datetime import date
 
 from django.db import models
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
+
 import django.db.models.options as options
 
 from wagtail.wagtailcore.fields import RichTextField
@@ -15,6 +16,7 @@ from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailembeds.blocks import EmbedBlock
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
+from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 
 
 from wagtail.wagtailsearch import index
@@ -185,7 +187,11 @@ class BlogPage(Page):
         ('image', ImageChooserBlock()),
         ('embed', EmbedBlock()),
     ])
-    intro = models.TextField(blank=True)
+    excerpt = models.TextField(
+        blank=True,
+        help_text='The excerpt is used on the homepage miniatures only.'
+    )
+    intro = RichTextField(blank=True)
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
     feed_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -214,7 +220,8 @@ class BlogPage(Page):
 BlogPage.content_panels = [
     FieldPanel('title', classname="full title"),
     FieldPanel('date'),
-    FieldPanel('intro'),
+    FieldPanel('excerpt'),
+    FieldPanel('intro', classname="full"),
     SnippetChooserPanel('author', Author),
     StreamFieldPanel('body'),
     InlinePanel(BlogPage, 'related_links', label="Related links"),
@@ -280,7 +287,7 @@ BlogIndexPage.content_panels = [
 
 # Comp page
 
-class CompPage(Page):
+class CompPage(RoutablePageMixin, Page):
     current = models.BooleanField(default=False, help_text="Is this the current competition?")
     year = models.IntegerField("Year")
     winner = models.ForeignKey(
@@ -302,6 +309,22 @@ class CompPage(Page):
     search_fields = Page.search_fields + (
         index.SearchField('body'),
     )
+
+    @route(r'^$')
+    def current_page(self, request):
+
+        context = {}
+        context['self'] = self
+
+        return render(request, self.template, context)
+
+    @route(r'^teams/$')
+    def teams(self, request):
+
+        context = {}
+        context['self'] = self
+
+        return render(request, 'business/comp_page_teams.html', context)
 
     @property
     def get_next_results_by_date(self):

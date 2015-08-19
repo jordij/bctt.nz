@@ -2,17 +2,23 @@
 {% load wagtailcore_tags i18n widget_tweaks %}
 {% block body_class %}template-{{ self.get_verbose_name|slugify }}{% endblock %}
 
+
+{% block heading %}
+    <div class="jumbotron">
+        <div class="container  page-container">
+
+        <h1>{{ self.title }}</h1>
+
+        {{ self.body|richtext }}
+
+        </div>
+    </div>
+{% endblock %}
+
+
 {% block content %}
 
-    <div class="container page-container">
-        
-        <div class="jumbotron">
-            <h1>{{ self.title }}</h1>
-
-            <div class="intro">
-                {{ self.body|richtext }}
-            </div>
-        </div>
+    <div class="container">
         
         <form class="form-horizontal" role="form" action="." method="post">
             {% csrf_token %}

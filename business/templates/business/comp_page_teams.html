@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags %}
+
+{% block heading %}
+    <div class="jumbotron">
+        <div class="container page-container">
+
+        <h1>Teams {{ self.title }}</h1>
+
+        {{ self.body|richtext }}
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+
+        {% if self.related_teams.all %}
+
+            <div class="row">
+
+                {% for team in self.related_teams.all %}
+                  
+                    <div class="col-sm-6" id="{{ team.team.name|slugify }}">      
+
+                        <div class="media">
+                            <div class="media-left">
+                                {% spaceless %}
+                                    {% if team.team.image%}
+                                        {% image team.team.image fill-75x75 class="img-circle media-object" %}
+                                    {% else %}
+                                        <img width="75" height="75" src="{% static 'images/placeholder.png' %}" class="img-circle media-object" >
+                                    {% endif %}
+                                {% endspaceless %}
+                            </div>
+                            <div class="media-body">
+                                <h6 class="media-heading"><a href="{{ team.team.url }}" title="{{ team.team.name }}">{{ team.team.name }}</a></h6>
+                                <p class="text-justify">{{ team.team.bio }}</p>
+                                <p><strong>Players</strong></p>
+                                {% for player in team.team.players.all %}
+                                    
+                                    <div class="media">
+                                        <div class="media-left">
+                                            {% if player.image %}
+                                                {% image player.image fill-64x64 class="media-object img-circle" %}
+                                            {% else %}
+                                                <img width="75" height="75" src="{% static 'images/placeholder.png' %}" class="img-circle media-object"> 
+                                            {% endif %}
+                                        </div>
+                                        <div class="media-body">
+                                            <h6 class="media-heading">{{ player.name }}</h6>
+                                            <p>{{ player.bio }}</p>
+                                        </div>
+                                    </div>
+
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                         
+                    {% if forloop.counter|divisibleby:2 %}
+                    
+                        </div>
+                        
+                        <div class="row  spacer-top">
+                    
+                    {% endif %}           
+                
+                {% endfor %}
+                        
+            </div>
+            
+        {% endif %}
+
+    </div>
+{% endblock %}

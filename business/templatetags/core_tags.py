@@ -106,3 +106,15 @@ def set_var(parser, token):
     if len(parts) < 4:
         raise template.TemplateSyntaxError("'set' tag must be of the form:  {% set var_name  = var_value %}")
     return SetVarNode(parts[1], parts[3])
+
+
+@register.filter
+def slugify(value):
+    """
+    Normalizes string, converts to lowercase, removes non-alpha characters,
+    and converts spaces to hyphens.
+    """
+    import unicodedata
+    value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
+    value = unicode(re.sub('[^\w\s-]', '', value).strip().lower())
+    return mark_safe(re.sub('[-\s]+', '-', value))

@@ -54,8 +54,11 @@
             <!-- End Google Tag Manager -->
         {% endif %}
 
+        {% block menu %}
+            {% menu name='Top' current_page=self %}
+        {% endblock %}
 
-        {% menu name='Top' current_page=self %}
+        {% block heading %}{% endblock %}
 
         {% block content %}{% endblock %}
 

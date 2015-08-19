@@ -13,7 +13,7 @@
       <h4 class="media-heading">{{ blog.title }}</h4>
       <p><strong>{{ blog.date }}</strong></p>
       {% if blog.intro %}
-        <p>{{ blog.intro }}</p>
+        <p>{{ blog.intro|richtext }}</p>
       {% endif %}
     </div>
   </div>

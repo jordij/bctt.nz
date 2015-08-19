@@ -1,19 +1,26 @@
 {% extends "base.html" %}
-{% load wagtailcore_tags wagtailimages_tags static %}
+{% load wagtailcore_tags wagtailimages_tags static wagtailroutablepage_tags %}
 {% block body_class %}template-{{ self.get_verbose_name|slugify }}{% endblock %}
 
+{% block heading %}
+        {% include "business/includes/carousel.html" with carousel_items=self.carousel_items.all only %}
+{% endblock %}
+
+
 {% block content %}
-
-    {% include "business/includes/carousel.html" with carousel_items=self.carousel_items.all only %}
-
+    
+    <!-- Comp info headline -->
     {% if current_comp %}
-        <div class="inversed-container">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h4>Lastest in {{ current_comp.title }} comp</h4>
-                    </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>{{ current_comp.title }} updates</h4>
+                    <hr/>
                 </div>
+            </div>
+        </div>
+        <div class="">
+            <div class="container">
                 <div class="row">
                     <div class="col-md-6">
                         <h6>{{ current_comp.get_next_results_by_date.0.date|date:"j M Y" }}</h6>
@@ -39,15 +46,15 @@
                         {% endif %}
                     </div>
                     <div class="col-md-6">
-
-                    <div class="row">
-                        {% include "business/includes/classification_table.html" with items=current_comp.get_stats.items class="col-md-6" simple=True only %}
+                        <div class="row">
+                            {% include "business/includes/classification_table.html" with items=current_comp.get_stats.items class="col-md-6" simple=True only %}
+                        </div>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-12">
-                        <a href="/competition#results" class="pull-right btn btn-primary"><span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span> Full results</a>
+                        <a href="{% pageurl current_comp %}" class="pull-right btn btn-primary">Check competition details</a>
                     </div>
                 </div>
 
@@ -55,19 +62,25 @@
         </div>
     {% endif %}
 
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h4>What's new</h4>
-                <hr/>
+    <!-- Blog headline -->
+    <div class="inversed-container spacer-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4>What's new</h4>
+                    <hr/>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="container">
-	    <div class="row">
-	    	{% include "business/includes/blog_thumbnails.html" with request=request items=self.blogs class="col-lg-4" only %}
-	    </div>
-	</div>
+    
+    <!-- Blog thumbnails -->
+    <div class="inversed-container">
+        <div class="container spacer-bottom">
+    	    <div class="row">
+    	    	{% include "business/includes/blog_thumbnails.html" with request=request items=self.blogs class="col-lg-4" only %}
+    	    </div>
+	   </div>
+    </div>
 
 {% endblock %}

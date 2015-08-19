@@ -1,7 +1,7 @@
 {% load wagtailimages_tags wagtailembeds_tags core_tags%}
 <!-- Carousel
     ================================================== -->
-    <div id="carousel" class="carousel slide" data-ride="carousel">
+    <div id="carousel" class="carousel slide inversed-container" data-ride="carousel">
 
         {% if carousel_items|length > 1 %}
         <!-- Indicators -->
@@ -35,6 +35,8 @@
             {% endif %}
 
         {% endfor %}
+
+        </div>
 
     {% if carousel_items|length > 1 %}
         <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">

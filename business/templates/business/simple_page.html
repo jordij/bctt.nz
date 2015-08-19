@@ -2,15 +2,20 @@
 {% load wagtailcore_tags %}
 {% block body_class %}template-{{ self.get_verbose_name|slugify }}{% endblock %}
 
+
+{% block heading %}
+  <div class="jumbotron">
+    <div class="container  page-container">
+        <h1>{{ self.title }}</h1>
+      </div>
+  </div>
+{% endblock %}
+
+
 {% block content %}
 
-    <div class="container page-container">
-
-        <div class="jumbotron">
-
-            <h1>{{ self.title }}</h1>
-        </div>
+    <div class="container">
+       {{ self.body|richtext }}
     </div>
 
-    {{ self.body|richtext }}
 {% endblock %}

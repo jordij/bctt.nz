@@ -1,154 +1,79 @@
 {% extends "base.html" %}
-{% load static wagtailcore_tags wagtailimages_tags %}
+{% load static wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags %}
 
-{% block content %}
-    <div class="container page-container">
-
-        {% if self.related_teams.all %}
-
-        <div class="jumbotron">
+{% block heading %}
+    <div class="jumbotron">
+        <div class="container page-container">
 
         <h1>{{ self.title }}</h1>
 
+        {{ self.body|richtext }}
 
-            <!--<div class="row">
-                <div class="col-md-9">-->
-                    {{ self.body|richtext }}
-                <!--</div>
-                <div class="col-md-3">
-                    <ul class="list-group">
-                      <li class="list-group-item" role="presentation"><a href="#teams" id="teams">Teams</a></li>
-                      <li class="list-group-item" role="presentation"><a href="#results">Results</a></li>
-                      <li class="list-group-item" role="presentation"><a href="#stats">Classification and stats</a></li>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    
+    {% if self.related_teams.all %}
+
+        <div class="container">
+            <!-- Submenu -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul class="nav nav-pills">
+                        <li role="presentation"><a href="#teams">Teams</a></li>
+                        <li  role="presentation"><a href="#results">Results</a></li>
+                        <li role="presentation"><a href="#stats">Classification and stats</a></li>
                     </ul>
+                    <hr/>
                 </div>
-            </div>-->
-
-
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-            <ul class="nav nav-pills">
-              <li role="presentation"><a href="#teams" id="teams">Teams</a></li>
-              <li  role="presentation"><a href="#results">Results</a></li>
-              <li role="presentation"><a href="#stats">Classification and stats</a></li>
-            </ul>
-            <hr/>
             </div>
-        </div>
 
+            <!-- Teams -->
             <div class="row" id="teams">
 
-            {% for group, groups in self.get_grouped_teams.items %}
-              
-                <div class="col-md-6">      
+                {% for group, groups in self.get_grouped_teams.items %}
+                  
+                    <div class="col-md-12">      
 
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Group {{ group }}</div>
-                        
-                        <div class="panel-body">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Group {{ group }}</div>
+                            
+                            <div class="panel-body">
 
-                            {% for team in groups %}
+                            <div class="row">
 
-                                <div class="media">
-                                  <div class="media-left">
-                                    <a href="{{ team.team.url }}" title="{{ team.team.name }}">
-                                        {% if team.team.image%}
-                                        {% image team.team.image fill-75x75 class="media-object" %}
-                                        {% else %}
-                                            <img width="75" height="75" src="{% static 'images/placeholder.png' %}">
-                                        {% endif %}
-                                    </a>
-                                  </div>
-                                  <div class="media-body">
-                                    <h6 class="media-heading">{{ team.team.name }}</h6>
-                                    <p>{{ team.team.bio }}</p>
+                                {% for team in groups %}
 
-                                    <ul class="list-inline">
+                                    <div class="col-sm-2 text-center">
+                                        <a href="{% routablepageurl self 'teams' %}#{{ team.team.name|slugify }}" role="button">
 
-                                    {% for player in team.team.players.all %}
-                                              <li>{% image player.image fill-64x64 class="img-circle" %}</li>
+                                            {% if team.team.image%}
+                                                {% image team.team.image fill-75x75 class="img-circle" %}
+                                            {% else %}
+                                                <img width="75" height="75" src="{% static 'images/placeholder.png' %}" class="img-circle">
+                                            {% endif %}
+
+                                            <h6 class="">{{ team.team.name }}</h6>
+                                        </a>
+                                    </div>
+
+                                     {% if forloop.counter|divisibleby:6 %}
+                    
+                                        </div>
                                         
-                                        <!--<div class="media">
-                                          <div class="media-left">
-                                            {% image player.image fill-64x64 class="media-object img-circle" %}
-                                          </div>
-                                          <div class="media-body">
-                                            <h6 class="media-heading">{{ player.name }}</h6>
-                                            <p>{{ player.bio }}</p>
-                                          </div>
-                                        </div>-->
+                                        <div class="row">
+                                        
+                                        {% endif %}
 
-                                    {% endfor %}
-                                  </div>
-                                </div>
+                                {% endfor %}
 
-                                
-                            {% endfor %}
+                            </div>
+                            
+                            </div>
                         
                         </div>
-                    
-                    </div>
-
-                </div>
-
-                {% if forloop.counter|divisibleby:2 %}
-                
-                </div>
-                
-                <div class="row">
-                
-                {% endif %}
-
-            {% endfor %}
-
-            </div>
-            
-        {% endif %}
-
-
-       
-        {% if self.related_results.all %}
-
-            <div class="row">
-                <div class="col-xs-12">
-                    <a href="#teams" class="pull-right btn btn-primary"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Back to top</a>
-                </div>
-            </div>
-            
-
-            <div class="row">
-                <div class="col-xs-12">
-                    <h4>Calendar results</h4>
-                </div>
-            </div>
-
-            <div class="row" id="results">
-
-                {% for result, results in self.get_grouped_results.items %}
-                  
-                    <div class="col-md-6">      
-                        
-                        <h5>{{ results.0.date|date:"j M Y" }}</h5>
-
-                        <table class="table table-striped">
-                            <thead>
-                                <td></td>
-                                <td class="hidden-xs">Team A</td>
-                                <td></td>
-                                <td class="hidden-xs">Team B</td>
-                                <td>Total</td>
-                            </thead>
-                            {% for team in results %}
-                            <tr>
-                                <td>{% if team.team_one.image %}{% image team.team_one.image fill-50x50 class="img-circle" %}{% else %}<img class="img-circle" src="{% static 'images/placeholder.png' %}" width="50" height="50"> {% endif %}</td>
-                                <td class="hidden-xs">{{ team.team_one.name }}{% if team.team_one_games > team.team_two_games %}&nbsp;<span class="label label-success">Winner</span>{% endif %}</td>
-                                <td>{% if team.team_two.image %}{% image team.team_two.image fill-50x50 class="img-circle" %}{% else %}<img class="img-circle" src="{% static 'images/placeholder.png' %}" width="50" height="50"> {% endif %}</td>
-                                <td class="hidden-xs">{{ team.team_two.name }}{% if team.team_one_games < team.team_two_games %}&nbsp;<span class="label label-success">Winner</span>{% endif %}</td>
-                                <td><strong>{{ team.team_one_games }}-{{ team.team_two_games }}</strong></td>
-                            </tr>
-                            {% endfor %}
-                        </table>
 
                     </div>
 
@@ -164,17 +89,83 @@
 
             </div>
 
-
-        {% endif %}
-
-
-        {% if self.related_results.all %}
-
             <div class="row">
                 <div class="col-xs-12">
-                    <a href="#teams" class="pull-right btn btn-primary"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> Back to top</a>
+                    <a href="#teams" class="pull-right btn btn-primary">Back to top</a>
                 </div>
             </div>
+
+        </div>
+            
+    {% endif %}
+
+
+       
+    {% if self.related_results.all %}
+        
+        <div class="inversed-container spacer-top  spacer-bottom">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h5>Calendar</h5>
+                    </div>
+                </div>
+
+                <div class="row" id="results">
+
+                    {% for result, results in self.get_grouped_results.items %}
+                      
+                        <div class="col-md-6">      
+                            
+                            <h6>{{ results.0.date|date:"j M Y" }}</h6>
+
+                            <table class="table table-striped">
+                                <thead>
+                                    <td></td>
+                                    <td class="hidden-xs">Team A</td>
+                                    <td></td>
+                                    <td class="hidden-xs">Team B</td>
+                                    <td>Total</td>
+                                </thead>
+                                {% for team in results %}
+                                <tr>
+                                    <td>{% if team.team_one.image %}{% image team.team_one.image fill-50x50 class="img-circle" %}{% else %}<img class="img-circle" src="{% static 'images/placeholder.png' %}" width="50" height="50"> {% endif %}</td>
+                                    <td class="hidden-xs">{{ team.team_one.name }}{% if team.team_one_games > team.team_two_games %}&nbsp;<span class="label label-success">Winner</span>{% endif %}</td>
+                                    <td>{% if team.team_two.image %}{% image team.team_two.image fill-50x50 class="img-circle" %}{% else %}<img class="img-circle" src="{% static 'images/placeholder.png' %}" width="50" height="50"> {% endif %}</td>
+                                    <td class="hidden-xs">{{ team.team_two.name }}{% if team.team_one_games < team.team_two_games %}&nbsp;<span class="label label-success">Winner</span>{% endif %}</td>
+                                    <td><strong>{{ team.team_one_games }}-{{ team.team_two_games }}</strong></td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+
+                        </div>
+
+                        {% if forloop.counter|divisibleby:2 %}
+                        
+                        </div>
+                        
+                        <div class="row">
+                        
+                        {% endif %}
+
+                    {% endfor %}
+
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a href="#teams" class="pull-right btn btn-primary">Back to top</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    {% endif %}
+
+
+    {% if self.related_results.all %}
+        <div class="container spacer-top  spacer-bottom">
 
             <div class="row">
                 <div class="col-xs-12">
@@ -188,7 +179,15 @@
 
             </div>
 
-        {% endif %}
+             <div class="row">
+                <div class="col-xs-12">
+                    <a href="#teams" class="pull-right btn btn-primary">Back to top</a>
+                </div>
+            </div>
 
-    </div>
+
+        </div>
+
+    {% endif %}
+
 {% endblock %}
