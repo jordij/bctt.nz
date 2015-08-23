@@ -35,7 +35,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         {% compress css %}
-        <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-3.3.5/dist/css/bootstrap.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/dist/css/bootstrap.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'css/carousel.css' %}">
         <link href="{% static 'flat-ui/dist/css/flat-ui.css' %}" rel="stylesheet">
         {% endcompress %}
@@ -68,7 +68,7 @@
 
         {% compress js %}
         <script src="{% static 'js/jquery-2.1.4.min.js' %}"/>
-        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"/>
+        <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"/>
         {% endcompress %}
 
         {% block extra_js %}

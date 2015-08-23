@@ -113,9 +113,11 @@ class PageCarouselItem(Orderable, CarouselItem):
 
 class BlogIndexPage(Page):
     intro = RichTextField(blank=True)
+    subtitle = models.CharField(max_length=255)
 
     search_fields = Page.search_fields + (
         index.SearchField('intro'),
+        index.SearchField('subtitle'),
     )
 
     @property
@@ -389,7 +391,7 @@ class CompPage(RoutablePageMixin, Page):
 
             for result_b in team_results_b:
                 team_group.team.wins += result_b.team_two_games
-                team_group.team.losts += result_a.team_one_games
+                team_group.team.losts += result_b.team_one_games
                 team_group.team.points += result_b.team_two_games
 
                 if result_b.team_two_games > result_b.team_one_games:

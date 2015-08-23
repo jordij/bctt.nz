@@ -2,7 +2,6 @@
 
 {% for item in items %}
 	<div class="{{ class }} card__blog">
-        <a href="{% pageurl item %}">
           <div class="caption">
             {% if item.feed_image %}
                 {% image item.feed_image fill-360x200 class="img-responsive" %}
@@ -12,7 +11,7 @@
             <h5>{{ item.title }}</h5>
             <p class="text-left text-muted">{{ item.date|date:"j M Y" }}</p>
             <p class="text-justify">{{ item.excerpt }}</p>
+            <a href="{% pageurl item %}" class="btn btn-primary">Read more</a>
           </div>
-        </a>
     </div>
 {% endfor %}

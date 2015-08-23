@@ -54,9 +54,8 @@
                                             {% else %}
                                                 <img width="75" height="75" src="{% static 'images/placeholder.png' %}" class="img-circle">
                                             {% endif %}
-
-                                            <h6 class="">{{ team.team.name }}</h6>
                                         </a>
+                                        <h6 class="">{{ team.team.name }}</h6>
                                     </div>
 
                                      {% if forloop.counter|divisibleby:6 %}
@@ -165,7 +164,7 @@
 
 
     {% if self.related_results.all %}
-        <div class="container spacer-top  spacer-bottom">
+        <div class="container spacer-top spacer-bottom">
 
             <div class="row">
                 <div class="col-xs-12">

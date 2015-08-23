@@ -11,11 +11,10 @@
     
     <!-- Comp info headline -->
     {% if current_comp %}
-        <div class="container">
+        <div class="container spacer-top">
             <div class="row">
                 <div class="col-md-12">
-                    <h4>{{ current_comp.title }} updates</h4>
-                    <hr/>
+                    <h4>{{ current_comp.title|upper }} UPDATES</h4>
                 </div>
             </div>
         </div>
@@ -54,7 +53,7 @@
 
                 <div class="row">
                     <div class="col-xs-12">
-                        <a href="{% pageurl current_comp %}" class="pull-right btn btn-primary">Check competition details</a>
+                        <a href="{% pageurl current_comp %}" class="pull-right btn btn-primary">See competition details</a>
                     </div>
                 </div>
 
@@ -67,7 +66,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4>What's new</h4>
+                    <h4>NEWS</h4>
                     <hr/>
                 </div>
             </div>
@@ -75,7 +74,7 @@
     </div>
     
     <!-- Blog thumbnails -->
-    <div class="inversed-container">
+    <div class="inversed-container ">
         <div class="container spacer-bottom">
     	    <div class="row">
     	    	{% include "business/includes/blog_thumbnails.html" with request=request items=self.blogs class="col-lg-4" only %}

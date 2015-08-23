@@ -1,5 +1,6 @@
 from django.db import models
 import django.db.models.options as options
+from django.db.models import F, Sum
 
 from wagtail.wagtailadmin.edit_handlers import InlinePanel, FieldPanel, MultiFieldPanel, PageChooserPanel
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
@@ -273,6 +274,26 @@ class Team(models.Model):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+
+    @property
+    def get_wins(self):
+        wins_one = self.competitions_as_one.filter(team_one_games__gt=F('team_two_games')).aggregate(Sum('team_one_games'))
+        if wins_one['team_one_games__sum'] is None:
+            wins_one['team_one_games__sum'] = 0
+        wins_two = self.competitions_as_two.filter(team_two_games__gt=F('team_one_games')).aggregate(Sum('team_two_games'))
+        if wins_two['team_two_games__sum'] is None:
+            wins_two['team_two_games__sum'] = 0
+        return wins_one['team_one_games__sum'] + wins_two['team_two_games__sum']
+
+    @property
+    def get_losts(self):
+        wins_one = self.competitions_as_one.filter(team_two_games__gt=F('team_two_games')).aggregate(Sum('team_one_games'))
+        if wins_one['team_one_games__sum'] is None:
+            wins_one['team_one_games__sum'] = 0
+        wins_two = self.competitions_as_two.filter(team_one_games__gt=F('team_one_games')).aggregate(Sum('team_two_games'))
+        if wins_two['team_two_games__sum'] is None:
+            wins_two['team_two_games__sum'] = 0
+        return wins_one['team_one_games__sum'] + wins_two['team_two_games__sum']
 
     class Meta:
         verbose_name = "Team profile"

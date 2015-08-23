@@ -15,64 +15,74 @@
 
 {% block content %}
 
-    <div class="container">
+    {% if self.related_teams.all %}
 
-        {% if self.related_teams.all %}
+        <div class="margin-top spacer-bottom">
+            <div class="container">
 
-            <div class="row">
+                <div class="row">
 
-                {% for team in self.related_teams.all %}
-                  
-                    <div class="col-sm-6" id="{{ team.team.name|slugify }}">      
+                    {% for team in self.related_teams.all %}
+                      
+                        <div class="col-sm-6" id="{{ team.team.name|slugify }}">      
 
-                        <div class="media">
-                            <div class="media-left">
-                                {% spaceless %}
-                                    {% if team.team.image%}
-                                        {% image team.team.image fill-75x75 class="img-circle media-object" %}
-                                    {% else %}
-                                        <img width="75" height="75" src="{% static 'images/placeholder.png' %}" class="img-circle media-object" >
-                                    {% endif %}
-                                {% endspaceless %}
-                            </div>
-                            <div class="media-body">
-                                <h6 class="media-heading"><a href="{{ team.team.url }}" title="{{ team.team.name }}">{{ team.team.name }}</a></h6>
-                                <p class="text-justify">{{ team.team.bio }}</p>
-                                <p><strong>Players</strong></p>
-                                {% for player in team.team.players.all %}
-                                    
-                                    <div class="media">
-                                        <div class="media-left">
-                                            {% if player.image %}
-                                                {% image player.image fill-64x64 class="media-object img-circle" %}
-                                            {% else %}
-                                                <img width="75" height="75" src="{% static 'images/placeholder.png' %}" class="img-circle media-object"> 
-                                            {% endif %}
-                                        </div>
-                                        <div class="media-body">
-                                            <h6 class="media-heading">{{ player.name }}</h6>
-                                            <p>{{ player.bio }}</p>
-                                        </div>
+                            <div class="media">
+                                <div class="media-left">
+                                    {% spaceless %}
+                                        {% if team.team.image%}
+                                            {% image team.team.image fill-100x100 class="img-circle media-object" %}
+                                        {% else %}
+                                            <img width="100" height="100" src="{% static 'images/placeholder.png' %}" class="img-circle media-object" >
+                                        {% endif %}
+                                    {% endspaceless %}
+                                </div>
+                                <div class="media-body">
+                                    <h6 class="media-heading">{{ team.team.name }}</h6>
+                                    <small><a href="{{ team.team.url }}" title="{{ team.team.name }}">&nbsp;<i class="glyphicon glyphicon-share"></i>&nbsp;Visit site</a></small>
+                                    <p>
+                                    <span class="label label-success">{{ team.team.get_wins }} wins</span>
+                                    <span class="label label-danger">{{ team.team.get_losts }} lost</span>
+                                    </p>
+                                    <div class=" margin-top">
+                                    <p class="text-justify">{{ team.team.bio }}</p>
                                     </div>
+                                    <p><strong>PLAYERS</strong></p>
+                                    {% for player in team.team.players.all %}
+                                        
+                                        <div class="media">
+                                            <div class="media-left">
+                                                {% if player.image %}
+                                                    {% image player.image fill-64x64 class="media-object img-circle" %}
+                                                {% else %}
+                                                    <img width="75" height="75" src="{% static 'images/placeholder.png' %}" class="img-circle media-object"> 
+                                                {% endif %}
+                                            </div>
+                                            <div class="media-body">
+                                                <h6 class="media-heading">{{ player.name }}</h6>
+                                                <p>{{ player.bio }}</p>
+                                            </div>
+                                        </div>
 
-                                {% endfor %}
+                                    {% endfor %}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                         
-                    {% if forloop.counter|divisibleby:2 %}
+                             
+                        {% if forloop.counter|divisibleby:2 and not forloop.last %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="padding-top padding-bottom {% cycle 'inversed-container' 'none' %}">
+                                <div class="container">
+                                    <div class="row">
+                        {% endif %}           
                     
-                        </div>
-                        
-                        <div class="row  spacer-top">
-                    
-                    {% endif %}           
-                
-                {% endfor %}
-                        
+                    {% endfor %}
+                </div>    
             </div>
             
-        {% endif %}
+        </div>
+    {% endif %}
 
-    </div>
+    
 {% endblock %}

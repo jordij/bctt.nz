@@ -41,7 +41,7 @@ def menu(context, name=None, current_page=None):
 
         if current_page:
             for item in menu_items:
-                if item.link_page and item.link_page.id == current_page.id:
+                if item.link_page and item.link_page.id == current_page.id or current_page.is_descendant_of(item.link_page):
                     item.is_active = True
     except ObjectDoesNotExist:
         return None
@@ -104,17 +104,5 @@ def set_var(parser, token):
     """
     parts = token.split_contents()
     if len(parts) < 4:
-        raise template.TemplateSyntaxError("'set' tag must be of the form:  {% set var_name  = var_value %}")
+        raise template.TemplateSyntaxError("'set' tag must be of the form:  {% set var_name = var_value %}")
     return SetVarNode(parts[1], parts[3])
-
-
-@register.filter
-def slugify(value):
-    """
-    Normalizes string, converts to lowercase, removes non-alpha characters,
-    and converts spaces to hyphens.
-    """
-    import unicodedata
-    value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
-    value = unicode(re.sub('[^\w\s-]', '', value).strip().lower())
-    return mark_safe(re.sub('[-\s]+', '-', value))
