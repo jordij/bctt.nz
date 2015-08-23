@@ -20,15 +20,10 @@ PROJECT_ROOT = dirname(DJANGO_ROOT)
 
 # Site name:
 SITE_NAME = basename(DJANGO_ROOT)
-
-WAGTAIL_SITE_NAME = "ttwellington"
-
+WAGTAIL_SITE_NAME = SITE_NAME
 # Add our project to our pythonpath, this way we don't need to type our project
 # name in our dotted import paths:
 path.append(DJANGO_ROOT)
-
-# Server environment
-SERVER_ENV = "Development"
 
 """
 Two things are wrong with Django's default `SECRET_KEY` system:
@@ -78,7 +73,6 @@ INSTALLED_APPS = (
     'taggit',
     'modelcluster',
     'business',
-    'sweetcaptcha',
     'widget_tweaks',
     'wagtail.contrib.wagtailsitemaps',
     'wagtail.contrib.wagtailroutablepage',
@@ -94,8 +88,6 @@ INSTALLED_APPS = (
     'wagtail.wagtailredirects',
     'wagtail.wagtailforms',
     'wagtail.contrib.wagtailstyleguide',
-    'wagtailsweetcaptcha',
-
 )
 
 MIDDLEWARE_CLASSES = (
@@ -112,14 +104,14 @@ MIDDLEWARE_CLASSES = (
 
 # Name and email addresses of recipients
 ADMINS = (
-    ('Tech-urgent', 'tech-urgent@springload.co.nz'),
+    ('Jordi', 'jordi@springload.co.nz'),
 )
 
 # Default from address for CMS auto email messages (logs, errors..)
-SERVER_EMAIL = 'errors@springload.co.nz'
+SERVER_EMAIL = 'errors@ttwellington.co.nz'
 
 # Default from address for CMS email messages to users (forgot password etc..)
-DEFAULT_FROM_EMAIL = '%s@springload.co.nz' % SITE_NAME
+DEFAULT_FROM_EMAIL = '%s@ttwellington.co.nz' % SITE_NAME
 
 ROOT_URLCONF = SITE_NAME + '.urls'
 WSGI_APPLICATION = SITE_NAME + '.wsgi.application'
@@ -196,3 +188,7 @@ TEMPLATE_DIRS = (
 
 LOGIN_URL = 'wagtailadmin_login'
 LOGIN_REDIRECT_URL = 'wagtailadmin_home'
+
+# Pagination
+
+PAGINATION_PER_PAGE = 1

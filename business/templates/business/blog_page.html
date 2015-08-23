@@ -2,51 +2,27 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
 {% block heading %}
-  <div class="jumbotron">
-    <div class="container  page-container">
-        <h1>{{ self.title }}</h1>
-        <p>by {{self.author}}</p>
-      </div>
-  </div>
+  {% include "business/includes/jumbotron.html" with title=self.title subtitle=self.subtitle only %}
 {% endblock %}
 
 {% block content %}
-  <div class="container">
+    <div class="container">
 
-    <div class="pull-right">
-      {% for tag in self.tags.all %}
-        <a href="{% pageurl self.blog_index %}?tag={{ tag }}"
-           class="btn btn-primary btn-xs">
-          <i class="glyphicon glyphicon-tag"></i> {{ tag }}
-        </a>
-      {% endfor %}
+        <div class="pull-right">
+          {% for tag in self.tags.all %}
+            <a href="{% pageurl self.blog_index %}?tag={{ tag }}"
+               class="btn btn-primary btn-xs">
+              <i class="glyphicon glyphicon-tag"></i> {{ tag }}
+            </a>
+          {% endfor %}
+        </div>
+
+    
+        <article>
+            {% include "business/includes/body.html" with body=self.body only %}
+        </article>
+
+        {% include "business/includes/related_links.html" with related_links=self.related_links.all only %}
     </div>
-
-    
-    <article>
-    
-    <blockquote>
-              <p>There are 12 teams and it's gonna be awesome.</p>
-              <small>Steve Montgomery, CEO TTW</small>
-            </blockquote>
-
-    {% for block in self.body %}
-      {% if block.block_type == 'image' %}
-          <figure>
-            {% image block.value width-1170 class="img-responsive" %}
-          </figure>
-          <caption>{{ block.value.title }}</caption>
-        {% else %}
-            <section class="block-{{ block.block_type }}">
-                {{ block }}
-            </section>
-        {% endif %}
-    {% endfor %}
-
-    
-
-  </article>
-    {% include "business/includes/related_links.html" with related_links=self.related_links.all only %}
-</div>
 {% endblock %}
 

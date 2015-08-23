@@ -45,7 +45,7 @@
 
 // Brand colors
 @brand-primary:             @pantone;
-//@brand-secondary:           mix(@brand-primary, white, 10%);
+@brand-secondary:           mix(@brand-primary, white, 10%);
 @brand-secondary:           @emerald;
 @brand-success:             @green-sea;
 @brand-warning:             @sun-flower;
@@ -69,10 +69,10 @@
 @text-color:                #2E2F41;
 
 //** Global textual link color.
-@link-color:                @brand-primary;
-@link-hover-color:          @green-sea;
+@link-color:                @green-sea;
+@link-hover-color:          @brand-primary;
 //** Link hover decoration.
-@link-hover-decoration:     none;
+@link-hover-decoration:     underline;
 
 
 //== Typography
@@ -84,7 +84,7 @@
 //@font-family-base:              "Lato", Helvetica, Arial, sans-serif;
 @font-family-demo:              "Helvetica Neue", Helvetica, Arial, sans-serif;
 @font-family-monospace:          Monaco, Menlo, Consolas, "Courier New", monospace;
-@font-size-base:                 14px;
+@font-size-base:                 15px;
 
 //@local-font-path:               "../fonts/lato/";
 //@local-font-name:               "lato-regular";
@@ -107,7 +107,7 @@
 @font-size-h5:              floor((@font-size-base * 1.556)); // ~28px
 @font-size-h6:              ceil((@font-size-base * 1.333)); // ~24px
 
-@line-height-base:          1.32222; // 31/18
+@line-height-base:          1.5; // 31/18
 @line-height-computed:      floor((@font-size-base * @line-height-base)); // ~31px
 
 @headings-font-family:      @font-family-headings;

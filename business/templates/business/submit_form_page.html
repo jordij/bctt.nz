@@ -4,15 +4,7 @@
 
 
 {% block heading %}
-    <div class="jumbotron">
-        <div class="container  page-container">
-
-        <h1>{{ self.title }}</h1>
-
-        {{ self.body|richtext }}
-
-        </div>
-    </div>
+    {% include "business/includes/jumbotron.html" with title=self.title subtitle=self.subtitle only %}
 {% endblock %}
 
 

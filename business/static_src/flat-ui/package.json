@@ -10,8 +10,8 @@
     "flat",
     "bootstrap"
   ],
-  "style": "dist/css/flat-ui.css",
-  "less": "less/flat-ui.less",
+  "style": "../../static/flat-ui/dist/css/flat-ui.css",
+  "less": "../../static/flat-ui/less/flat-ui.less",
   "repository": {
     "type": "git",
     "url": "https://github.com/designmodo/Flat-UI.git"

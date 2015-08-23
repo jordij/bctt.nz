@@ -1,0 +1,27 @@
+{% load wagtailimages_tags %}
+
+<div class="block-blockquote">
+    <blockquote>
+        <p>{{ self.quote }}</p>
+    </blockquote>
+    {% if self.image or self.author %}
+    <cite class="media">
+        {% if self.image %}
+            <div class="media__image align--middle">
+                <span class="i circle">
+                    {% image self.image original as tmp_photo %}
+                    <img src="{{ tmp_photo.url }}" alt="{{ tmp_photo.title }}" />
+                </span>
+            </div>
+        {% endif %}
+        <div class="media__body align--middle cite__info mt-xs">
+            {% if self.author %}
+                <h4>{{ self.author }}</h4>
+            {% endif %}
+            {% if self.author_title %}
+                <span class="cite__job-title">{{ self.author_title }}</span>
+            {% endif %}
+        </div>
+    </cite>
+    {% endif %}
+</div>

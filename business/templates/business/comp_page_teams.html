@@ -2,15 +2,7 @@
 {% load static wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags %}
 
 {% block heading %}
-    <div class="jumbotron">
-        <div class="container page-container">
-
-        <h1>Teams {{ self.title }}</h1>
-
-        {{ self.body|richtext }}
-
-        </div>
-    </div>
+    {% include "business/includes/jumbotron.html" with title="Winter  "+self.title subtitle=self.subtitle only %}
 {% endblock %}
 
 {% block content %}

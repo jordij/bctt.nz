@@ -1,23 +1,42 @@
-from wagtail.wagtailcore.blocks import StructBlock, RichTextBlock
-from wagtail.wagtailsnippets.blocks import SnippetChooserBlock
-from wagtail.wagtailcore.blocks import DateBlock, StreamBlock, ListBlock
+from django import forms
+from django.utils.functional import cached_property
 
-from .snippets import Team
-
-
-class GameBlock(StructBlock):
-    first_team = SnippetChooserBlock(Team, required=True)
-    second_team = SnippetChooserBlock(Team, required=True)
-    results = RichTextBlock(required=False)
-
-    class Meta:
-        icon = 'spinner'
-        form_classname = 'game-block struct-block'
+from wagtail.wagtailcore import blocks
+from wagtail.wagtailcore.blocks import RichTextBlock
+from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 
-class CompDayBlock(StreamBlock):
-    date = DateBlock(required=True)
-    games = ListBlock(GameBlock())
+class SimpleRichTextBlock(RichTextBlock):
+    @cached_property
+    def field(self):
+        from .fields import SimpleRichTextArea
+        return forms.CharField(widget=SimpleRichTextArea, **self.field_options)
 
     class Meta:
-        icon = 'group'
+        icon = 'bold'
+
+
+class QuoteBlock(blocks.StructBlock):
+    """
+    Block for rich text quotes
+    """
+    quote = blocks.CharBlock(required=True)
+    author = blocks.CharBlock(required=False)
+    author_title = blocks.CharBlock(required=False)
+    image = ImageChooserBlock(required=False)
+
+    class Meta:
+        icon = 'openquote'
+        template = 'business/blocks/quote_block.html'
+
+
+class CaptionImageBlock(blocks.StructBlock):
+    """
+    Block for images
+    """
+    image = ImageChooserBlock()
+    caption = blocks.CharBlock(required=False)
+
+    class Meta:
+        icon = 'image'
+        template = 'business/blocks/caption_image_block.html'

@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.core.exceptions import ValidationError
 #  A place to define methods used in different parts of the app
 
@@ -20,13 +19,3 @@ def replace_tags(string=None, tags=dict()):
         for key, value in tags.items():
             string = string.replace(key, value)
     return string
-
-
-def has_sweetcaptcha():
-    """
-    Check if the SweetCaptcha settings are properly set
-    """
-    sweetcaptcha_id = getattr(settings, 'SWEETCAPTCHA_APP_ID', None)
-    sweetcaptcha_key = getattr(settings, 'SWEETCAPTCHA_APP_KEY', None)
-
-    return sweetcaptcha_id and sweetcaptcha_key

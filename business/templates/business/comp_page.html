@@ -2,18 +2,18 @@
 {% load static wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags %}
 
 {% block heading %}
-    <div class="jumbotron">
-        <div class="container page-container">
-
-        <h1>{{ self.title }}</h1>
-
-        {{ self.body|richtext }}
-
-        </div>
-    </div>
+    {% include "business/includes/jumbotron.html" with title=self.title subtitle=self.subtitle only %}
 {% endblock %}
 
 {% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-4">
+                {% include "business/includes/body.html" with body=self.body only %}
+            </div>
+        </div>
+    </div>
     
     {% if self.related_teams.all %}
 

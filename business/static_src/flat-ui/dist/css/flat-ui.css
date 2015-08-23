@@ -308,21 +308,21 @@
 }
 body {
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.32222;
+  font-size: 15px;
+  line-height: 1.5;
   color: #2e2f41;
   background-color: #ffffff;
 }
 a {
-  color: #216775;
+  color: #16a085;
   text-decoration: none;
   -webkit-transition: .25s;
           transition: .25s;
 }
 a:hover,
 a:focus {
-  color: #16a085;
-  text-decoration: none;
+  color: #216775;
+  text-decoration: underline;
 }
 a:focus {
   outline: none;
@@ -332,7 +332,7 @@ a:focus {
 }
 .img-thumbnail {
   padding: 4px;
-  line-height: 1.32222;
+  line-height: 1.5;
   background-color: #ffffff;
   border: 2px solid #bdc3c7;
   border-radius: 6px;
@@ -343,7 +343,7 @@ a:focus {
   height: auto;
 }
 .img-comment {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.2;
   font-style: italic;
   margin: 24px 0;
@@ -382,56 +382,56 @@ h6 small,
 h1,
 h2,
 h3 {
-  margin-top: 18px;
-  margin-bottom: 9px;
+  margin-top: 22px;
+  margin-bottom: 11px;
 }
 h4,
 h5,
 h6 {
-  margin-top: 9px;
-  margin-bottom: 9px;
+  margin-top: 11px;
+  margin-bottom: 11px;
 }
 h6 {
   font-weight: normal;
 }
 h1,
 .h1 {
-  font-size: 48px;
+  font-size: 51px;
 }
 h2,
 .h2 {
-  font-size: 41px;
+  font-size: 44px;
 }
 h3,
 .h3 {
-  font-size: 32px;
+  font-size: 34px;
 }
 h4,
 .h4 {
-  font-size: 23px;
+  font-size: 25px;
 }
 h5,
 .h5 {
-  font-size: 21px;
+  font-size: 23px;
 }
 h6,
 .h6 {
-  font-size: 19px;
+  font-size: 20px;
 }
 p {
-  font-size: 14px;
-  line-height: 1.32222;
-  margin: 0 0 9px;
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 0 0 11px;
 }
 .lead {
-  margin-bottom: 18px;
-  font-size: 21px;
+  margin-bottom: 22px;
+  font-size: 23px;
   line-height: 1.46428571;
   font-weight: 300;
 }
 @media (min-width: 768px) {
   .lead {
-    font-size: 23.338px;
+    font-size: 25.005px;
   }
 }
 small,
@@ -507,20 +507,20 @@ a.bg-danger:hover {
   background-color: #e4b9b9;
 }
 .page-header {
-  padding-bottom: 8px;
-  margin: 36px 0 18px;
+  padding-bottom: 10px;
+  margin: 44px 0 22px;
   border-bottom: 2px solid #e4edee;
 }
 ul,
 ol {
-  margin-bottom: 9px;
+  margin-bottom: 11px;
 }
 dl {
-  margin-bottom: 18px;
+  margin-bottom: 22px;
 }
 dt,
 dd {
-  line-height: 1.32222;
+  line-height: 1.5;
 }
 @media (min-width: 768px) {
   .dl-horizontal dt {
@@ -537,18 +537,18 @@ abbr[data-original-title] {
 blockquote {
   border-left: 3px solid #e4edee;
   padding: 0 0 0 16px;
-  margin: 0 0 18px;
+  margin: 0 0 22px;
 }
 blockquote p {
-  font-size: 16px;
+  font-size: 17px;
   line-height: 1.55;
   font-weight: normal;
   margin-bottom: .4em;
 }
 blockquote small,
 blockquote .small {
-  font-size: 14px;
-  line-height: 1.32222;
+  font-size: 15px;
+  line-height: 1.5;
   font-style: italic;
   color: inherit;
 }
@@ -566,8 +566,8 @@ blockquote.pull-right small:after {
   content: "";
 }
 address {
-  margin-bottom: 18px;
-  line-height: 1.32222;
+  margin-bottom: 22px;
+  line-height: 1.5;
 }
 sub,
 sup {
@@ -595,10 +595,10 @@ kbd {
   box-shadow: none;
 }
 pre {
-  padding: 4px;
-  margin: 0 0 9px;
-  font-size: 9px;
-  line-height: 1.32222;
+  padding: 5.33333333px;
+  margin: 0 0 11px;
+  font-size: 10px;
+  line-height: 1.5;
   color: inherit;
   background-color: #ffffff;
   border: 2px solid #e4edee;
@@ -612,7 +612,7 @@ pre {
   display: block;
   padding: 4px;
   margin-bottom: 5px;
-  line-height: 1.32222;
+  line-height: 1.5;
   background-color: #ffffff;
   border: 2px solid #bdc3c7;
   border-radius: 6px;
@@ -630,7 +630,7 @@ pre {
 a.thumbnail:hover,
 a.thumbnail:focus,
 a.thumbnail.active {
-  border-color: #216775;
+  border-color: #16a085;
 }
 .thumbnail .caption {
   padding: 9px;
@@ -638,7 +638,7 @@ a.thumbnail.active {
 }
 .btn {
   border: none;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: normal;
   line-height: 1.4;
   border-radius: 4px;
@@ -1010,11 +1010,11 @@ fieldset[disabled] .btn-inverse.active {
   padding-right: 30px;
 }
 .btn-link {
-  color: #216775;
+  color: #16a085;
 }
 .btn-link:hover,
 .btn-link:focus {
-  color: #16a085;
+  color: #216775;
   text-decoration: underline;
   background-color: transparent;
 }
@@ -1028,28 +1028,28 @@ fieldset[disabled] .btn-link:focus {
 .btn-hg,
 .btn-group-hg > .btn {
   padding: 13px 20px;
-  font-size: 17px;
+  font-size: 19px;
   line-height: 1.227;
   border-radius: 6px;
 }
 .btn-lg,
 .btn-group-lg > .btn {
   padding: 10px 19px;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.471;
   border-radius: 6px;
 }
 .btn-sm,
 .btn-group-sm > .btn {
   padding: 9px 13px;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.385;
   border-radius: 4px;
 }
 .btn-xs,
 .btn-group-xs > .btn {
   padding: 6px 9px;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.083;
   border-radius: 3px;
 }
@@ -1063,7 +1063,7 @@ fieldset[disabled] .btn-link:focus {
 }
 [class*="btn-social-"] {
   padding: 10px 15px;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.077;
   border-radius: 4px;
 }
@@ -1212,14 +1212,14 @@ legend {
   display: block;
   width: 100%;
   padding: 0;
-  margin-bottom: 18px / 2;
-  font-size: 19.2px;
+  margin-bottom: 22px / 2;
+  font-size: 20.8px;
   line-height: inherit;
   color: inherit;
   border-bottom: none;
 }
 textarea {
-  font-size: 15px;
+  font-size: 17px;
   line-height: 24px;
   padding: 5px 11px;
 }
@@ -1228,7 +1228,7 @@ input[type="search"] {
 }
 label {
   font-weight: normal;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 2.3;
 }
 .form-control::-moz-placeholder,
@@ -1249,7 +1249,7 @@ label {
   border: 2px solid #bdc3c7;
   color: #216775;
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.467;
   padding: 8px 12px;
   height: 42px;
@@ -1297,7 +1297,7 @@ fieldset[disabled] .select2-search input[type="text"] {
 .select2-search input[type="text"] {
   height: 35px;
   padding: 6px 10px;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.462;
   border-radius: 6px;
 }
@@ -1323,7 +1323,7 @@ select[multiple].select2-search input[type="text"] {
 .form-group-lg .select2-search input[type="text"] {
   height: 45px;
   padding: 10px 15px;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.235;
   border-radius: 6px;
 }
@@ -1348,7 +1348,7 @@ select[multiple].form-group-lg .select2-search input[type="text"] {
 .form-horizontal .form-group-hg .select2-search input[type="text"] {
   height: 53px;
   padding: 10px 16px;
-  font-size: 17px;
+  font-size: 19px;
   line-height: 1.318;
   border-radius: 6px;
 }
@@ -1372,7 +1372,7 @@ select[multiple].form-group-hg .select2-search input[type="text"] {
   right: 2px;
   margin-top: 1px;
   line-height: 36px;
-  font-size: 13px;
+  font-size: 14px;
   color: #a3d0d9;
   background-color: transparent;
   padding: 0 12px 0 0;
@@ -1381,7 +1381,7 @@ select[multiple].form-group-hg .select2-search input[type="text"] {
 }
 .input-hg + .form-control-feedback,
 .control-feedback-hg {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 48px;
   padding-right: 16px;
   width: auto;
@@ -1389,7 +1389,7 @@ select[multiple].form-group-hg .select2-search input[type="text"] {
 }
 .input-lg + .form-control-feedback,
 .control-feedback-lg {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 40px;
   width: auto;
   height: 40px;
@@ -1538,7 +1538,7 @@ fieldset[disabled] .select2-search input[type="text"] + .form-control-feedback,
   filter: alpha(opacity=70);
 }
 .help-block {
-  font-size: 12px;
+  font-size: 13px;
   margin-bottom: 5px;
   color: #5f8c96;
 }
@@ -1570,21 +1570,21 @@ fieldset[disabled] .select2-search input[type="text"] + .form-control-feedback,
 }
 @media (min-width: 768px) {
   .form-horizontal .form-group-hg .control-label {
-    font-size: 17px;
+    font-size: 19px;
     padding-top: 2px;
     padding-bottom: 0;
   }
 }
 @media (min-width: 768px) {
   .form-horizontal .form-group-lg .control-label {
-    font-size: 14px;
+    font-size: 15px;
     padding-top: 3px;
     padding-bottom: 2px;
   }
 }
 @media (min-width: 768px) {
   .form-horizontal .form-group-sm .control-label {
-    font-size: 10px;
+    font-size: 11px;
     padding-top: 2px;
     padding-bottom: 2px;
   }
@@ -1599,7 +1599,7 @@ fieldset[disabled] .select2-search input[type="text"] + .form-control-feedback,
 .input-group-hg > .select2-search input[type="text"] {
   height: 53px;
   padding: 10px 16px;
-  font-size: 17px;
+  font-size: 19px;
   line-height: 1.318;
   border-radius: 6px;
 }
@@ -1626,7 +1626,7 @@ select[multiple].input-group-hg > .select2-search input[type="text"] {
 .input-group-lg > .select2-search input[type="text"] {
   height: 45px;
   padding: 10px 15px;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.235;
   border-radius: 6px;
 }
@@ -1653,7 +1653,7 @@ select[multiple].input-group-lg > .select2-search input[type="text"] {
 .input-group-sm > .select2-search input[type="text"] {
   height: 35px;
   padding: 6px 10px;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.462;
   border-radius: 6px;
 }
@@ -1676,7 +1676,7 @@ select[multiple].input-group-sm > .select2-search input[type="text"] {
 }
 .input-group-addon {
   padding: 10px 12px;
-  font-size: 12px;
+  font-size: 13px;
   color: #ffffff;
   text-align: center;
   background-color: #bdc3c7;
@@ -1919,7 +1919,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
   position: relative;
   -webkit-transition: color .25s linear;
           transition: color .25s linear;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.5;
 }
 .checkbox .icons,
@@ -2204,7 +2204,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
   border-radius: 4px;
   background-color: #e9f0f1;
   color: #6f9ca5;
-  font-size: 10px;
+  font-size: 11px;
   cursor: pointer;
   display: inline-block;
   position: relative;
@@ -2254,7 +2254,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
           filter: none;
 }
 .bootstrap-tagsinput input[type="text"] {
-  font-size: 12px;
+  font-size: 13px;
   border: none;
   box-shadow: none;
   outline: none;
@@ -2322,7 +2322,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 }
 .twitter-typeahead .tt-suggestion p {
   padding: 6px 14px;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.429;
   margin: 0;
 }
@@ -2402,7 +2402,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 }
 .ui-slider-value {
   float: right;
-  font-size: 10px;
+  font-size: 11px;
   margin-top: 12px;
 }
 .ui-slider-value.first {
@@ -2568,7 +2568,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .pagination li.previous > span,
 .pagination li.next > span {
   border-right: 2px solid #e2ebed;
-  font-size: 12px;
+  font-size: 13px;
   min-width: auto;
   padding: 12px 17px;
   background-color: transparent;
@@ -2616,7 +2616,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
   border: none;
   border-left: 2px solid #e2ebed;
   color: #ffffff;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 16px;
   min-height: 41px;
   min-width: 41px;
@@ -2641,7 +2641,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .pagination > .btn.previous,
 .pagination > .btn.next {
   margin-right: 8px;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.429;
   padding-left: 23px;
   padding-right: 23px;
@@ -2958,7 +2958,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
   border-color: #007e75;
 }
 .pagination-plain {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   list-style-type: none;
   margin: 0 0 20px;
@@ -3034,7 +3034,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
   position: relative;
 }
 .tooltip {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.286;
   z-index: 1070;
 }
@@ -3106,7 +3106,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
   border: none;
   margin-top: 9px;
   padding: 0;
-  font-size: 12px;
+  font-size: 13px;
   border-radius: 4px;
   box-shadow: none;
 }
@@ -3175,7 +3175,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .dropdown-header {
   padding: 8px 16px;
   line-height: 1.538;
-  font-size: 10px;
+  font-size: 11px;
   text-transform: uppercase;
   color: rgba(33, 103, 117, 0.6);
 }
@@ -3264,7 +3264,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
   display: inline-block;
   position: relative;
   border: none;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: normal;
   line-height: 1.4;
   border-radius: 4px;
@@ -3493,11 +3493,11 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 }
 .select2-container.select-hg > .select2-choice {
   padding: 13px 20px;
-  font-size: 17px;
+  font-size: 19px;
   line-height: 1.227;
   border-radius: 6px;
   padding-right: 49px;
-  min-height: 47px;
+  min-height: 49px;
 }
 .select2-container.select-hg > .select2-choice .filter-option {
   left: 20px;
@@ -3512,11 +3512,11 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 }
 .select2-container.select-lg > .select2-choice {
   padding: 10px 19px;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.471;
   border-radius: 6px;
   padding-right: 47px;
-  min-height: 41px;
+  min-height: 42px;
 }
 .select2-container.select-lg > .select2-choice .filter-option {
   left: 18px;
@@ -3524,11 +3524,11 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 }
 .select2-container.select-sm > .select2-choice {
   padding: 9px 13px;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.385;
   border-radius: 4px;
   padding-right: 35px;
-  min-height: 32px;
+  min-height: 33px;
 }
 .select2-container.select-sm > .select2-choice .filter-option {
   left: 13px;
@@ -3576,7 +3576,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .select2-search-choice {
   border-radius: 4px;
   color: #ffffff;
-  font-size: 10px;
+  font-size: 11px;
   cursor: pointer;
   display: inline-block;
   position: relative;
@@ -3603,7 +3603,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .select2-search-choice .select2-search-choice-close {
   color: #ffffff;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 11px;
   position: absolute;
   right: 0;
   text-align: right;
@@ -3627,7 +3627,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 }
 .select2-search-field input[type="text"] {
   color: #216775;
-  font-size: 12px;
+  font-size: 13px;
   border: none;
   box-shadow: none;
   outline: none;
@@ -3796,7 +3796,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
   color: #ffffff;
 }
 .select2-drop .select2-result-with-children > .select2-result-label {
-  font-size: 10px;
+  font-size: 11px;
   text-transform: uppercase;
   color: rgba(33, 103, 117, 0.6);
   margin-top: 5px;
@@ -3957,9 +3957,9 @@ fieldset[disabled] .input-group-btn .btn-default.active {
   margin: 0;
 }
 .navbar {
-  font-size: 12px;
+  font-size: 13px;
   min-height: 53px;
-  margin-bottom: 18px;
+  margin-bottom: 22px;
   border: none;
   border-radius: 6px;
 }
@@ -4039,14 +4039,14 @@ fieldset[disabled] .input-group-btn .btn-default.active {
   border-width: 0;
 }
 .navbar-brand {
-  font-size: 19px;
+  font-size: 20px;
   line-height: 1.042;
   height: 53px;
   font-weight: 700;
   padding: 14px 21px;
 }
 .navbar-brand > [class*="fui-"] {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.263;
   vertical-align: top;
 }
@@ -4065,10 +4065,10 @@ fieldset[disabled] .input-group-btn .btn-default.active {
   line-height: 53px;
 }
 .navbar-toggle:before {
-  color: #216775;
+  color: #16a085;
   content: "\e61a";
   font-family: "Flat-UI-Icons";
-  font-size: 17px;
+  font-size: 19px;
   font-style: normal;
   font-weight: normal;
   -webkit-font-smoothing: antialiased;
@@ -4082,7 +4082,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 }
 .navbar-toggle:hover:before,
 .navbar-toggle:focus:before {
-  color: #16a085;
+  color: #216775;
 }
 .navbar-toggle .icon-bar {
   display: none;
@@ -4096,7 +4096,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
   margin: 0;
 }
 .navbar-nav > li > a {
-  font-size: 12px;
+  font-size: 13px;
   padding: 15px 21px;
   line-height: 23px;
   font-weight: 700;
@@ -4135,7 +4135,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .navbar-input {
   height: 35px;
   padding: 5px 10px;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.4;
   border-radius: 6px;
 }
@@ -4168,7 +4168,7 @@ select[multiple].navbar-input {
 .navbar-form .select2-search input[type="text"] {
   height: 35px;
   padding: 5px 10px;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 1.4;
   border-radius: 6px;
 }
@@ -4212,12 +4212,12 @@ select[multiple].navbar-form .select2-search input[type="text"] {
 }
 .navbar-form .form-control,
 .navbar-form .select2-search input[type="text"] {
-  font-size: 12px;
+  font-size: 13px;
   border-radius: 5px;
   display: table-cell;
 }
 .navbar-form .form-group ~ .btn {
-  font-size: 12px;
+  font-size: 13px;
   border-radius: 5px;
   margin-left: 5px;
 }
@@ -4260,7 +4260,7 @@ select[multiple].navbar-form .select2-search input[type="text"] {
   background-color: transparent;
 }
 .navbar-text {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.438;
   color: #216775;
   margin-top: 0;
@@ -4755,11 +4755,11 @@ fieldset[disabled] .navbar-inverse .navbar-btn.active {
   padding-bottom: 26px;
 }
 .navbar-lg .navbar-brand > [class*="fui-"] {
-  font-size: 19px;
+  font-size: 20px;
   line-height: 1;
 }
 .navbar-lg .navbar-nav > li > a {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.6;
 }
 @media (min-width: 768px) {
@@ -4793,7 +4793,7 @@ fieldset[disabled] .navbar-inverse .navbar-btn.active {
   margin-bottom: 25.5px;
 }
 .bootstrap-switch {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 29px;
   display: inline-block;
   cursor: pointer;
@@ -5059,7 +5059,7 @@ fieldset[disabled] .navbar-inverse .navbar-btn.active {
   padding: 15px;
 }
 .share li {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.4;
   padding-top: 11px;
 }
@@ -5238,7 +5238,7 @@ fieldset[disabled] .navbar-inverse .navbar-btn.active {
   position: absolute;
   font-family: "Flat-UI-Icons";
   color: #00948a;
-  font-size: 12px;
+  font-size: 13px;
   top: 38%;
   left: 50%;
   margin: -0.5em 0 0 -0.5em;
@@ -5302,7 +5302,7 @@ fieldset[disabled] .navbar-inverse .navbar-btn.active {
 .vjs-mute-control > div:after,
 .vjs-mute-control > div:before {
   font-family: "Flat-UI-Icons";
-  font-size: 12px;
+  font-size: 13px;
   line-height: 18px;
   position: absolute;
   left: 50%;
@@ -5402,7 +5402,7 @@ fieldset[disabled] .navbar-inverse .navbar-btn.active {
 .vjs-time-controls {
   font-family: "Open Sans", Helvetica, Arial, sans-serif;
   font-weight: 300;
-  font-size: 10px;
+  font-size: 11px;
   line-height: normal;
   width: auto;
   height: auto;
@@ -5410,7 +5410,7 @@ fieldset[disabled] .navbar-inverse .navbar-btn.active {
 }
 .vjs-time-divider {
   color: #4d8591;
-  font-size: 12px;
+  font-size: 13px;
   position: absolute;
   right: 114px;
   top: 11px;
@@ -5443,7 +5443,7 @@ fieldset[disabled] .navbar-inverse .navbar-btn.active {
 .vjs-fullscreen-control > div:before {
   font-family: "Flat-UI-Icons";
   content: "\e619";
-  font-size: 12px;
+  font-size: 13px;
   line-height: 18px;
   position: absolute;
   left: 50%;
@@ -5525,7 +5525,7 @@ fieldset[disabled] .navbar-inverse .navbar-btn.active {
   background: #216775;
   background-size: 20px 20px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.214;
   margin-top: 2px;
   padding: 18px 42px 21px 25px;
@@ -5563,7 +5563,7 @@ fieldset[disabled] .navbar-inverse .navbar-btn.active {
   content: "\e60a";
   font-family: 'Flat-UI-Icons';
   text-align: center;
-  font-size: 10px;
+  font-size: 11px;
   line-height: 21px;
   font-style: normal;
   font-weight: normal;
@@ -5636,6 +5636,9 @@ fieldset[disabled] .navbar-inverse .navbar-btn.active {
 .margin-top {
   margin-top: 20px;
 }
+.margin-bottom {
+  margin-bottom: 20px;
+}
 .padding-top {
   padding-top: 20px;
 }
@@ -5673,7 +5676,7 @@ a:hover img {
 }
 .jumbotron p {
   margin-bottom: 15px;
-  font-size: 21px;
+  font-size: 23px;
   font-weight: 200;
 }
 .jumbotron > hr {
@@ -5698,7 +5701,7 @@ a:hover img {
   }
   .jumbotron h1,
   .jumbotron .h1 {
-    font-size: 63px;
+    font-size: 68px;
   }
 }
 .pallete-item {
@@ -5707,7 +5710,7 @@ a:hover img {
   margin: 0 0 20px 20px;
 }
 .palette {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.214;
   color: #ffffff;
   margin: 0;
@@ -5929,7 +5932,7 @@ footer p {
 }
 .footer-banner a:hover {
   text-decoration: none;
-  color: #16a085;
+  color: #216775;
 }
 .footer-banner ul {
   list-style-type: none;

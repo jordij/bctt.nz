@@ -1,0 +1,7 @@
+<div class="block-image">
+    {% image self.image width-900 %}
+    
+    {% if self.caption %}
+        <p class="t-small">{{ self.caption }}</p>
+    {% endif %}
+</div>

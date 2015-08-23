@@ -3,6 +3,7 @@ from datetime import date
 from django.db import models
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
+from django.conf import settings
 
 import django.db.models.options as options
 
@@ -10,8 +11,6 @@ from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel, StreamFieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
-from wagtail.wagtailcore import blocks
-from wagtail.wagtailimages.blocks import ImageChooserBlock
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailembeds.blocks import EmbedBlock
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
@@ -63,7 +62,13 @@ class HomePage(Page):
     """
     HomePage class
     """
-
+    feed_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     search_fields = ()
 
     def blogs(self):
@@ -100,7 +105,8 @@ HomePage.content_panels = [
 HomePage.promote_panels = [
     FieldPanel('slug'),
     FieldPanel('seo_title'),
-    FieldPanel('search_description')
+    ImageChooserPanel('feed_image'),
+    FieldPanel('search_description'),
 ]
 
 
@@ -113,8 +119,14 @@ class PageCarouselItem(Orderable, CarouselItem):
 
 class BlogIndexPage(Page):
     intro = RichTextField(blank=True)
-    subtitle = models.CharField(max_length=255)
-
+    subtitle = models.CharField(max_length=255, blank=True, null=True)
+    feed_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     search_fields = Page.search_fields + (
         index.SearchField('intro'),
         index.SearchField('subtitle'),
@@ -141,7 +153,8 @@ class BlogIndexPage(Page):
 
         # Pagination
         page = request.GET.get('page')
-        paginator = Paginator(blogs, 10)  # Show 10 blogs per page
+        paginator = Paginator(blogs, settings.PAGINATION_PER_PAGE)
+
         try:
             blogs = paginator.page(page)
         except PageNotAnInteger:
@@ -156,14 +169,27 @@ class BlogIndexPage(Page):
 
 BlogIndexPage.content_panels = [
     FieldPanel('title', classname="full title"),
+    FieldPanel('subtitle', classname="full"),
     FieldPanel('intro', classname="full"),
+]
+
+BlogIndexPage.promote_panels = [
+    FieldPanel('slug'),
+    FieldPanel('seo_title'),
+    ImageChooserPanel('feed_image'),
+    FieldPanel('search_description'),
 ]
 
 
 # Blog page
 
 class RelatedLink(LinkFields):
-    title = models.CharField(max_length=255, help_text="Link title")
+    title = models.CharField(
+        blank=True,
+        null=True,
+        max_length=255,
+        help_text="Link title"
+    )
 
     panels = [
         FieldPanel('title'),
@@ -183,11 +209,13 @@ class BlogPageTag(TaggedItemBase):
 
 
 class BlogPage(Page):
+    subtitle = models.CharField(max_length=255, blank=True, null=True)
     date = models.DateField("Post date", default=date.today)
     body = StreamField([
-        ('paragraph', blocks.RichTextBlock()),
-        ('image', ImageChooserBlock()),
-        ('embed', EmbedBlock()),
+        ('paragraph', SimpleRichTextBlock()),
+        ('image', CaptionImageBlock()),
+        ('embed', EmbedBlock(icon='media')),
+        ('quote', QuoteBlock()),
     ])
     excerpt = models.TextField(
         blank=True,
@@ -212,6 +240,9 @@ class BlogPage(Page):
 
     search_fields = Page.search_fields + (
         index.SearchField('body'),
+        index.SearchField('intro'),
+        index.SearchField('excerpt'),
+        index.SearchField('subtitle'),
     )
 
     @property
@@ -221,25 +252,37 @@ class BlogPage(Page):
 
 BlogPage.content_panels = [
     FieldPanel('title', classname="full title"),
+    FieldPanel('subtitle', classname="full"),
     FieldPanel('date'),
     FieldPanel('excerpt'),
     FieldPanel('intro', classname="full"),
     SnippetChooserPanel('author', Author),
     StreamFieldPanel('body'),
+    FieldPanel('tags'),
     InlinePanel(BlogPage, 'related_links', label="Related links"),
 ]
 
-BlogPage.promote_panels = Page.promote_panels + [
+BlogPage.promote_panels = [
+    FieldPanel('slug'),
+    FieldPanel('seo_title'),
     ImageChooserPanel('feed_image'),
-    FieldPanel('tags'),
+    FieldPanel('search_description'),
 ]
 
 
 class CompIndexPage(Page):
     intro = RichTextField(blank=True)
-
+    subtitle = models.CharField(max_length=255, blank=True, null=True)
+    feed_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     search_fields = Page.search_fields + (
         index.SearchField('intro'),
+        index.SearchField('subtitle'),
     )
 
     @property
@@ -281,15 +324,24 @@ class CompIndexPage(Page):
         context['pages'] = pages
         return context
 
-BlogIndexPage.content_panels = [
+CompIndexPage.content_panels = [
     FieldPanel('title', classname="full title"),
+    FieldPanel('subtitle', classname="full"),
     FieldPanel('intro', classname="full"),
+]
+
+CompIndexPage.promote_panels = [
+    FieldPanel('slug'),
+    FieldPanel('seo_title'),
+    ImageChooserPanel('feed_image'),
+    FieldPanel('search_description'),
 ]
 
 
 # Comp page
 
 class CompPage(RoutablePageMixin, Page):
+    subtitle = models.CharField(max_length=255, blank=True, null=True)
     current = models.BooleanField(default=False, help_text="Is this the current competition?")
     year = models.IntegerField("Year")
     winner = models.ForeignKey(
@@ -299,8 +351,12 @@ class CompPage(RoutablePageMixin, Page):
         on_delete=models.SET_NULL,
         related_name='winner_of'
     )
-    body = RichTextField(blank=True)
-
+    body = StreamField([
+        ('paragraph', SimpleRichTextBlock()),
+        ('image', CaptionImageBlock()),
+        ('embed', EmbedBlock(icon='media')),
+        ('quote', QuoteBlock()),
+    ])
     feed_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -310,6 +366,7 @@ class CompPage(RoutablePageMixin, Page):
     )
     search_fields = Page.search_fields + (
         index.SearchField('body'),
+        index.SearchField('subtitle'),
     )
 
     @route(r'^$')
@@ -417,9 +474,10 @@ class CompPage(RoutablePageMixin, Page):
 
     content_panels = [
         FieldPanel('title', classname="full title"),
+        FieldPanel('subtitle', classname="full"),
         FieldPanel('current'),
         FieldPanel('year'),
-        FieldPanel('body', classname="full"),
+        StreamFieldPanel('body'),
     ]
 
     team_panels = [
@@ -513,11 +571,25 @@ class CompPageResult(Orderable, MatchResult):
 # Simple page
 
 class SimplePage(Page):
+    subtitle = models.CharField(max_length=255, blank=True, null=True)
     intro = RichTextField(blank=True)
-    body = RichTextField(blank=True)
+    body = StreamField([
+        ('paragraph', SimpleRichTextBlock()),
+        ('image', CaptionImageBlock()),
+        ('embed', EmbedBlock(icon='media')),
+        ('quote', QuoteBlock()),
+    ])
+    feed_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
     search_fields = Page.search_fields + (
         index.SearchField('intro'),
         index.SearchField('body'),
+        index.SearchField('subtitle'),
     )
 
     @property
@@ -528,6 +600,11 @@ class SimplePage(Page):
 
 SimplePage.content_panels = [
     FieldPanel('title', classname="full title"),
+    FieldPanel('subtitle', classname="full"),
     FieldPanel('intro', classname="full"),
-    FieldPanel('body', classname="full"),
+    StreamFieldPanel('body'),
+]
+
+SimplePage.promote_panels = Page.promote_panels + [
+    ImageChooserPanel('feed_image'),
 ]

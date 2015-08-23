@@ -30,17 +30,6 @@ urlpatterns = patterns(
     url(r'', include(wagtail_urls)),
 )
 
-if settings.SERVER_ENV == "Production":
-    urlpatterns += patterns(
-        '',
-        url(r'^robots\.txt', TemplateView.as_view(template_name='robots_prod.txt', content_type='text/plain'))
-    )
-else:
-    urlpatterns = urlpatterns + patterns(
-        '',
-        url(r'^robots\.txt', TemplateView.as_view(template_name='robots_dev.txt', content_type='text/plain'))
-    )
-
 if settings.DEBUG:
     import debug_toolbar
     from django.contrib.staticfiles.urls import staticfiles_urlpatterns
@@ -52,5 +41,6 @@ if settings.DEBUG:
 else:
     urlpatterns += patterns(
         '',
+        url(r'^robots\.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
         url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT})
     )

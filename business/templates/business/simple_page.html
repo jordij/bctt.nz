@@ -2,20 +2,14 @@
 {% load wagtailcore_tags %}
 {% block body_class %}template-{{ self.get_verbose_name|slugify }}{% endblock %}
 
-
 {% block heading %}
-  <div class="jumbotron">
-    <div class="container  page-container">
-        <h1>{{ self.title }}</h1>
-      </div>
-  </div>
+    {% include "business/includes/jumbotron.html" with title=self.title subtitle=self.subtitle only %}
 {% endblock %}
-
 
 {% block content %}
 
     <div class="container">
-       {{ self.body|richtext }}
+        {% include "business/includes/body.html" with body=self.body only %}
     </div>
 
 {% endblock %}

@@ -3,51 +3,48 @@
 {% load wagtailcore_tags %}
 
 {% block heading %}
-    <div class="jumbotron">
-        <div class="container  page-container">
-
-        <h1>{{ self.title }}</h1>
-
-        {{ self.body|richtext }}
-
-        </div>
-    </div>
+    {% include "business/includes/jumbotron.html" with title=self.title subtitle=self.subtitle only %}
 {% endblock %}
 
 
 {% block content %}
 
-<div class="container">
+<div class="container margin-bottom">
 
     {% if request.GET.tag|length %}
         <h4>Showing posts tagged as {{ request.GET.tag|safe }} <a href=" {% pageurl self %} ">Show all</a></h4>
     {% endif %}
 
-    <div class="list-group">
-        {# Uses serve method defined in models.py - allows for paging if required #}
-        {# See also standard index for creating a listing with a tag #}
-        {% for blog in blogs %}
-            {% include "business/includes/blog_list_item.html" %}
-        {% empty %}
-            No blogs found
-        {% endfor %}
-    </div>
-
-    {# Pagination - uses django.core.paginator #}
-    {# Append any other url query string variables to the next and previous links - allows tag to be passed through #}
     <div class="row">
-        <div class="col-sm-4 previous">
-            {% if blogs.has_previous %}
-                <a href="?page={{ blogs.previous_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&amp;{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">Previous</a>
+        <div class="col-sm-8">
+            {% for blog in blogs %}
+                {% include "business/includes/blog_list_item.html" %}
+                {% if not forloop.last %}
+                    <hr>
+                {% endif %}
+            {% empty %}
+                No blogs found
+            {% endfor %}
+
+            {% if blogs and blogs.paginator.num_pages > 1 %}
+
+                <nav class="text-center">
+                    <ul class="pager">
+                        {% if blogs.has_previous %}
+                        <li class="previous"><a href="?page={{ blogs.previous_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&amp;{{ key }}={{ value }}{% endifnotequal %}{% endfor %}"><span aria-hidden="true">&larr;</span> Newer</a></li>
+                        {% endif %}
+                        {% if blogs.has_next %}
+                        <li class="next"><a href="?page={{ blogs.next_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&amp;{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">Older <span aria-hidden="true">&rarr;</span></a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                
             {% endif %}
         </div>
-        <div class="col-sm-4 pages">
-            Page {{ blogs.number }} of {{ blogs.paginator.num_pages }}
-        </div>
-        <div class="col-sm-4 next">
-            {% if blogs.has_next %}
-                <a href="?page={{ blogs.next_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&amp;{{ key }}={{ value }}{% endifnotequal %}{% endfor %}">Next</a>
-            {% endif %}
+        <div class="col-sm-3 col-sm-offset-1">
+        {% comment %}
+            TODO: TAGS
+        {% endcomment %}
         </div>
     </div>
 

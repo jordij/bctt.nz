@@ -85,7 +85,7 @@ module.exports = function (grunt) {
           'js/*.js',
           '!js/application.js'
         ],
-        dest: 'dist/js/<%= pkg.name %>.js'
+        dest: '../../static/flat-ui/dist/js/<%= pkg.name %>.js'
       }
     },
 
@@ -95,7 +95,7 @@ module.exports = function (grunt) {
       },
       dist: {
         src: '<%= concat.dist.dest %>',
-        dest: 'dist/js/<%= pkg.name %>.min.js'
+        dest: '../../static/flat-ui/dist/js/<%= pkg.name %>.min.js'
       }
     },
 
@@ -106,10 +106,10 @@ module.exports = function (grunt) {
           sourceMap: true,
           outputSourceFiles: true,
           sourceMapURL: '<%= pkg.name %>.css.map',
-          sourceMapFilename: 'dist/css/<%= pkg.name %>.css.map'
+          sourceMapFilename: '../../static/flat-ui/dist/css/<%= pkg.name %>.css.map'
         },
         files: {
-          'dist/css/<%= pkg.name %>.css': 'less/<%= pkg.name %>.less'
+          '../../static/flat-ui/dist/css/<%= pkg.name %>.css': 'less/<%= pkg.name %>.less'
         }
       },
       compileDocs: {
@@ -198,8 +198,8 @@ module.exports = function (grunt) {
         },
         files: {
           src: [
-            'dist/css/<%= pkg.name %>.css',
-            'dist/css/<%= pkg.name %>.min.css',
+            '../../static/flat-ui/dist/css/<%= pkg.name %>.css',
+            '../../static/flat-ui/dist/css/<%= pkg.name %>.min.css',
             'docs/assets/css/docs.css',
             'docs/assets/css/demo.css'
           ]
@@ -213,7 +213,7 @@ module.exports = function (grunt) {
       },
       dist: {
         files: {
-          'dist/css/<%= pkg.name %>.css': 'dist/css/<%= pkg.name %>.css'
+          '../../static/flat-ui/dist/css/<%= pkg.name %>.css': 'dist/css/<%= pkg.name %>.css'
         }
       },
       assets: {
@@ -231,7 +231,7 @@ module.exports = function (grunt) {
           'fonts/**',
           'img/**'
         ],
-        dest: 'dist/'
+        dest: '../../static/flat-ui/dist/'
       },
       distTemplate: {
         src: 'docs/template.html',
