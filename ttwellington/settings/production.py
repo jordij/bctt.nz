@@ -8,9 +8,6 @@ import djcelery
 DEBUG = False
 TEMPLATE_DEBUG = False
 
-# Server environment
-SERVER_ENV = "Production"
-
 # Compress static files offline
 # http://django-compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_OFFLINE
 

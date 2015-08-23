@@ -191,4 +191,4 @@ LOGIN_REDIRECT_URL = 'wagtailadmin_home'
 
 # Pagination
 
-PAGINATION_PER_PAGE = 1
+PAGINATION_PER_PAGE = 5
