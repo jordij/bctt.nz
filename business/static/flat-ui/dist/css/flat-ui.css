@@ -5629,10 +5629,6 @@ a:hover img {
   opacity: 0.75;
   filter: alpha(opacity=75);
 }
-.media:hover .media-left img {
-  opacity: 0.75;
-  filter: alpha(opacity=75);
-}
 .jumbotron {
   padding-top: 30px;
   padding-bottom: 30px;

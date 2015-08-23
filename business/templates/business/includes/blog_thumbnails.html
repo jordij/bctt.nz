@@ -1,8 +1,8 @@
 {% load wagtailcore_tags wagtailimages_tags static %}
 
 {% for item in items %}
-	<div class="{{ class }} card__blog">
-          <div class="caption">
+	<div class="{{ class }}">
+        <div class="caption">
             {% if item.feed_image %}
                 {% image item.feed_image fill-360x200 class="img-responsive" %}
             {% else %}
@@ -12,6 +12,6 @@
             <p class="text-left text-muted">{{ item.date|date:"j M Y" }}</p>
             <p class="text-justify">{{ item.excerpt }}</p>
             <a href="{% pageurl item %}" class="btn btn-primary">Read more</a>
-          </div>
+        </div>
     </div>
 {% endfor %}

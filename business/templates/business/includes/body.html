@@ -1,29 +1,22 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
 {% for block in body %}
+
     {% if block.block_type == 'paragraph' %}
 
-        <div class="content_width text">
-            {{ block.value|richtext }}
-        </div>
+        {{ block.value|richtext }}
 
     {% elif block.block_type == 'image' %}
 
-        <div class="content_width">
-            {{ block }}
-        </div>
+        {{ block }}
 
     {% elif block.block_type == 'quote' %}
 
-        <div class="content_width -breakout-medium">
-            {{ block }}
-        </div>
+        {{ block }}
 
     {% elif block.block_type == 'embed' %}
 
-        <div class="content_width">
-            {{ block.value|safe }}
-        </div>
+        {{ block.value|safe }}
 
     {% endif %}
 {% endfor %}

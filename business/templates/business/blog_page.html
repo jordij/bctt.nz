@@ -6,23 +6,59 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
+<div class="container margin-bottom">
+    <div class="row">
+        <div class="col-sm-8">
+            <p class="margin-bottom">{{ self.date|date:"j M Y" }}{% if self.author %} by <strong>{{ self.author.name }}{% endif %}</strong></p>
 
-        <div class="pull-right">
-          {% for tag in self.tags.all %}
-            <a href="{% pageurl self.blog_index %}?tag={{ tag }}"
-               class="btn btn-primary btn-xs">
-              <i class="glyphicon glyphicon-tag"></i> {{ tag }}
-            </a>
-          {% endfor %}
+            <div class="margin-bottom">
+                {% for tag in self.tags.all %}
+                <a href="{% pageurl self.blog_index %}?tag={{ tag }}"
+                class="btn btn-primary btn-xs">
+                    <i class="glyphicon glyphicon-tag"></i> {{ tag }}
+                </a>
+                {% endfor %}
+            </div>
+
+            <hr>
+
+            <article>
+                {% include "business/includes/body.html" with body=self.body only %}
+            </article>
+
         </div>
 
-    
-        <article>
-            {% include "business/includes/body.html" with body=self.body only %}
-        </article>
-
-        {% include "business/includes/related_links.html" with related_links=self.related_links.all only %}
+        <div class="col-sm-4">
+            {% if self.related_links %}
+                {% include "business/includes/related_links.html" with related_links=self.related_links.all request=request only %}
+            {% endif %}
+        </div>
     </div>
+</div>
+
+{% if self.author %}
+    <div class="inversed-container spacer-top spacer-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 offset-sm-4">
+                    <p class="lead">About the author</p>
+                    <div class="media">
+                        <div class="media-left">
+                            {% if self.author.image %}
+                                {% image self.author.image fill-75x75 class="img-circle" %}
+                            {% endif %}
+                        </div>
+                        <div class="media-body">
+                            <h6 class="media-heading">{{ self.author.name }}</h6>
+                            <p class="text-muted">{{ self.author.title }}</p>
+                            <p>{{ self.author.bio }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
 {% endblock %}
 

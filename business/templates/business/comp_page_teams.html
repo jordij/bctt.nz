@@ -2,7 +2,9 @@
 {% load static wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags %}
 
 {% block heading %}
-    {% include "business/includes/jumbotron.html" with title="Winter  "+self.title subtitle=self.subtitle only %}
+    {% with "Competition "|add:self.title as comp_title %}
+        {% include "business/includes/jumbotron.html" with title=comp_title subtitle=self.subtitle only %}
+    {% endwith %}
 {% endblock %}
 
 {% block content %}

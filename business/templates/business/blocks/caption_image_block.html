@@ -1,7 +1,13 @@
-<div class="block-image">
-    {% image self.image width-900 %}
+{% load wagtailimages_tags %}
+
+<figure class="margin-top margin-bottom">
+    {% if self.image.width > self.image.height %}
+        {% image self.image width-800 class="img-responsive" %}
+    {% else %}
+        {% image self.image height-400 class="img-responsive" %}
+    {% endif %}
     
     {% if self.caption %}
-        <p class="t-small">{{ self.caption }}</p>
+        <caption>{{ self.caption }}</caption>
     {% endif %}
-</div>
+</figure>

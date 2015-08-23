@@ -69,6 +69,12 @@ class HomePage(Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    subpage_types = [
+        'SimplePage',
+        'BlogIndexPage',
+        'CompIndexPage',
+        'SubmitFormPage',
+    ]
     search_fields = ()
 
     def blogs(self):
@@ -131,6 +137,9 @@ class BlogIndexPage(Page):
         index.SearchField('intro'),
         index.SearchField('subtitle'),
     )
+    subpage_types = [
+        'BlogPage',
+    ]
 
     @property
     def blogs(self):
@@ -183,25 +192,17 @@ BlogIndexPage.promote_panels = [
 
 # Blog page
 
-class RelatedLink(LinkFields):
-    title = models.CharField(
-        blank=True,
-        null=True,
-        max_length=255,
-        help_text="Link title"
+class BlogPageRelatedLink(Orderable):
+    link_page = models.ForeignKey(
+        'BlogPage',
+        on_delete=models.CASCADE,
+        related_name='+',
     )
+    page = ParentalKey('BlogPage', related_name='related_links')
 
     panels = [
-        FieldPanel('title'),
-        MultiFieldPanel(LinkFields.panels, "Link"),
+        PageChooserPanel('link_page', 'business.BlogPage')
     ]
-
-    class Meta:
-        abstract = True
-
-
-class BlogPageRelatedLink(Orderable, RelatedLink):
-    page = ParentalKey('BlogPage', related_name='related_links')
 
 
 class BlogPageTag(TaggedItemBase):
@@ -245,6 +246,9 @@ class BlogPage(Page):
         index.SearchField('subtitle'),
     )
 
+    subpage_types = []
+
+
     @property
     def blog_index(self):
         # Find closest ancestor which is a blog index
@@ -284,6 +288,10 @@ class CompIndexPage(Page):
         index.SearchField('intro'),
         index.SearchField('subtitle'),
     )
+    subpage_types = [
+        'CompPage',
+    ]
+
 
     @property
     def pages(self):
@@ -341,6 +349,7 @@ CompIndexPage.promote_panels = [
 # Comp page
 
 class CompPage(RoutablePageMixin, Page):
+    subpage_types = []
     subtitle = models.CharField(max_length=255, blank=True, null=True)
     current = models.BooleanField(default=False, help_text="Is this the current competition?")
     year = models.IntegerField("Year")
@@ -571,6 +580,8 @@ class CompPageResult(Orderable, MatchResult):
 # Simple page
 
 class SimplePage(Page):
+    subpage_types = []
+
     subtitle = models.CharField(max_length=255, blank=True, null=True)
     intro = RichTextField(blank=True)
     body = StreamField([

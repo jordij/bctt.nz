@@ -1,19 +1,27 @@
+{% load wagtailcore_tags wagtailimages_tags static %}
+
 {% if related_links %}
-    <div class="page-header"></div>
     <div class="row">
-        <div class="col-sm-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Related links</h3>
+        <div class="col-xs-12">
+            <h4>Related articles</h4>
+
+            {% for link in related_links %}
+                <div class="caption spacer-top spacer-bottom">
+                    {% if link.link_page.feed_image %}
+                        {% image link.link_page.feed_image fill-320x160 class="img-responsive" %}
+                    {% else %}
+                        <img width="320" height="160" src="{% static 'images/placeholder.png' %}" class="img-responsive" >
+                    {% endif %}
+                    <h5>{{ link.link_page.title }}</h5>
+                    <p class="text-left text-muted">{{ link.link_page.date|date:"j M Y" }}</p>
+                    <p class="text-justify">{{ link.link_page.excerpt }}</p>
+                    <a href="{% pageurl link.link_page %}" class="btn btn-primary">Read more</a>
                 </div>
-                <div class="panel-body">
-                    <ul>
-                    {% for related_link in related_links %}
-                        <li><a href="{{ related_link.link }}">{{ related_link.title }}</a></li>
-                    {% endfor %}
-                    </ul>
-                </div>
-            </div>
+                {% if not forloop.last %}
+                    <hr>
+                {% endif %}
+            {% endfor %}
+
         </div>
     </div>
 {% endif %}

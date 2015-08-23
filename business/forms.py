@@ -16,6 +16,7 @@ class SubmitFormPage(AbstractEmailForm):
     """
     Form page, inherits from SweetCaptchaEmailForm if available, otherwise fallback to AbstractEmailForm
     """
+    subpage_types = []
     search_fields = ()
     thank_you_text = RichTextField(blank=True, help_text='Set the message users will see after submitting the form.')
     feed_image = models.ForeignKey(

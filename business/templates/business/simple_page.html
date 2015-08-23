@@ -8,8 +8,18 @@
 
 {% block content %}
 
-    <div class="container">
-        {% include "business/includes/body.html" with body=self.body only %}
+    <div class="container margin-bottom">
+        <div class="row">
+            <div class="col-sm-8">
+                
+                {% include "business/includes/body.html" with body=self.body only %}
+
+            </div>
+
+            <div class="col-sm-4">
+                
+            </div>
+        </div>
     </div>
 
 {% endblock %}
