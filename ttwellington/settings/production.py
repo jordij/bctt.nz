@@ -1,5 +1,4 @@
 from .base import *
-import djcelery
 import dj_database_url
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -21,32 +20,6 @@ COMPRESS_CSS_FILTERS = [
 STATIC_ROOT = join(DJANGO_ROOT, 'static')
 STATICFILES_DIRS = ()
 
-# Add apps
-INSTALLED_APPS += (
-    'djcelery',
-)
-
-ALLOWED_HOSTS = ['*']
-
-# Celery
-
-djcelery.setup_loader()
-# Enables error emails.
-CELERY_SEND_TASK_ERROR_EMAILS = True
-
-BROKER_URL = 'redis://'
-CELERY_RESULT_BACKEND = 'redis://'
-
-#: Only add pickle to this list if your broker is secured
-#: from unwanted access (see userguide/security.html)
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-
-# Use Elasticsearch as the search backend for extra performance and better search results:
-# http://wagtail.readthedocs.org/en/latest/howto/performance.html#search
-# http://wagtail.readthedocs.org/en/latest/core_components/search/backends.html#elasticsearch-backend
-
 WAGTAILSEARCH_BACKENDS = {
     'default': {
         'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',
@@ -54,7 +27,13 @@ WAGTAILSEARCH_BACKENDS = {
     },
 }
 
-# Use Redis as the cache backend for extra performance
+# Use the cached template loader
+TEMPLATE_LOADERS = (
+    ('django.template.loaders.cached.Loader', (
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    )),
+)
 
 CACHES = {
     'default': {
@@ -66,6 +45,7 @@ CACHES = {
         }
     }
 }
+
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.cache.UpdateCacheMiddleware',
