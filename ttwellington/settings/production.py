@@ -1,5 +1,17 @@
 from .base import *
 import dj_database_url
+import os
+
+# Parse database configuration from $DATABASE_URL
+DATABASES['default'] = dj_database_url.config()
+env = os.environ.copy()
+SECRET_KEY = env['SECRET_KEY']
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -48,18 +60,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
-# Make sure we include the needed Middleware apps
 # Excluding logged in (admin) requests
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
-
-# Parse database configuration from $DATABASE_URL
-DATABASES['default'] = dj_database_url.config()
-
-# Honor the 'X-Forwarded-Proto' header for request.is_secure()
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-# Allow all host headers
-ALLOWED_HOSTS = ['*']
 
 try:
     from .local import *
