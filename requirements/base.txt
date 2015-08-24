@@ -6,3 +6,6 @@ django-taggit>=0.13.0
 wagtail==1.0
 beautifulsoup4>=4.3.2
 django-widget-tweaks
+django-libsass>=0.2
+libsass==0.8.2
+Pillow==2.8.1

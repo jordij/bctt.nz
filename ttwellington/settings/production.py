@@ -1,9 +1,6 @@
 from .base import *
 import djcelery
 
-# Do not set SECRET_KEY, Postgres or LDAP password or any other sensitive data here.
-# Instead, create a local.py file on the server.
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 TEMPLATE_DEBUG = False

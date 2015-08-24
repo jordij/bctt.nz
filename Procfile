@@ -1,0 +1,1 @@
+web: gunicorn ttwellington.heroku_wsgi
