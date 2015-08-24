@@ -1,4 +1,4 @@
--r base.txt
+-r production.txt
 
 dj-database-url==0.3.0
 dj-static==0.0.6
