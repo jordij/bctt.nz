@@ -1,5 +1,6 @@
 from .base import *
 import djcelery
+import dj_database_url
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -76,44 +77,14 @@ MIDDLEWARE_CLASSES = (
 # Excluding logged in (admin) requests
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt': "%d/%b/%Y %H:%M:%S"
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        },
-    },
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': join(DJANGO_ROOT, 'logs/%s.log' % SITE_NAME),
-            'formatter': 'verbose',
-            'maxBytes': 1024 * 1024 * 50,
-        },
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler'
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file', 'mail_admins'],
-            'propagate': True,
-            'level': 'ERROR',
-        },
-        'core': {
-            'handlers': ['file', 'mail_admins'],
-            'propagate': True,
-            'level': 'ERROR',
-        }
-    }
-}
+# Parse database configuration from $DATABASE_URL
+DATABASES['default'] = dj_database_url.config()
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
 
 try:
     from .local import *

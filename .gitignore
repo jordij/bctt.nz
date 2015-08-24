@@ -30,7 +30,7 @@ media/*
 *.sass-cache
 .idea
 .coverage
-
+.env
 # node
 node_modules/
 # bower
