@@ -21,7 +21,6 @@ lib64
 *.log
 *.pot
 ttwellington/settings/local.py
-static/CACHE/*
 .vagrant/*
 media/*
 .anaconda
