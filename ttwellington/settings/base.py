@@ -113,8 +113,8 @@ SERVER_EMAIL = 'errors@ttwellington.co.nz'
 # Default from address for CMS email messages to users (forgot password etc..)
 DEFAULT_FROM_EMAIL = '%s@ttwellington.co.nz' % SITE_NAME
 
-ROOT_URLCONF = SITE_NAME + '.urls'
-WSGI_APPLICATION = SITE_NAME + '.wsgi.application'
+ROOT_URLCONF = 'ttwellington.urls'
+# WSGI_APPLICATION = 'ttwellington.wsgi.application'
 
 
 # Database
