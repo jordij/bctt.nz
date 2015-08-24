@@ -1,6 +1,5 @@
 .DS_Store
 /.venv/
-/static/
 /media/
 /local/
 /.vagrant/
