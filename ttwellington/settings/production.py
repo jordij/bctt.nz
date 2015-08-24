@@ -19,18 +19,16 @@ TEMPLATE_DEBUG = False
 
 # Compress static files offline
 # http://django-compressor.readthedocs.org/en/latest/settings/#django.conf.settings.COMPRESS_OFFLINE
-
-COMPRESS_OFFLINE = True
-COMPRESS_ENABLED = True
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 COMPRESS_CSS_FILTERS = [
     'compressor.filters.css_default.CssAbsoluteFilter',
     'compressor.filters.cssmin.CSSMinFilter',
 ]
+COMPRESS_CSS_HASHING_METHOD = 'content'
 
-# Static folder ready for production mode
-STATIC_ROOT = join(DJANGO_ROOT, 'static')
-STATICFILES_DIRS = ()
+COMPRESS_OFFLINE = True
+COMPRESS_ENABLED = True
 
 WAGTAILSEARCH_BACKENDS = {
     'default': {
