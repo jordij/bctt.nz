@@ -18,7 +18,7 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 
 # Compress static files offline
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.abspath(os.path.dirname(__name__))
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
