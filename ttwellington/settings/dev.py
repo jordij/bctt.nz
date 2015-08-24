@@ -23,6 +23,7 @@ INTERNAL_IPS = (
 
 INSTALLED_APPS += (
     'debug_toolbar',
+    'wagtail.contrib.wagtailstyleguide',
 )
 
 CACHE_MIDDLEWARE_SECONDS = 0
