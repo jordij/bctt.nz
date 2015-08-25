@@ -37,12 +37,12 @@ COMPRESS_CSS_HASHING_METHOD = 'content'
 COMPRESS_OFFLINE = True
 COMPRESS_ENABLED = True
 
-WAGTAILSEARCH_BACKENDS = {
-    'default': {
-        'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',
-        'INDEX': SITE_NAME,
-    },
-}
+# WAGTAILSEARCH_BACKENDS = {
+#     'default': {
+#         'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',
+#         'INDEX': SITE_NAME,
+#     },
+# }
 
 # Use the cached template loader
 TEMPLATE_LOADERS = (
