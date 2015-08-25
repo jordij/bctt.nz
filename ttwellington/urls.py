@@ -14,6 +14,7 @@ from wagtail.wagtailimages import urls as wagtailimages_urls
 from wagtail.contrib.wagtailsitemaps.views import sitemap
 from wagtail.wagtailsearch.signal_handlers import register_signal_handlers as wagtailsearch_register_signal_handlers
 
+
 admin.autodiscover()
 
 # Register search signal handlers
