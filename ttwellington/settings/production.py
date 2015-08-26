@@ -23,13 +23,13 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 
 # Compress static files offline
-# BASE_DIR = os.path.abspath(os.path.dirname(__name__))
+BASE_DIR = os.path.abspath(os.path.dirname(__name__))
 # STATIC_ROOT = 'staticfiles'
 #STATIC_URL = '/static/'
 
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-# )
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 # Use Amazon S3 for storage for uploaded media files.
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
