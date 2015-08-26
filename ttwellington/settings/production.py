@@ -24,12 +24,12 @@ TEMPLATE_DEBUG = False
 
 # Compress static files offline
 BASE_DIR = os.path.abspath(os.path.dirname(__name__))
-STATIC_ROOT = 'staticfiles'
+# STATIC_ROOT = 'staticfiles'
 #STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+# )
 
 # Use Amazon S3 for storage for uploaded media files.
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
@@ -59,11 +59,11 @@ AWS_IS_GZIPPED = False
 # Cache settings.
 CACHES = {
     # Long cache timeout for staticfiles, since this is used heavily by the optimizing storage.
-    # "staticfiles": {
-    #     "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-    #     "TIMEOUT": 60 * 60 * 24 * 365,
-    #     "LOCATION": "staticfiles",
-    # },
+    "staticfiles": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "TIMEOUT": 60 * 60 * 24 * 365,
+        "LOCATION": "staticfiles",
+    },
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'ttwellington',
