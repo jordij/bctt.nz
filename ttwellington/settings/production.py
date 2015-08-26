@@ -59,6 +59,10 @@ CACHES = {
         "TIMEOUT": 60 * 60 * 24 * 365,
         "LOCATION": "staticfiles",
     },
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'ttwellington',
+    }
 }
 
 COMPRESS_CSS_FILTERS = [
