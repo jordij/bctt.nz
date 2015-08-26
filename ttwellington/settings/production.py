@@ -1,14 +1,14 @@
 from .base import *
-import dj_database_url
+# import dj_database_url
 import os
 
 
 INSTALLED_APPS += (
-    'herokuapp',
+   'herokuapp',
 )
 
 # Parse database configuration from $DATABASE_URL
-DATABASES['default'] = dj_database_url.config()
+# DATABASES['default'] = dj_database_url.config()
 env = os.environ.copy()
 SECRET_KEY = env['SECRET_KEY']
 
@@ -23,7 +23,7 @@ DEBUG = True
 TEMPLATE_DEBUG = False
 
 # Compress static files offline
-BASE_DIR = os.path.abspath(os.path.dirname(__name__))
+# BASE_DIR = os.path.abspath(os.path.dirname(__name__))
 # STATIC_ROOT = 'staticfiles'
 #STATIC_URL = '/static/'
 
@@ -35,7 +35,7 @@ BASE_DIR = os.path.abspath(os.path.dirname(__name__))
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
 
 # Use Amazon S3 for static files storage.
-STATICFILES_STORAGE = "storages.backends.s3boto.S3BotoStorage"
+STATICFILES_STORAGE = "require_s3.storage.OptimizedCachedStaticFilesStorage"
 
 # Amazon S3 settings.
 AWS_ACCESS_KEY_ID = env['AWS_ACCESS_KEY_ID']
@@ -46,9 +46,9 @@ AWS_HEADERS = {
     "Cache-Control": "public, max-age=86400",
 }
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+STATIC_URL = "https://%s/%s" % (AWS_S3_CUSTOM_DOMAIN, 'static/')
 COMPRESS_URL = STATIC_URL
-MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+MEDIA_URL = "https://%s/%s" % (AWS_S3_CUSTOM_DOMAIN, 'media/')
 
 AWS_S3_FILE_OVERWRITE = False
 AWS_QUERYSTRING_AUTH = False
