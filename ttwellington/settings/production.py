@@ -35,7 +35,7 @@ STATICFILES_DIRS = (
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
 
 # Use Amazon S3 for static files storage.
-STATICFILES_STORAGE = "require_s3.storage.OptimizedCachedStaticFilesStorage"
+STATICFILES_STORAGE = "storages.backends.s3boto.S3BotoStorage"
 
 # Amazon S3 settings.
 AWS_ACCESS_KEY_ID = env['AWS_ACCESS_KEY_ID']
@@ -59,11 +59,11 @@ AWS_IS_GZIPPED = False
 # Cache settings.
 CACHES = {
     # Long cache timeout for staticfiles, since this is used heavily by the optimizing storage.
-    "staticfiles": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "TIMEOUT": 60 * 60 * 24 * 365,
-        "LOCATION": "staticfiles",
-    },
+    # "staticfiles": {
+    #     "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+    #     "TIMEOUT": 60 * 60 * 24 * 365,
+    #     "LOCATION": "staticfiles",
+    # },
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
         'LOCATION': 'ttwellington',
