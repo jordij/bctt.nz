@@ -51,10 +51,6 @@ AWS_S3_SECURE_URLS = True
 AWS_REDUCED_REDUNDANCY = False
 AWS_IS_GZIPPED = False
 
-from boto.s3.connection import S3Connection  
-calling_format=boto.s3.connection.OrdinaryCallingFormat()  
-conn = S3Connection(AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, calling_format=calling_format)  
-
 # Cache settings.
 CACHES = {
     # Long cache timeout for staticfiles, since this is used heavily by the optimizing storage.
