@@ -110,11 +110,9 @@ ADMINS = (
 SERVER_EMAIL = 'errors@ttwellington.co.nz'
 
 # Default from address for CMS email messages to users (forgot password etc..)
-DEFAULT_FROM_EMAIL = '%s@ttwellington.co.nz' % SITE_NAME
+DEFAULT_FROM_EMAIL = 'info@ttwellington.co.nz'
 
 ROOT_URLCONF = 'ttwellington.urls'
-# WSGI_APPLICATION = 'ttwellington.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases

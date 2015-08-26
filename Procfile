@@ -1,1 +1,1 @@
-web: gunicorn ttwellington.heroku_wsgi
+web: waitress-serve --port=$PORT ttwellington.wsgi:application

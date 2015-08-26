@@ -3,9 +3,9 @@ from django.dispatch import receiver
 from django.core.cache import cache
 
 
-# @receiver(post_save)
-# def post_model_save(sender, instance, **kwargs):
-#     """
-#     Clear cache when any kind of Model is saved
-#     """
-#     cache.clear()
+@receiver(post_save)
+def post_model_save(sender, instance, **kwargs):
+    """
+    Clear cache when any kind of Model is saved
+    """
+    cache.clear()
