@@ -1,5 +1,5 @@
 from .base import *
-# import dj_database_url
+import dj_database_url
 import os
 
 
@@ -8,7 +8,7 @@ INSTALLED_APPS += (
 )
 
 # Parse database configuration from $DATABASE_URL
-# DATABASES['default'] = dj_database_url.config()
+DATABASES['default'] = dj_database_url.config()
 env = os.environ.copy()
 SECRET_KEY = env['SECRET_KEY']
 
