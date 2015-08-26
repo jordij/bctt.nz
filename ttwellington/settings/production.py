@@ -25,7 +25,7 @@ TEMPLATE_DEBUG = False
 # Compress static files offline
 BASE_DIR = os.path.abspath(os.path.dirname(__name__))
 STATIC_ROOT = 'staticfiles'
-STATIC_URL = '/static/'
+#STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
@@ -45,6 +45,11 @@ AWS_AUTO_CREATE_BUCKET = True
 AWS_HEADERS = {
     "Cache-Control": "public, max-age=86400",
 }
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+COMPRESS_URL = STATIC_URL
+MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+
 AWS_S3_FILE_OVERWRITE = False
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_SECURE_URLS = True
