@@ -46,7 +46,7 @@ AWS_HEADERS = {
     "Cache-Control": "public, max-age=86400",
 }
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN    
+STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
 COMPRESS_URL = STATIC_URL
 MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
 
