@@ -58,19 +58,43 @@ AWS_S3_SECURE_URLS = True
 AWS_REDUCED_REDUNDANCY = False
 AWS_IS_GZIPPED = False
 
+
 # Cache settings.
-CACHES = {
-    # Long cache timeout for staticfiles, since this is used heavily by the optimizing storage.
-    "staticfiles": {
-        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-        "TIMEOUT": 60 * 60 * 24 * 365,
-        "LOCATION": "staticfiles",
-    },
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'ttwellington',
-    }
-}
+def get_cache():
+    import os
+    try:
+        os.environ['MEMCACHE_SERVERS'] = os.environ['MEMCACHIER_SERVERS'].replace(',', ';')
+        os.environ['MEMCACHE_USERNAME'] = os.environ['MEMCACHIER_USERNAME']
+        os.environ['MEMCACHE_PASSWORD'] = os.environ['MEMCACHIER_PASSWORD']
+        return {
+          'default': {
+            'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+            'TIMEOUT': 60 * 60 * 24,
+            'BINARY': True,
+            'OPTIONS': {'tcp_nodelay': True}
+          }
+        }
+    except:
+        return {
+          'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+          }
+        }
+
+CACHES = get_cache()
+
+# CACHES = {
+#     # Long cache timeout for staticfiles, since this is used heavily by the optimizing storage.
+#     "staticfiles": {
+#         "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+#         "TIMEOUT": 60 * 60 * 24 * 365,
+#         "LOCATION": "staticfiles",
+#     },
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+#         'LOCATION': 'ttwellington',
+#     }
+# }
 
 # Compress static files offline
 
@@ -81,7 +105,7 @@ COMPRESS_CSS_FILTERS = [
 COMPRESS_CSS_HASHING_METHOD = 'content'
 COMPRESS_ROOT = STATIC_ROOT
 COMPRESS_STORAGE = STATICFILES_STORAGE
-COMPRESS_OFFLINE = False
+COMPRESS_OFFLINE = True
 COMPRESS_ENABLED = True
 
 LOGGING = {
