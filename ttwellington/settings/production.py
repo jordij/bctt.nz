@@ -27,11 +27,6 @@ ALLOWED_HOSTS = ['*']
 DEBUG = False
 TEMPLATE_DEBUG = False
 
-# Compress static files offline
-BASE_DIR = os.path.abspath(os.path.dirname(__name__))
-STATIC_ROOT = 'staticfiles'
-#STATIC_URL = '/static/'
-
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
@@ -41,6 +36,11 @@ DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
 
 # Use Amazon S3 for static files storage.
 STATICFILES_STORAGE = "require_s3.storage.OptimizedCachedStaticFilesStorage"
+# Compress static files offline
+BASE_DIR = os.path.abspath(os.path.dirname(__name__))
+STATIC_ROOT = 'staticfiles'
+COMPRESS_ROOT = STATIC_ROOT
+COMPRESS_STORAGE = STATICFILES_STORAGE
 
 # Amazon S3 settings.
 AWS_ACCESS_KEY_ID = env['AWS_ACCESS_KEY_ID']
