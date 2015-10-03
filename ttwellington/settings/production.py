@@ -8,10 +8,9 @@ INSTALLED_APPS += (
 )
 
 # Heroku platform settings.
-
 HEROKU_APP_NAME = "wellyttbc"
-
 HEROKU_BUILDPACK_URL = "https://github.com/heroku/heroku-buildpack-python.git"
+SITE_DOMAIN = "wellyttbc.herokuapp.com"
 
 # Parse database configuration from $DATABASE_URL
 DATABASES['default'] = dj_database_url.config()

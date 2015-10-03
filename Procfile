@@ -1,1 +1,1 @@
-web: waitress-serve --port=$PORT wellyttbc.ttwellington.wsgi:application
+web: waitress-serve --port=$PORT ttwellington.wsgi:application
