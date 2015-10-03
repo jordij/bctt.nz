@@ -68,7 +68,7 @@ def get_cache():
         return {
           'default': {
             'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
-            'LOCATION': env['MEMCACHIER_SERVERS'].replace(',', ';'),
+            'LOCATION': '%s:11211' % env['MEMCACHIER_SERVERS'].replace(',', ';'),
             'TIMEOUT': 60 * 60 * 24,
             'BINARY': True,
             'OPTIONS': {'tcp_nodelay': True}
