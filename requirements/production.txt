@@ -1,5 +1,3 @@
 -r dev.txt
 elasticsearch==1.2.0
 django-redis==3.8.2
-pylibmc
-django-pylibmc
