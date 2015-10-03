@@ -61,11 +61,10 @@ AWS_IS_GZIPPED = False
 
 # Cache settings.
 def get_cache():
-    import os
     try:
-        os.environ['MEMCACHE_SERVERS'] = os.environ['MEMCACHIER_SERVERS'].replace(',', ';')
-        os.environ['MEMCACHE_USERNAME'] = os.environ['MEMCACHIER_USERNAME']
-        os.environ['MEMCACHE_PASSWORD'] = os.environ['MEMCACHIER_PASSWORD']
+        os.environ['MEMCACHE_SERVERS'] = env['MEMCACHIER_SERVERS'].replace(',', ';')
+        os.environ['MEMCACHE_USERNAME'] = env['MEMCACHIER_USERNAME']
+        os.environ['MEMCACHE_PASSWORD'] = env['MEMCACHIER_PASSWORD']
         return {
           'default': {
             'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
@@ -82,19 +81,6 @@ def get_cache():
         }
 
 CACHES = get_cache()
-
-# CACHES = {
-#     # Long cache timeout for staticfiles, since this is used heavily by the optimizing storage.
-#     "staticfiles": {
-#         "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-#         "TIMEOUT": 60 * 60 * 24 * 365,
-#         "LOCATION": "staticfiles",
-#     },
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-#         'LOCATION': 'ttwellington',
-#     }
-# }
 
 # Compress static files offline
 
