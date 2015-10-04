@@ -1,6 +1,7 @@
 from .base import *
 import dj_database_url
 import os
+from memcacheify import memcacheify
 
 
 INSTALLED_APPS += (
@@ -58,30 +59,7 @@ AWS_S3_SECURE_URLS = True
 AWS_REDUCED_REDUNDANCY = False
 AWS_IS_GZIPPED = False
 
-
-# Cache settings.
-def get_cache():
-    try:
-        os.environ['MEMCACHE_SERVERS'] = env['MEMCACHIER_SERVERS']
-        os.environ['MEMCACHE_USERNAME'] = env['MEMCACHIER_USERNAME']
-        os.environ['MEMCACHE_PASSWORD'] = env['MEMCACHIER_PASSWORD']
-        return {
-          'default': {
-            'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
-            'LOCATION': env['MEMCACHIER_SERVERS'],
-            'TIMEOUT': 60 * 60 * 24,
-            'BINARY': True,
-            'OPTIONS': {'tcp_nodelay': True}
-          }
-        }
-    except:
-        return {
-          'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
-          }
-        }
-
-CACHES = get_cache()
+CACHES = memcacheify()
 
 # Compress static files offline
 COMPRESS_CSS_FILTERS = [
@@ -134,8 +112,3 @@ MIDDLEWARE_CLASSES = (
 
 # Excluding logged in (admin) requests
 CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
-
-try:
-    from .local import *
-except ImportError:
-    pass
