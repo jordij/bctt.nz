@@ -62,13 +62,13 @@ AWS_IS_GZIPPED = False
 # Cache settings.
 def get_cache():
     try:
-        os.environ['MEMCACHE_SERVERS'] = env['MEMCACHIER_SERVERS'].replace(',', ';')
+        os.environ['MEMCACHE_SERVERS'] = env['MEMCACHIER_SERVERS']
         os.environ['MEMCACHE_USERNAME'] = env['MEMCACHIER_USERNAME']
         os.environ['MEMCACHE_PASSWORD'] = env['MEMCACHIER_PASSWORD']
         return {
           'default': {
             'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
-            'LOCATION': '%s:11211' % env['MEMCACHIER_SERVERS'].replace(',', ';'),
+            'LOCATION': env['MEMCACHIER_SERVERS'],
             'TIMEOUT': 60 * 60 * 24,
             'BINARY': True,
             'OPTIONS': {'tcp_nodelay': True}
@@ -84,7 +84,6 @@ def get_cache():
 CACHES = get_cache()
 
 # Compress static files offline
-
 COMPRESS_CSS_FILTERS = [
     'compressor.filters.css_default.CssAbsoluteFilter',
     'compressor.filters.cssmin.CSSMinFilter',
@@ -111,12 +110,12 @@ LOGGING = {
     }
 }
 
-# WAGTAILSEARCH_BACKENDS = {
-#     'default': {
-#         'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',
-#         'INDEX': SITE_NAME,
-#     },
-# }
+WAGTAILSEARCH_BACKENDS = {
+    'default': {
+        'BACKEND': 'wagtail.wagtailsearch.backends.db',
+        'AUTO_UPDATE': True,
+    }
+}
 
 # Use the cached template loader
 TEMPLATE_LOADERS = (
