@@ -292,7 +292,6 @@ class CompIndexPage(Page):
         'CompPage',
     ]
 
-
     @property
     def pages(self):
         # Get list of live comp pages that are descendants of this page
@@ -308,8 +307,8 @@ class CompIndexPage(Page):
         Override if there's a current comp
         """
         try:
-            current_competition = CompPage.objects.live().descendant_of(self).filter(current=True)[0]
-            return redirect(current_competition.url, *args, **kwargs)
+            current_comp = CompPage.objects.live().descendant_of(self).filter(current=True)[0]
+            return redirect(current_comp.url, *args, **kwargs)
         except:
             return super(CompIndexPage, self).serve(request, *args, **kwargs)
 
@@ -428,7 +427,7 @@ class CompPage(RoutablePageMixin, Page):
     @property
     def get_stats(self):
         """
-        Get team totals, by group and ordered by wins
+        Get team totals, by group and ordered by wins, finals separated
         """
         teams = self.get_related_teams()
 
@@ -441,8 +440,8 @@ class CompPage(RoutablePageMixin, Page):
 
         for team_group in teams:
             team_group.team
-            team_results_a = self.get_related_results().filter(team_one=team_group.team)
-            team_results_b = self.get_related_results().filter(team_two=team_group.team)
+            team_results_a = self.get_related_results().filter(is_final=False, team_one=team_group.team)
+            team_results_b = self.get_related_results().filter(is_final=False, team_two=team_group.team)
             team_group.team.wins = 0
             team_group.team.losts = 0
             team_group.team.points = 0
@@ -486,6 +485,7 @@ class CompPage(RoutablePageMixin, Page):
         FieldPanel('subtitle', classname="full"),
         FieldPanel('current'),
         FieldPanel('year'),
+        SnippetChooserPanel('winner', Team),
         StreamFieldPanel('body'),
     ]
 
@@ -559,6 +559,7 @@ class MatchResult(models.Model):
     )
     team_one_games = models.IntegerField(default=0)
     team_two_games = models.IntegerField(default=0)
+    is_final = models.BooleanField(default=False, null=False)
 
     panels = [
         FieldPanel('date'),
@@ -566,6 +567,7 @@ class MatchResult(models.Model):
         FieldPanel('team_two'),
         FieldPanel('team_one_games'),
         FieldPanel('team_two_games'),
+        FieldPanel('is_final')
     ]
 
     class Meta:

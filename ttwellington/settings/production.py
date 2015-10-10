@@ -37,7 +37,8 @@ STATICFILES_DIRS = (
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
 
 # Use Amazon S3 for static files storage.
-STATICFILES_STORAGE = "require_s3.storage.OptimizedCachedStaticFilesStorage"
+STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
+# "require_s3.storage.OptimizedCachedStaticFilesStorage"
 STATIC_ROOT = 'staticfiles'
 
 # Amazon S3 settings.
@@ -51,7 +52,7 @@ AWS_HEADERS = {
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
 COMPRESS_URL = STATIC_URL
-MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
+MEDIA_URL = "https://%s/media/" % AWS_S3_CUSTOM_DOMAIN
 
 AWS_S3_FILE_OVERWRITE = True
 AWS_QUERYSTRING_AUTH = False
@@ -67,7 +68,7 @@ COMPRESS_CSS_FILTERS = [
     'compressor.filters.css_default.CssAbsoluteFilter',
     'compressor.filters.cssmin.CSSMinFilter',
 ]
-COMPRESS_CSS_HASHING_METHOD = 'content'
+# COMPRESS_CSS_HASHING_METHOD = 'content'
 COMPRESS_ROOT = STATIC_ROOT
 COMPRESS_STORAGE = STATICFILES_STORAGE
 COMPRESS_OFFLINE = True
