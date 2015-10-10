@@ -1,0 +1,39 @@
+{% load wagtailcore_tags wagtailimages_tags static %}
+
+{% for group, groups in items %}
+
+    <div class="{{ class }}">      
+        
+        <h6>Final Classification {{ group }}</h6>
+
+        <table class="table table-striped">
+            <thead>
+                {% if not simple %}
+                <td>#</td>
+                <td>Team</td>
+                <td></td>
+                {% endif %}
+            </thead>
+
+            {% for team in groups %}
+            <tr>
+                {% if not simple %}                
+                <td>{{ forloop.counter }}</td>
+                {% endif %}
+                <td>{% if team.image %}{% image team.image fill-50x50 class="img-circle" %}{% else %}<img class="img-circle" src="{% static 'images/placeholder.png' %}" width="50" height="50">{% endif %}</td>
+                <td>{{ team.name }}{% if forloop.first %}&nbsp;<span class="label label-success">Winner</span>{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+
+    {% if forloop.counter|divisibleby:2 %}
+    
+    </div>
+    
+    <div class="row">
+    
+    {% endif %}
+
+{% endfor %}

@@ -15,6 +15,9 @@ class SimpleDbWhitelister(Whitelister):
         'b': allow_without_attributes,
         'i': allow_without_attributes,
         'u': allow_without_attributes,
+        'ul': allow_without_attributes,
+        'ol': allow_without_attributes,
+        'li': allow_without_attributes,
         'h2': allow_without_attributes,
     }
 

@@ -174,11 +174,21 @@
                 
             <div class="row" id="stats">
 
+                {% if self.winner %}
+                    {% include "business/includes/finals_table.html" with items=self.get_finals_stats.items class="col-md-6" simple=False only %}
+                {% endif %}
+
                 {% include "business/includes/classification_table.html" with items=self.get_stats.items class="col-md-6" simple=False only %}
 
             </div>
 
              <div class="row">
+                <div class="col-xs-12">
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      <strong>Important</strong> The statistics are only for the regular division results and do not include the results of the finals.
+                    </div>
+                </div>
                 <div class="col-xs-12">
                     <a href="#teams" class="pull-right btn btn-primary">Back to top</a>
                 </div>

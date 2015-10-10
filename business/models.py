@@ -425,6 +425,25 @@ class CompPage(RoutablePageMixin, Page):
         return values
 
     @property
+    def get_finals_stats(self):
+        """
+        Get team total classification finals separated
+        """
+        teams = self.related_teams.all().order_by('group', 'final_classification')
+
+        groups = teams.values('group').annotate(models.Count('group'))
+        results_group = dict()
+
+        for group in groups:
+            results_group[str(group['group'])] = list()
+
+            for team_group in teams:
+                if team_group.group is group['group']:
+                    results_group[str(team_group.group)].append(team_group.team)
+
+        return results_group
+
+    @property
     def get_stats(self):
         """
         Get team totals, by group and ordered by wins, finals separated
@@ -439,7 +458,6 @@ class CompPage(RoutablePageMixin, Page):
             results_group[str(group['group'])] = list()
 
         for team_group in teams:
-            team_group.team
             team_results_a = self.get_related_results().filter(is_final=False, team_one=team_group.team)
             team_results_b = self.get_related_results().filter(is_final=False, team_two=team_group.team)
             team_group.team.wins = 0
@@ -528,9 +546,11 @@ class TeamGroup(models.Model):
         related_name='competitions'
     )
     group = models.IntegerField(default=0)
+    final_classification = models.IntegerField(default=0, help_text='To set once the comp is finished')
     panels = [
         FieldPanel('group'),
         SnippetChooserPanel('team', Team),
+        FieldPanel('final_classification')
     ]
 
     class Meta:
