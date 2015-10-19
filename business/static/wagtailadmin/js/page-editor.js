@@ -14,7 +14,16 @@ function registerHalloPlugin(name, opts) {
     halloPlugins[name] = (opts || {});
 }
 
-function makeRichTextEditable(id, plugins) {
+function unRegisterHalloPlugin(name) {
+    if (!$.inArray(name, disabledHalloPlugins)) {
+        disabledHalloPlugins.push(name);
+    }
+    if ($.inArray(name, halloPlugins)) {
+        delete halloPlugins[name];
+    }
+}
+
+function makeRichTextEditable(id) {
     var instanceHalloPlugins = plugins || halloPlugins;
     var input = $('#' + id);
     var richText = $('<div class="richtext"></div>').html(input.val());
@@ -157,6 +166,7 @@ function InlinePanel(opts) {
             $('#' + deleteInputId).val('1');
             $('#' + childId).addClass('deleted').slideUp(function() {
                 self.updateMoveButtonDisabledStates();
+                self.updateAddButtonState();
                 self.setHasContent();
             });
         });
@@ -211,6 +221,7 @@ function InlinePanel(opts) {
         if ($('#' + deleteInputId).val() === '1') {
             $('#' + childId).addClass('deleted').hide(0, function() {
                 self.updateMoveButtonDisabledStates();
+                self.updateAddButtonState();
                 self.setHasContent();
             });
 
@@ -227,6 +238,19 @@ function InlinePanel(opts) {
                 $('ul.controls .inline-child-move-up', this).toggleClass('disabled', i === 0).toggleClass('enabled', i !== 0);
                 $('ul.controls .inline-child-move-down', this).toggleClass('disabled', i === forms.length - 1).toggleClass('enabled', i != forms.length - 1);
             });
+        }
+    };
+
+    self.updateAddButtonState = function() {
+        if (opts.maxForms) {
+            var forms = self.formsUl.children('li:visible');
+            var addButton = $('#' + opts.formsetPrefix + '-ADD');
+
+            if (forms.length >= opts.maxForms) {
+                addButton.addClass('disabled');
+            } else {
+                addButton.removeClass('disabled');
+            }
         }
     };
 
@@ -271,6 +295,7 @@ function InlinePanel(opts) {
             }
 
             self.updateMoveButtonDisabledStates();
+            self.updateAddButtonState();
 
             if (opts.onAdd) opts.onAdd();
         }
@@ -288,15 +313,19 @@ function cleanForSlug(val, useURLify) {
 }
 
 function initSlugAutoPopulate() {
+    var slugFollowsTitle = false;
+
     $('#id_title').on('focus', function() {
-        $('#id_slug').data('previous-val', $('#id_slug').val());
-        $(this).data('previous-val', $(this).val());
+        /* slug should only follow the title field if its value matched the title's value at the time of focus */
+        var currentSlug = $('#id_slug').val();
+        var slugifiedTitle = cleanForSlug(this.value);
+        slugFollowsTitle = (currentSlug == slugifiedTitle);
     });
 
     $('#id_title').on('keyup keydown keypress blur', function() {
-        if ($('body').hasClass('create') || (!$('#id_slug').data('previous-val').length || cleanForSlug($('#id_title').data('previous-val')) === $('#id_slug').data('previous-val'))) {
-            // only update slug if the page is being created from scratch, if slug is completely blank, or if title and slug prior to typing were identical
-            $('#id_slug').val(cleanForSlug($('#id_title').val()));
+        if (slugFollowsTitle) {
+            var slugifiedTitle = cleanForSlug(this.value);
+            $('#id_slug').val(slugifiedTitle);
         }
     });
 }
@@ -336,7 +365,7 @@ function initCollapsibleBlocks() {
             $fieldset.hide();
         }
 
-        $li.find('h2').click(function() {
+        $li.find('> h2').click(function() {
             if (!$li.hasClass('collapsed')) {
                 $li.addClass('collapsed');
                 $fieldset.hide('slow');
@@ -349,7 +378,10 @@ function initCollapsibleBlocks() {
 }
 
 $(function() {
-    initSlugAutoPopulate();
+    /* Only non-live pages should auto-populate the slug from the title */
+    if (!$('body').hasClass('page-is-live')) {
+        initSlugAutoPopulate();
+    }
     initSlugCleaning();
     initErrorDetection();
     initCollapsibleBlocks();

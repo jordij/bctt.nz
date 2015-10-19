@@ -32,19 +32,3 @@ def editor_js():
     js_includes = format_html_join(
         '\n', '<script src="{0}{1}"></script>', ((settings.STATIC_URL, filename) for filename in js_files))
     return js_includes
-
-
-@hooks.register('construct_whitelister_element_rules')
-def whitelister_element_rules():
-    """
-    Whitelist custom elements to the hallo.js editor
-    """
-    return {
-        'blockquote': allow_without_attributes,
-        'cite': allow_without_attributes,
-        'a': attribute_rule({'href': check_url, 'class': True}),
-        'h2': attribute_rule({'id': True}),
-        'h3': attribute_rule({'id': True}),
-        'h4': attribute_rule({'id': True}),
-        'h5': attribute_rule({'id': True}),
-    }

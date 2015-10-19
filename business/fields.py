@@ -10,7 +10,12 @@ allow_without_attributes = attribute_rule({})
 class SimpleDbWhitelister(Whitelister):
     element_rules = {
         '[document]': allow_without_attributes,
-        'a': attribute_rule({'href': check_url}),
+        'a': attribute_rule({
+            'href': check_url,
+            'id': True,
+            'target': True,
+            'linktype': True,
+        }),
         'p': allow_without_attributes,
         'b': allow_without_attributes,
         'i': allow_without_attributes,
@@ -48,7 +53,7 @@ class SimpleRichTextArea(RichTextArea):
             'allowedTags': ['a', 'p', 'i', 'b', 'u'],
             'removeAttrs': ['class', 'style', 'id'],
             'allowedAttributes': [
-                ["a", ['href', 'target', 'data-id', 'data-linktype']]
+                ["a", ['href', 'id', 'target', 'id', 'linktype']]
             ]
         }
     }

@@ -35,6 +35,13 @@ footer {
   img {
     width: 216px;
   }
+  a {
+    color: lighten(@brand-primary, 42%);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 // Footer banner
@@ -53,8 +60,8 @@ footer {
     //text-decoration: underline;
 
     &:hover {
-      text-decoration: none;
-      color: @link-hover-color;
+      text-decoration: underline;
+      //color: @link-hover-color;
     }
   }
   ul {

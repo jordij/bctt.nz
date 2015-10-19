@@ -5882,6 +5882,12 @@ footer p {
 .footer-brand img {
   width: 216px;
 }
+.footer-brand a {
+  color: #8dd1df;
+}
+.footer-brand a:hover {
+  text-decoration: underline;
+}
 .footer-banner {
   background-color: #216775;
   color: #d3e1e3;
@@ -5896,8 +5902,7 @@ footer p {
   color: #8dd1df;
 }
 .footer-banner a:hover {
-  text-decoration: none;
-  color: #216775;
+  text-decoration: underline;
 }
 .footer-banner ul {
   list-style-type: none;
