@@ -23,7 +23,7 @@ function unRegisterHalloPlugin(name) {
     }
 }
 
-function makeRichTextEditable(id) {
+function makeRichTextEditable(id, plugins) {
     var instanceHalloPlugins = plugins || halloPlugins;
     var input = $('#' + id);
     var richText = $('<div class="richtext"></div>').html(input.val());
