@@ -24,6 +24,14 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
 
+# Sendgrid Email settings
+
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_HOST_USER = env["SENDGRID_USERNAME"]
+EMAIL_HOST_PASSWORD = env["SENDGRID_PASSWORD"]
+EMAIL_PORT = 25
+EMAIL_USE_TLS = False
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 TEMPLATE_DEBUG = False
