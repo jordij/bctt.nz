@@ -3,6 +3,7 @@ import dj_database_url
 import os
 from memcacheify import memcacheify
 
+NOCAPTCHA = True
 
 INSTALLED_APPS += (
    'herokuapp',
@@ -18,6 +19,9 @@ DATABASES['default'] = dj_database_url.config()
 env = os.environ.copy()
 SECRET_KEY = env['SECRET_KEY']
 
+RECAPTCHA_PUBLIC_KEY = env['RECAPTCHA_PUBLIC_KEY']
+RECAPTCHA_PRIVATE_KEY = env['RECAPTCHA_PRIVATE_KEY']
+
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -27,8 +31,8 @@ ALLOWED_HOSTS = ['*']
 # Sendgrid Email settings
 
 EMAIL_HOST = "smtp.sendgrid.net"
-EMAIL_HOST_USER = env["SENDGRID_USERNAME"]
-EMAIL_HOST_PASSWORD = env["SENDGRID_PASSWORD"]
+EMAIL_HOST_USER = env['SENDGRID_USERNAME']
+EMAIL_HOST_PASSWORD = env['SENDGRID_PASSWORD']
 EMAIL_PORT = 25
 EMAIL_USE_TLS = False
 

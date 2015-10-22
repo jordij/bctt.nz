@@ -180,7 +180,7 @@ class NavigationMenu(models.Model):
 
 NavigationMenu.panels = [
     FieldPanel('menu_name', classname='full title'),
-    InlinePanel(NavigationMenu, 'menu_items', label="Menu Items", help_text='Set the menu items for the current menu.')
+    InlinePanel('menu_items', label="Menu Items", help_text='Set the menu items for the current menu.')
 ]
 
 

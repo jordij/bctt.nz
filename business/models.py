@@ -263,7 +263,7 @@ BlogPage.content_panels = [
     SnippetChooserPanel('author', Author),
     StreamFieldPanel('body'),
     FieldPanel('tags'),
-    InlinePanel(BlogPage, 'related_links', label="Related links"),
+    InlinePanel('related_links', label="Related links"),
 ]
 
 BlogPage.promote_panels = [
@@ -545,7 +545,7 @@ class TeamGroup(models.Model):
         on_delete=models.SET_NULL,
         related_name='competitions'
     )
-    group = models.IntegerField(default=0)
+    group = models.IntegerField('Division', default=0)
     final_classification = models.IntegerField(default=0, help_text='To set once the comp is finished')
     panels = [
         FieldPanel('group'),

@@ -6,15 +6,18 @@ from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from modelcluster.fields import ParentalKey
+from wagtailcaptcha.models import WagtailCaptchaEmailForm
+
+from business.utilities import has_recaptcha
 
 
 class SubmitFormField(AbstractFormField):
     page = ParentalKey('SubmitFormPage', related_name='form_fields')
 
 
-class SubmitFormPage(AbstractEmailForm):
+class SubmitFormPage(WagtailCaptchaEmailForm if has_recaptcha() else AbstractEmailForm):
     """
-    Form page, inherits from SweetCaptchaEmailForm if available, otherwise fallback to AbstractEmailForm
+    Form page, inherits from WagtailCaptchaEmailForm if available, otherwise fallback to AbstractEmailForm
     """
     subpage_types = []
     search_fields = ()
@@ -37,7 +40,7 @@ SubmitFormPage.content_panels = [
     FieldPanel('title', classname="full title"),
     FieldPanel('subtitle', classname="full"),
     FieldPanel('thank_you_text', classname="full"),
-    InlinePanel(SubmitFormPage, 'form_fields', label="Form fields"),
+    InlinePanel('form_fields', label="Form fields"),
     MultiFieldPanel([
         FieldPanel('to_address'),
         FieldPanel('from_address'),

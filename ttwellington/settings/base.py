@@ -72,6 +72,8 @@ INSTALLED_APPS = (
     'compressor',
     'taggit',
     'modelcluster',
+    'captcha',
+    'wagtailcaptcha',
     'business',
     'widget_tweaks',
     'wagtail.contrib.wagtailsitemaps',

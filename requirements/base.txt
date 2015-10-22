@@ -10,3 +10,4 @@ django-libsass>=0.2
 libsass==0.8.2
 Pillow==2.8.1
 django-herokuapp
+wagtail-django-recaptcha==0.1

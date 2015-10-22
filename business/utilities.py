@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.exceptions import ValidationError
 #  A place to define methods used in different parts of the app
 
@@ -19,3 +20,13 @@ def replace_tags(string=None, tags=dict()):
         for key, value in tags.items():
             string = string.replace(key, value)
     return string
+
+
+def has_recaptcha():
+    """
+    Check if the WagtailCaptcha settings are properly set
+    """
+    wagtailcaptcha_public_key = getattr(settings, 'RECAPTCHA_PUBLIC_KEY', None)
+    wagtailcaptcha_private_key = getattr(settings, 'RECAPTCHA_PRIVATE_KEY', None)
+
+    return wagtailcaptcha_public_key and wagtailcaptcha_private_key
