@@ -9,7 +9,7 @@ import django.db.models.options as options
 
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page, Orderable
-from wagtail.wagtailadmin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel, StreamFieldPanel
+from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, StreamFieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailcore.fields import StreamField
 from wagtail.wagtailembeds.blocks import EmbedBlock
@@ -33,6 +33,7 @@ options.DEFAULT_NAMES = options.DEFAULT_NAMES + ('description',)
 
 
 class CarouselItem(LinkFields):
+
     """
     A set of carousel images
     """
@@ -59,6 +60,7 @@ class CarouselItem(LinkFields):
 
 
 class HomePage(Page):
+
     """
     HomePage class
     """
@@ -248,7 +250,6 @@ class BlogPage(Page):
 
     subpage_types = []
 
-
     @property
     def blog_index(self):
         # Find closest ancestor which is a blog index
@@ -421,7 +422,8 @@ class CompPage(RoutablePageMixin, Page):
     @property
     def get_grouped_teams(self):
         groups = self.get_related_teams().values('group').annotate(models.Count('group'))
-        values = dict(((str(group['group']), self.get_related_teams().filter(group=group['group'])) for group in groups if group['group__count']))
+        values = dict(((str(group['group']), self.get_related_teams().filter(group=group['group']))
+                       for group in groups if group['group__count']))
         return values
 
     @property
