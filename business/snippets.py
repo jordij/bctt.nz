@@ -287,10 +287,10 @@ class Team(models.Model):
 
     @property
     def get_losts(self):
-        wins_one = self.competitions_as_one.filter(team_two_games__gt=F('team_one_games')).aggregate(Sum('team_two_games'))
+        wins_one = self.competitions_as_one.filter(team_one_games__lt=F('team_two_games')).aggregate(Sum('team_one_games'))
         if wins_one['team_one_games__sum'] is None:
             wins_one['team_one_games__sum'] = 0
-        wins_two = self.competitions_as_two.filter(team_one_games__gt=F('team_two_games')).aggregate(Sum('team_one_games'))
+        wins_two = self.competitions_as_two.filter(team_two_games__lt=F('team_one_games')).aggregate(Sum('team_two_games'))
         if wins_two['team_two_games__sum'] is None:
             wins_two['team_two_games__sum'] = 0
         return wins_one['team_one_games__sum'] + wins_two['team_two_games__sum']
