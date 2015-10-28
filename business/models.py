@@ -493,7 +493,7 @@ class CompPage(RoutablePageMixin, Page):
         return self.related_teams.all().order_by('group', 'team__name')
 
     def get_related_results(self):
-        return self.related_results.all().order_by('date')
+        return self.related_results.all().order_by('-date')
 
     @property
     def comp_index(self):
