@@ -9,6 +9,7 @@ from wagtail.wagtailcore.models import Orderable
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
 
 from .utilities import *
 from .snippets import *
@@ -161,7 +162,7 @@ class NavigationMenuManager(models.Manager):
 
 
 @register_snippet
-class NavigationMenu(models.Model):
+class NavigationMenu(ClusterableModel):
 
     objects = NavigationMenuManager()
     menu_name = models.CharField(max_length=255, null=False, blank=False)
@@ -259,7 +260,7 @@ class TeamManager(models.Manager):
 
 
 @register_snippet
-class Team(models.Model):
+class Team(ClusterableModel):
 
     """
     Team for player
@@ -277,23 +278,23 @@ class Team(models.Model):
 
     @property
     def get_wins(self):
-        wins_one = self.competitions_as_one.all().annotate(Sum('team_one_games'))
+        wins_one = self.competitions_as_one.all().aggregate(Sum('team_one_games'))
         if wins_one['team_one_games__sum'] is None:
             wins_one['team_one_games__sum'] = 0
-        wins_two = self.competitions_as_two.all().annotate(Sum('team_two_games'))
+        wins_two = self.competitions_as_two.all().aggregate(Sum('team_two_games'))
         if wins_two['team_two_games__sum'] is None:
             wins_two['team_two_games__sum'] = 0
         return wins_one['team_one_games__sum'] + wins_two['team_two_games__sum']
 
     @property
     def get_losts(self):
-        wins_one = self.competitions_as_one.all().annotate(Sum('team_two_games'))
-        if wins_one['team_two_games__sum'] is None:
-            wins_one['team_two_games_sum'] = 0
-        wins_two = self.competitions_as_two.all().annotate(Sum('team_one_games'))
-        if wins_two['team_one_games__sum'] is None:
-            wins_two['team_one_games__sum'] = 0
-        return wins_one['team_one_games__sum'] + wins_two['team_two_games__sum']
+        losts_one = self.competitions_as_one.all().aggregate(Sum('team_two_games'))
+        if losts_one['team_two_games__sum'] is None:
+            losts_one['team_two_games__sum'] = 0
+        losts_two = self.competitions_as_two.all().aggregate(Sum('team_one_games'))
+        if losts_two['team_one_games__sum'] is None:
+            losts_two['team_one_games__sum'] = 0
+        return losts_one['team_two_games__sum'] + losts_two['team_one_games__sum']
 
     class Meta:
         verbose_name = "Team profile"

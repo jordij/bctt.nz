@@ -113,11 +113,11 @@
 
                 <div class="row" id="results">
 
-                    {% for result, results in self.get_grouped_results.items %}
+                    {% for result in self.get_grouped_results %}
                       
                         <div class="col-md-6">      
                             
-                            <h6>{{ results.0.date|date:"j M Y" }}</h6>
+                            <h6>{{ result.date|date:"j M Y" }}</h6>
 
                             <table class="table table-striped">
                                 <thead>
@@ -127,7 +127,7 @@
                                     <td class="hidden-xs">Team B</td>
                                     <td>Total</td>
                                 </thead>
-                                {% for team in results %}
+                                {% for team in result.values %}
                                 <tr>
                                     <td>{% if team.team_one.image %}{% image team.team_one.image fill-50x50 class="img-circle" %}{% else %}<img class="img-circle" src="{% static 'images/placeholder.png' %}" width="50" height="50"> {% endif %}</td>
                                     <td class="hidden-xs">{{ team.team_one.name }}{% if team.team_one_games > team.team_two_games %}&nbsp;<span class="label label-success">Winner</span>{% endif %}</td>

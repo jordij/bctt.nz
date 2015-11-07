@@ -404,7 +404,7 @@ class CompPage(RoutablePageMixin, Page):
         """
         Get either next date of the comp or last recent result date
         """
-        dates = self.get_related_results().order_by('date').values('date').annotate(models.Count('date'))
+        dates = self.get_related_results().values('date').annotate(models.Count('date')).order_by('-date')
         for _date in dates:
             if _date['date'] > date.today():
                 return (_date['date'], False)
@@ -415,8 +415,14 @@ class CompPage(RoutablePageMixin, Page):
 
     @property
     def get_grouped_results(self):
-        dates = self.get_related_results().values('date').annotate(models.Count('date'))
-        values = dict(((str(date['date']), self.get_related_results().filter(date=date['date'])) for date in dates if date['date__count']))
+        dates = self.get_related_results().values('date').annotate(models.Count('date')).order_by('-date')
+        values = []
+        for _date in dates:
+            if _date['date__count']:
+                values.append({
+                        'date': _date['date'],
+                        'values': self.get_related_results().filter(date=_date['date']),
+                    })
         return values
 
     @property
@@ -452,7 +458,7 @@ class CompPage(RoutablePageMixin, Page):
         """
         teams = self.get_related_teams()
 
-        groups = self.get_related_teams().values('group').annotate(models.Count('group'))
+        groups = self.get_related_teams().order_by('group').values('group').annotate(models.Count('group'))
 
         results_group = dict()
 
@@ -493,7 +499,7 @@ class CompPage(RoutablePageMixin, Page):
         return self.related_teams.all().order_by('group', 'team__name')
 
     def get_related_results(self):
-        return self.related_results.all().order_by('-date')
+        return self.related_results.all().order_by('date')
 
     @property
     def comp_index(self):
