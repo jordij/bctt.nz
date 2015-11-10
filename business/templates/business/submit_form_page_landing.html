@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags i18n widget_tweaks %}
+{% block body_class %}template-{{ self.get_verbose_name|slugify }}{% endblock %}
+
+
+{% block heading %}
+    {% include "business/includes/jumbotron.html" with title=self.title subtitle=self.subtitle only %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container padding-bottom padding-top">
+        <div class="row">
+            <div class="col-md-7">
+                <p>{{ self.thank_you_text|richtext }}</p>
+            </div>
+
+            <div class="col-md-5 hidden-sm   text-center">
+                <img width="277" height="305" src="{% static 'images/white-logo.png' %}">
+            </div>
+
+        </div>
+    </div>
+    
+{% endblock %}
