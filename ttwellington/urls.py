@@ -39,5 +39,6 @@ else:
     urlpatterns += patterns(
         '',
         url(r'^robots\.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
+        url(r'^humans\.txt', TemplateView.as_view(template_name='humans.txt', content_type='text/plain')),
         url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT})
     )
