@@ -1,4 +1,4 @@
-[![Heroku](http://heroku-badge.herokuapp.com/?app=bctt&style=flat&svg=1)]
+![Heroku](http://heroku-badge.herokuapp.com/?app=bctt&style=flat&svg=1)
 
 Busines Class Table Tennis Wellington
 =====================================
