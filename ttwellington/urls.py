@@ -14,7 +14,7 @@ from wagtail.wagtailimages import urls as wagtailimages_urls
 from wagtail.contrib.wagtailsitemaps.views import sitemap
 from wagtail.wagtailsearch.signal_handlers import register_signal_handlers as wagtailsearch_register_signal_handlers
 
-from core.views import S3DocumentServe
+from business.views import S3DocumentServe
 
 
 admin.autodiscover()
