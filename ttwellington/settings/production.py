@@ -1,7 +1,11 @@
-from .base import *
 import dj_database_url
 import os
 from memcacheify import memcacheify
+
+from .base import *
+
+
+GOOGLE_ANALYTICS_KEY = 'UA-24461191-2'
 
 NOCAPTCHA = True
 
@@ -10,9 +14,9 @@ INSTALLED_APPS += (
 )
 
 # Heroku platform settings.
-HEROKU_APP_NAME = "wellyttbc"
+HEROKU_APP_NAME = "bctt"
 HEROKU_BUILDPACK_URL = "https://github.com/heroku/heroku-buildpack-python.git"
-SITE_DOMAIN = "wellyttbc.herokuapp.com"
+SITE_DOMAIN = "bctt.herokuapp.com"
 
 # Parse database configuration from $DATABASE_URL
 DATABASES['default'] = dj_database_url.config()

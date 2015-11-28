@@ -35,12 +35,12 @@
         <meta property="og:title" content="{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}" />
         <meta property="og:description" content="{% if self.search_description %}{{ self.search_description }}{% elif self.intro %}{{ self.intro }}{% elif self.body_excerpt %}{{ self.body_excerpt|truncatewords:40 }}{% else %}{{ self.title }}{% endif %}" />
         {% block og_images %}
-            {% if self.og_image and self.og_image.image %}
-                {% image self.og_image.image width-400 as tmp_og_image %}
-                <meta property="og:image" content="{{ BASE_URL }}{{ tmp_og_image.url }}" />
-                <meta property="og:image:width" content="{{ tmp_og_image.width }}">
-                <meta property="og:image:height" content="{{ tmp_og_image.height }}">
-                <meta property="og:image:type" content="image/{{ self.og_image.type }}">
+            {% if self.feed_image %}
+                {% image self.feed_image width-400 as og_image %}
+                <meta property="og:image" content="{{ BASE_URL }}{{ og_image.url }}" />
+                <meta property="og:image:width" content="{{ og_image.width }}">
+                <meta property="og:image:height" content="{{ og_image.height }}">
+                <meta property="og:image:type" content="image/{{ og_image.type }}">
             {% else %}
                 <meta property="og:image" content="{% static 'images/og-white-logo.png' %}">
                 <meta property="og:image:width" content="400">
@@ -59,11 +59,6 @@
         {% endcompress %}
 
         {% block extra_css %}{% endblock %}
-
-        {% if GOOGLE_ANALYTICS_KEY %}
-            <!-- Google Analytics -->
-            <!-- End Google Analytics -->
-        {% endif %}
     </head>
     <body class="{% block body_class %}{% endblock %}">
 
@@ -91,5 +86,18 @@
 
         {% block extra_js %}
         {% endblock %}
+
+        {% if GOOGLE_ANALYTICS_KEY %}
+            <!-- Google Analytics -->
+            <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+                ga('create', '{{ GOOGLE_ANALYTICS_KEY }}', 'auto');
+                ga('send', 'pageview');
+            </script>
+            <!-- End Google Analytics -->
+        {% endif %}
     </body>
 </html>
