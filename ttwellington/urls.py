@@ -14,6 +14,8 @@ from wagtail.wagtailimages import urls as wagtailimages_urls
 from wagtail.contrib.wagtailsitemaps.views import sitemap
 from wagtail.wagtailsearch.signal_handlers import register_signal_handlers as wagtailsearch_register_signal_handlers
 
+from core.views import S3DocumentServe
+
 
 admin.autodiscover()
 
@@ -25,6 +27,7 @@ urlpatterns = patterns(
     url(r'^django-admin/', include(admin.site.urls)),
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^search/', include(wagtailsearch_urls)),
+    url(r'^documents/(?P<document_id>\d+)/(.*)$', S3DocumentServe.as_view(), name='wagtaildocs_serve'),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^images/', include(wagtailimages_urls)),
     url('^sitemap\.xml$', sitemap),

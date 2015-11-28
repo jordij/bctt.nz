@@ -9,5 +9,5 @@ django-widget-tweaks
 django-libsass==0.4
 libsass==0.9.1
 Pillow==2.8.1
-django-herokuapp==0.9.19
+django-herokuapp==0.9.20
 wagtail-django-recaptcha==0.1
