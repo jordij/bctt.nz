@@ -29,11 +29,13 @@ RECAPTCHA_PRIVATE_KEY = env['RECAPTCHA_PRIVATE_KEY']
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# Allow all host headers
-ALLOWED_HOSTS = ['*']
+# Allow domain host headers
+ALLOWED_HOSTS = [
+    'bctt.nz',
+    'www.bctt.nz',
+]
 
 # Sendgrid Email settings
-
 EMAIL_HOST = "smtp.sendgrid.net"
 EMAIL_HOST_USER = env['SENDGRID_USERNAME']
 EMAIL_HOST_PASSWORD = env['SENDGRID_PASSWORD']
@@ -74,7 +76,6 @@ AWS_S3_FILE_OVERWRITE = True
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_SECURE_URLS = True
 AWS_REDUCED_REDUNDANCY = True
-# AWS_PRELOAD_METADATA = True
 AWS_IS_GZIPPED = False
 
 CACHES = memcacheify()
@@ -84,7 +85,6 @@ COMPRESS_CSS_FILTERS = [
     'compressor.filters.css_default.CssAbsoluteFilter',
     'compressor.filters.cssmin.CSSMinFilter',
 ]
-# COMPRESS_CSS_HASHING_METHOD = 'content'
 COMPRESS_ROOT = STATIC_ROOT
 COMPRESS_STORAGE = STATICFILES_STORAGE
 COMPRESS_OFFLINE = True
