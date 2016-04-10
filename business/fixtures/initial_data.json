@@ -225,7 +225,7 @@
 },
 {
     "fields": {
-        "body": "<p>Wanna join the Competition? No worries, fill the following form and we'll get in touch as soon as possible.</p>",
+        "subtitle": "Wanna join the Competition? No worries, fill the following form and we'll get in touch as soon as possible.",
         "thank_you_text": "<p>Sweet, we'll be in touch soon. In the meantime check our latest <a id=\"4\" linktype=\"page\">news and articles</a>.</p>",
         "to_address": "",
         "from_address": "",

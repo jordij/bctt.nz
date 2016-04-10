@@ -214,21 +214,7 @@
 // Optional captions
 // -----------------------------
 // Hidden by default for smaller viewports
-.carousel-caption {
-  position: absolute;
-  left: 15%;
-  right: 15%;
-  bottom: 20px;
-  z-index: 10;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  color: @carousel-caption-color;
-  text-align: center;
-  text-shadow: @carousel-text-shadow;
-  & .btn {
-    text-shadow: none; // No shadow for button elements in carousel-caption
-  }
-}
+
 
 
 // Scale up controls for tablets and up
@@ -256,14 +242,27 @@
   }
 
   // Show and left align the captions
-  .carousel-caption {
-    left: 20%;
-    right: 20%;
-    padding-bottom: 30px;
-  }
+  //.carousel-caption {
+  //  left: 20%;
+  //  right: 20%;
+  //  padding-bottom: 30px;
+  //}
 
   // Move up the indicators
   .carousel-indicators {
     bottom: 20px;
+  }
+}
+
+.carousel-caption {
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  z-index: 10;
+  color: @carousel-caption-color;
+  text-align: center;
+  text-shadow: @carousel-text-shadow;
+  & .btn {
+    text-shadow: none; // No shadow for button elements in carousel-caption
   }
 }
