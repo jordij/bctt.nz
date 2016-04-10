@@ -1,7 +1,14 @@
-![Heroku](http://heroku-badge.herokuapp.com/?app=bctt&style=flat&svg=1)
-
 Busines Class Table Tennis Wellington
 =====================================
+
+```
+             o      .   _______ _______
+              \_ 0     /______//______/|   @_o
+                /\_,  /______//______/     /\
+               | \    |      ||      |     / |
+
+```
+
 
 Website for the TT business league in Wellington NZ. Available at [bctt.nz](http://bctt.nz)
 
@@ -20,5 +27,7 @@ Website for the TT business league in Wellington NZ. Available at [bctt.nz](http
 Your instance is up and running! Available on **http://localhost:8111**
 
 Backend based on [Wagtail CMS](https://wagtail.io)
+
+Hosted on [Heroku](https://www.heroku.com)
 
 Frontend based on [Twitter Bootstrap](http://getbootstrap.com) and [Flat UI Theme](http://designmodo.github.io/Flat-UI/).
