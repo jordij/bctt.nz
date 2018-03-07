@@ -2,12 +2,12 @@
 # vi: set ft=ruby :
 
 # Set your project name
-PROJECT_NAME = 'bctt.nz'
+PROJECT_NAME = 'bctt'
 
 Vagrant.configure(2) do |config|
     # Base box to build off, and download URL for when it doesn't exist on the user's system already
-    config.vm.box = "wagtail-base-v0.3"
-    config.vm.box_url = "http://rich.wagtail.springload.co.nz/wagtail-base-v0.3.box"
+    config.vm.box = "torchbox/wagtail"
+    # config.vm.box_url = "http://rich.wagtail.springload.co.nz/wagtail-base-v0.3.box"
 
     # Forward a port from the guest to the host, which allows for outside
     # computers to access the VM, whereas host only networking does not.
@@ -17,12 +17,15 @@ Vagrant.configure(2) do |config|
     # Share additional folders, one with the project, another with the media folder mounted from
     # the preview site in delila
     config.vm.synced_folder ".", "/home/vagrant/" + PROJECT_NAME
-    PROJECT_NAME + "/media" 
+    #PROJECT_NAME + "/media"
+     # Export var
+    config.vm.provision "shell", inline: "export VAGRANT_PREFER_SYSTEM_BIN=1"
 
     # Forward agent
     config.ssh.forward_agent = true
 
     # Enable provisioning with a shell script.
+    config.vm.provision :shell, :path => "vagrant/postgres.sh"
     config.vm.provision :shell, :path => "vagrant/provision.sh", :args => [PROJECT_NAME, "requirements/dev.txt"]
 
     # If a 'Vagrantfile.local' file exists, import any configuration settings
