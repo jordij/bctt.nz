@@ -33,6 +33,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = [
     'bctt.nz',
     'www.bctt.nz',
+    'bctt.herokuapp.com',
+    'www.bctt.herokuapp.com',
 ]
 
 # Sendgrid Email settings
