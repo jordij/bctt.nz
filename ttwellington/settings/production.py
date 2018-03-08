@@ -35,6 +35,8 @@ ALLOWED_HOSTS = [
     'www.bctt.nz',
     'bctt.herokuapp.com',
     'www.bctt.herokuapp.com',
+    'bctt.herokudns.com',
+    'www.bctt.herokudns.com',
 ]
 
 # Sendgrid Email settings
