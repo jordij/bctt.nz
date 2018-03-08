@@ -16,7 +16,6 @@ INSTALLED_APPS += (
 # Heroku platform settings.
 HEROKU_APP_NAME = "bctt"
 HEROKU_BUILDPACK_URL = "https://github.com/heroku/heroku-buildpack-python.git"
-SITE_DOMAIN = "bctt.herokuapp.com"
 
 # Parse database configuration from $DATABASE_URL
 DATABASES['default'] = dj_database_url.config()
@@ -127,6 +126,7 @@ TEMPLATE_LOADERS = (
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.security.SecurityMiddleware',
 ) + MIDDLEWARE_CLASSES + (
     'django.middleware.cache.FetchFromCacheMiddleware',
 )
