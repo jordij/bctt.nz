@@ -55,9 +55,9 @@ STATICFILES_DIRS = (
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
 
 # Use Amazon S3 for static files storage.
-#STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
+STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
 # "require_s3.storage.OptimizedCachedStaticFilesStorage"
-STATICFILES_STORAGE = "require_s3.storage.OptimizedCachedStaticFilesStorage"
+#STATICFILES_STORAGE = "require_s3.storage.OptimizedCachedStaticFilesStorage"
 
 STATIC_ROOT = 'staticfiles'
 
