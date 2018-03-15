@@ -14,7 +14,7 @@ INSTALLED_APPS += (
 )
 
 # Heroku platform settings.
-HEROKU_APP_NAME = "bctt"
+HEROKU_APP_NAME = "bctt-heroku-16"
 HEROKU_BUILDPACK_URL = "https://github.com/heroku/heroku-buildpack-python.git"
 
 # Parse database configuration from $DATABASE_URL
@@ -27,14 +27,12 @@ RECAPTCHA_PRIVATE_KEY = env['RECAPTCHA_PRIVATE_KEY']
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
+#SECURE_SSL_REDIRECT = True
 
 # Allow domain host headers
 ALLOWED_HOSTS = [
-    'bctt.nz',
-    'www.bctt.nz',
-    'bctt.herokuapp.com',
-    'www.bctt.herokuapp.com',
+    'bctt-heroku-16.herokuapp.com',
+    'www.bctt-heroku-16.herokuapp.com',
 ]
 
 # Sendgrid Email settings
@@ -59,6 +57,8 @@ DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
 # Use Amazon S3 for static files storage.
 STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
 # "require_s3.storage.OptimizedCachedStaticFilesStorage"
+#STATICFILES_STORAGE = "require_s3.storage.OptimizedCachedStaticFilesStorage"
+
 STATIC_ROOT = 'staticfiles'
 
 # Amazon S3 settings.
@@ -69,7 +69,8 @@ AWS_AUTO_CREATE_BUCKET = True
 AWS_HEADERS = {
     "Cache-Control": "public, max-age=86400",
 }
-AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_REGION_NAME = 'ap-southeast-2'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3-%s.amazonaws.com' % (AWS_STORAGE_BUCKET_NAME, AWS_S3_REGION_NAME)
 STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
 COMPRESS_URL = STATIC_URL
 MEDIA_URL = "https://%s/media/" % AWS_S3_CUSTOM_DOMAIN
@@ -126,7 +127,6 @@ TEMPLATE_LOADERS = (
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.cache.UpdateCacheMiddleware',
-    'django.middleware.security.SecurityMiddleware',
 ) + MIDDLEWARE_CLASSES + (
     'django.middleware.cache.FetchFromCacheMiddleware',
 )
