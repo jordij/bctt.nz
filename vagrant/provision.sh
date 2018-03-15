@@ -20,27 +20,9 @@ su - vagrant -c "/usr/local/bin/virtualenv $VIRTUALENV_DIR && \
 # Set Git repos as known host, in case we have packages to be installed from Github repos
 # ssh -T git@github.com -o StrictHostKeyChecking=no
 
-# Install pip dependencies, recursively and in order like a boss
 filename="$PROJECT_DIR/$REQUIREMENTS_FILE"
 
-install_reqs()
-{
-    while read -r line || [[ -n $line ]]
-    do
-        if [[ -n "$line" && "$line" =~ ^\-r ]];then
-            for word in $line; do
-                echo $word
-            done
-            echo "INSTALLING file $word"
-            install_reqs "$PROJECT_DIR/requirements/$word"
-        elif [[ -n "$line" && "$line" != [[:blank:]#]* ]];then
-            echo "INSTALLING package $line"
-            $PIP install $line
-        fi
-    done < "$1"
-}
-
-install_reqs $filename
+$PIP install -r $filename
 
 echo "workon $PROJECT_NAME" >> /home/vagrant/.bashrc
 

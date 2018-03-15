@@ -9,7 +9,16 @@ TEMPLATE_DEBUG = True
 
 COMPRESS_ENABLED = False
 
-DATABASES['default']['PASSWORD'] = ''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'bctt',
+        'USER': 'postgres',
+        'HOST': '',  # Set to empty string for localhost.
+        'PORT': '',  # Set to empty string for default.
+        'PASSWORD': '',
+    }
+}
 
 # To have fake email backend
 
