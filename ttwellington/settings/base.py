@@ -174,6 +174,7 @@ COMPRESS_PRECOMPILERS = (
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
     'business.context_processors.google_analytics',
+    'business.context_processors.baseurl',
     'django.contrib.messages.context_processors.messages',
 )
 
@@ -186,6 +187,7 @@ TEMPLATE_DIRS = (
 
 LOGIN_URL = 'wagtailadmin_login'
 LOGIN_REDIRECT_URL = 'wagtailadmin_home'
+WAGTAIL_AUTO_UPDATE_PREVIEW = True
 
 # Pagination
 
