@@ -18,7 +18,7 @@
         {% if item.embed_url %}
             {# Embedded video - requires an embedly key to be stored in wagtaildemo/settings/local.py #}
             <div class="text-center">
-              {{ item.embed_url|embed:1000 }}
+              {% embed item.embed_url %}
             </div>
         {% else %}
             {% image item.image width-1200 as carouselimagedata %}

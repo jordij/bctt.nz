@@ -1,32 +1,29 @@
 from datetime import date
 
 from django.db import models
+import django.db.models.options as options
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
 from django.conf import settings
 
-import django.db.models.options as options
-
+from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, StreamFieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore import blocks
 from wagtail.wagtailembeds.blocks import EmbedBlock
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
-from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
-
-
 from wagtail.wagtailsearch import index
 
 from modelcluster.fields import ParentalKey
-from modelcluster.tags import ClusterTaggableManager
+from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 
-from .utilities import *
 from .snippets import *
-from .blocks import *
+from .blocks import QuoteBlock, CaptionImageBlock
 from .forms import *
 
 options.DEFAULT_NAMES = options.DEFAULT_NAMES + ('description',)
@@ -77,7 +74,7 @@ class HomePage(Page):
         'CompIndexPage',
         'SubmitFormPage',
     ]
-    search_fields = ()
+    search_fields = []
 
     def blogs(self):
         # Get latest blogs
@@ -100,6 +97,7 @@ class HomePage(Page):
     class Meta:
         description = "The top level homepage for your site"
         verbose_name = "Homepage"
+
 
 HomePage.content_panels = [
     FieldPanel('title', classname="full title"),
@@ -135,10 +133,10 @@ class BlogIndexPage(Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('intro'),
         index.SearchField('subtitle'),
-    )
+    ]
     subpage_types = [
         'BlogPage',
     ]
@@ -178,6 +176,7 @@ class BlogIndexPage(Page):
         context['blogs'] = blogs
         return context
 
+
 BlogIndexPage.content_panels = [
     FieldPanel('title', classname="full title"),
     FieldPanel('subtitle', classname="full"),
@@ -215,7 +214,7 @@ class BlogPage(Page):
     subtitle = models.CharField(max_length=255, blank=True, null=True)
     date = models.DateField("Post date", default=date.today)
     body = StreamField([
-        ('paragraph', SimpleRichTextBlock()),
+        ('paragraph', blocks.RichTextBlock()),
         ('image', CaptionImageBlock()),
         ('embed', EmbedBlock(icon='media')),
         ('quote', QuoteBlock()),
@@ -241,12 +240,12 @@ class BlogPage(Page):
         related_name='articles'
     )
 
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('body'),
         index.SearchField('intro'),
         index.SearchField('excerpt'),
         index.SearchField('subtitle'),
-    )
+    ]
 
     subpage_types = []
 
@@ -255,13 +254,14 @@ class BlogPage(Page):
         # Find closest ancestor which is a blog index
         return self.get_ancestors().type(BlogIndexPage).last()
 
+
 BlogPage.content_panels = [
     FieldPanel('title', classname="full title"),
     FieldPanel('subtitle', classname="full"),
     FieldPanel('date'),
     FieldPanel('excerpt'),
     FieldPanel('intro', classname="full"),
-    SnippetChooserPanel('author', Author),
+    SnippetChooserPanel('author'),
     StreamFieldPanel('body'),
     FieldPanel('tags'),
     InlinePanel('related_links', label="Related links"),
@@ -285,10 +285,10 @@ class CompIndexPage(Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('intro'),
         index.SearchField('subtitle'),
-    )
+    ]
     subpage_types = [
         'CompPage',
     ]
@@ -332,6 +332,7 @@ class CompIndexPage(Page):
         context['pages'] = pages
         return context
 
+
 CompIndexPage.content_panels = [
     FieldPanel('title', classname="full title"),
     FieldPanel('subtitle', classname="full"),
@@ -361,7 +362,7 @@ class CompPage(RoutablePageMixin, Page):
         related_name='winner_of'
     )
     body = StreamField([
-        ('paragraph', SimpleRichTextBlock()),
+        ('paragraph', blocks.RichTextBlock()),
         ('image', CaptionImageBlock()),
         ('embed', EmbedBlock(icon='media')),
         ('quote', QuoteBlock()),
@@ -373,10 +374,10 @@ class CompPage(RoutablePageMixin, Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('body'),
         index.SearchField('subtitle'),
-    )
+    ]
 
     @route(r'^$')
     def current_page(self, request):
@@ -511,7 +512,7 @@ class CompPage(RoutablePageMixin, Page):
         FieldPanel('subtitle', classname="full"),
         FieldPanel('current'),
         FieldPanel('year'),
-        SnippetChooserPanel('winner', Team),
+        SnippetChooserPanel('winner'),
         StreamFieldPanel('body'),
     ]
 
@@ -557,7 +558,7 @@ class TeamGroup(models.Model):
     final_classification = models.IntegerField(default=0, help_text='To set once the comp is finished')
     panels = [
         FieldPanel('group'),
-        SnippetChooserPanel('team', Team),
+        SnippetChooserPanel('team'),
         FieldPanel('final_classification')
     ]
 
@@ -615,7 +616,7 @@ class SimplePage(Page):
     subtitle = models.CharField(max_length=255, blank=True, null=True)
     intro = RichTextField(blank=True)
     body = StreamField([
-        ('paragraph', SimpleRichTextBlock()),
+        ('paragraph', blocks.RichTextBlock()),
         ('image', CaptionImageBlock()),
         ('embed', EmbedBlock(icon='media')),
         ('quote', QuoteBlock()),
@@ -627,11 +628,11 @@ class SimplePage(Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('intro'),
         index.SearchField('body'),
         index.SearchField('subtitle'),
-    )
+    ]
 
     @property
     def pages(self):

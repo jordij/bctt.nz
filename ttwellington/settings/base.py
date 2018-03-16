@@ -105,7 +105,7 @@ MIDDLEWARE_CLASSES = (
 
 # Name and email addresses of recipients
 ADMINS = (
-    ('Jordi', 'jordi@springload.co.nz'),
+    ('Jordi', 'hello@jordi.nz'),
 )
 
 # Default from address for CMS auto email messages (logs, errors..)
@@ -173,7 +173,6 @@ COMPRESS_PRECOMPILERS = (
 # Template configuration
 TEMPLATE_CONTEXT_PROCESSORS += (
     'django.core.context_processors.request',
-    'business.context_processors.baseurl',
     'business.context_processors.google_analytics',
     'django.contrib.messages.context_processors.messages',
 )
