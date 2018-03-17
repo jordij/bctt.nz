@@ -1,7 +1,6 @@
 from .base import *
 
 # Analytics stuff
-GOOGLE_TAG_MANAGER = False
 GOOGLE_ANALYTICS_KEY = False
 
 DEBUG = True

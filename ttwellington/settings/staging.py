@@ -4,9 +4,7 @@ from memcacheify import memcacheify
 
 from .base import *
 
-
-GOOGLE_ANALYTICS_KEY = 'UA-24461191-2'
-
+GOOGLE_ANALYTICS_KEY = False
 NOCAPTCHA = True
 
 INSTALLED_APPS += (
@@ -27,7 +25,7 @@ RECAPTCHA_PRIVATE_KEY = env['RECAPTCHA_PRIVATE_KEY']
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-#SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = True
 
 # Allow domain host headers
 ALLOWED_HOSTS = [
@@ -113,12 +111,12 @@ WAGTAILSEARCH_BACKENDS = {
 }
 
 # Use the cached template loader
-TEMPLATES[0]['OPTIONS']['loaders'] = [
-    ('django.template.loaders.cached.Loader', (
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-    )),
-]
+# TEMPLATES[0]['OPTIONS']['loaders'] = [
+#     ('django.template.loaders.cached.Loader', (
+#         'django.template.loaders.filesystem.Loader',
+#         'django.template.loaders.app_directories.Loader',
+#     )),
+# ]
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.cache.UpdateCacheMiddleware',
