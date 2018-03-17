@@ -10,7 +10,6 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 from os.path import abspath, basename, dirname, join, normpath
 from sys import path
-from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
 # Absolute filesystem path to the Django project directory:
 DJANGO_ROOT = dirname(dirname(dirname(abspath(__file__))))

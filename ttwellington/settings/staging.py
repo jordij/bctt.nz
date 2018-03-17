@@ -44,7 +44,6 @@ EMAIL_USE_TLS = False
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-TEMPLATE_DEBUG = False
 
 BASE_DIR = os.path.abspath(os.path.dirname(__name__))
 STATICFILES_DIRS = (
@@ -56,9 +55,6 @@ DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
 
 # Use Amazon S3 for static files storage.
 STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
-# "require_s3.storage.OptimizedCachedStaticFilesStorage"
-#STATICFILES_STORAGE = "require_s3.storage.OptimizedCachedStaticFilesStorage"
-
 STATIC_ROOT = 'staticfiles'
 
 # Amazon S3 settings.
@@ -117,13 +113,12 @@ WAGTAILSEARCH_BACKENDS = {
 }
 
 # Use the cached template loader
-TEMPLATE_LOADERS = (
+TEMPLATES[0]['OPTIONS']['loaders'] = [
     ('django.template.loaders.cached.Loader', (
         'django.template.loaders.filesystem.Loader',
         'django.template.loaders.app_directories.Loader',
     )),
-)
-
+]
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.cache.UpdateCacheMiddleware',
