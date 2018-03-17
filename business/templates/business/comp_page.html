@@ -2,7 +2,7 @@
 {% load static wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags %}
 
 {% block heading %}
-    {% include "business/includes/jumbotron.html" with title=self.title subtitle=self.subtitle only %}
+    {% include "business/includes/jumbotron.html" with title=self.full_title subtitle=self.subtitle only %}
 {% endblock %}
 
 {% block content %}

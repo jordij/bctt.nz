@@ -2,9 +2,7 @@
 {% load static wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags %}
 
 {% block heading %}
-    {% with "Competition "|add:self.title as comp_title %}
-        {% include "business/includes/jumbotron.html" with title=comp_title subtitle=self.subtitle only %}
-    {% endwith %}
+    {% include "business/includes/jumbotron.html" with title=self.full_title subtitle=self.subtitle only %}
 {% endblock %}
 
 {% block content %}
@@ -72,7 +70,11 @@
                         {% endif %}           
                     
                     {% endfor %}
-                </div>    
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                    <a href="{% pageurl self %}" class="pull-right btn btn-primary">Back to {{ self.full_title }}</a>
+                </div></div>  
             </div>
             
         </div>

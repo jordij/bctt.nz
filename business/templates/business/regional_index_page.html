@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags %}
+
+{% block heading %}
+    {% include "business/includes/jumbotron.html" with title=self.title subtitle=self.subtitle only %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container ">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-4">
+                {% include "business/includes/body.html" with body=self.body only %}
+            </div>
+        </div>
+    </div>
+
+    {% if current_comp %}
+        {% include "business/includes/comp_updates.html" with current_comp=current_comp home=False %}
+    {% endif %}
+    
+    {% if self.pages %}
+        <div class="container">
+            <div class="row">
+                    {% for page in self.pages %}
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="thumbnail">
+                              <a href="{% pageurl page %}" class="">
+                                {% image page.feed_image max-175x125 %}
+                              </a>
+                              <div class="caption">
+                                <h3>{{ page.title }}</h3>
+                                <div class="hidden-xs">{{ page.intro|richtext }}</div>
+                                <p><a href="{% pageurl page %}" class="btn btn-primary" role="button">Details</a></p>
+                              </div>
+                            </div>
+                        </div>
+                        {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                                </div>
+                            <div class="row">
+                        {% endif %}
+
+                    {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

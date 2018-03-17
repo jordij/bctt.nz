@@ -231,8 +231,8 @@ class Player(models.Model):
     )
 
     class Meta:
-        verbose_name = "Player profile"
-        description = "Player profile"
+        verbose_name = "Player"
+        description = "Player"
 
     def __unicode__(self):
         return self.name
@@ -243,7 +243,6 @@ class Player(models.Model):
         FieldPanel('bio'),
         ImageChooserPanel('image'),
     ]
-
 
 class TeamPlayer(Orderable, Player):
     parent = ParentalKey(to='Team', related_name='players')
@@ -259,7 +258,7 @@ class TeamManager(models.Manager):
 class Team(ClusterableModel):
 
     """
-    Team for player
+    Team for players
     """
     name = models.CharField(max_length=255, blank=False)
     url = models.URLField(blank=True)
@@ -270,6 +269,13 @@ class Team(ClusterableModel):
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+'
+    )
+    region = models.ForeignKey(
+        'business.CompIndexPage',
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+        related_name='region_teams'
     )
 
     @property
@@ -293,16 +299,18 @@ class Team(ClusterableModel):
         return losts_one['team_two_games__sum'] + losts_two['team_one_games__sum']
 
     class Meta:
-        verbose_name = "Team profile"
-        description = "Team profile"
+        verbose_name = "Team"
+        description = "Team"
+        ordering = ['region__title', 'name']
 
     def __unicode__(self):
-        return self.name
+        return '%s - %s' % (self.name, self.region.title if self.region else '')
 
     panels = [
         FieldPanel('name'),
         FieldPanel('url'),
         FieldPanel('bio'),
+        FieldPanel('region'),
         ImageChooserPanel('image'),
         InlinePanel('players', label="Players", help_text='Set the players for this team.')
     ]

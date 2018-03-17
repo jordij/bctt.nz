@@ -78,6 +78,7 @@ INSTALLED_APPS = (
     'widget_tweaks',
     'wagtail.contrib.wagtailsitemaps',
     'wagtail.contrib.wagtailroutablepage',
+    'wagtail.contrib.modeladmin',
     'wagtail.wagtailcore',
     'wagtail.wagtailadmin',
     'wagtail.wagtaildocs',

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags %}
+
+{% block heading %}
+    {% include "business/includes/jumbotron.html" with title=self.title subtitle=self.subtitle only %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container ">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-4">
+                {% include "business/includes/body.html" with body=self.body only %}
+            </div>
+        </div>
+    </div>
+
+    {% if current_comp %}
+        {% include "business/includes/comp_updates.html" with current_comp=current_comp home=False %}
+    {% endif %}
+    
+    {% if self.pages %}
+        <div class="container">
+            <div class="col-md-8">
+                <div class="row">
+                    <h4>ARCHIVE</h4>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        {% for page in self.pages %}
+                            <div class="panel panel-default">
+                              <div class="panel-heading"><h4 class="panel-title">{{ page.title }}</h4></div>
+                              <div class="panel-body">
+                                Winner: <strong>{{ page.winner }}</strong>
+                                <a href="{% pageurl page %}" class="pull-right btn btn-primary">See Details</a>
+                              </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
