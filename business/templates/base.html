@@ -1,4 +1,4 @@
-{% load compress static wagtailuserbar wagtailcore_tags wagtailimages_tags core_tags %}
+{% load compress static wagtailcore_tags wagtailimages_tags core_tags %}
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -61,11 +61,6 @@
         {% block extra_css %}{% endblock %}
     </head>
     <body class="{% block body_class %}{% endblock %}">
-
-        {% if GOOGLE_TAG_MANAGER %}
-            <!-- Google Tag Manager -->
-            <!-- End Google Tag Manager -->
-        {% endif %}
 
         {% block menu %}
             {% menu name='Top' current_page=self %}

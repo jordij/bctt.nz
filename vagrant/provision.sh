@@ -24,8 +24,6 @@ filename="$PROJECT_DIR/$REQUIREMENTS_FILE"
 
 $PIP install -r $filename
 
-echo "workon $PROJECT_NAME" >> /home/vagrant/.bashrc
-
 # Set execute permissions on manage.py
 chmod a+x $DJANGO_DIR/manage.py
 

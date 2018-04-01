@@ -7,11 +7,6 @@ from wagtail.wagtailimages.blocks import ImageChooserBlock
 
 
 class SimpleRichTextBlock(RichTextBlock):
-    @cached_property
-    def field(self):
-        from .fields import SimpleRichTextArea
-        return forms.CharField(widget=SimpleRichTextArea, **self.field_options)
-
     class Meta:
         icon = 'bold'
 

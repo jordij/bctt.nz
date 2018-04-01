@@ -21,23 +21,24 @@
     
     {% if self.pages %}
         <div class="container">
-            <div class="col-md-8">
-                <div class="row">
-                    <h4>ARCHIVE</h4>
-                </div>
-                <div class="row">
-                    <div class="col-md-8">
-                        {% for page in self.pages %}
-                            <div class="panel panel-default">
-                              <div class="panel-heading"><h4 class="panel-title">{{ page.title }}</h4></div>
-                              <div class="panel-body">
-                                Winner: <strong>{{ page.winner.name }}</strong>
-                                <a href="{% pageurl page %}" class="pull-right btn btn-primary">See Details</a>
+            <div class="row">
+                    {% for page in self.pages %}
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="text-center">
+                              <a href="{% pageurl page %}" title="{{ page.title }}">
+                                {% image page.feed_image fill-175x175  class="img-circle" %}
+                              </a>
+                              <div class="caption">
+                                <h3>{{ page.title }}</h3>
                               </div>
                             </div>
-                        {% endfor %}
-                    </div>
-                </div>
+                        </div>
+                        {% if forloop.counter|divisibleby:3 and not forloop.last %}
+                                </div>
+                            <div class="row">
+                        {% endif %}
+
+                    {% endfor %}
             </div>
         </div>
     {% endif %}

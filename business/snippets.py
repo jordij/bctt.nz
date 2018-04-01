@@ -1,6 +1,5 @@
 from django.db import models
 import django.db.models.options as options
-from django.db.models import Sum
 
 from wagtail.wagtailadmin.edit_handlers import InlinePanel, FieldPanel, MultiFieldPanel, PageChooserPanel
 from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
@@ -10,9 +9,6 @@ from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
-
-from .utilities import *
-from .snippets import *
 
 options.DEFAULT_NAMES = options.DEFAULT_NAMES + ('description',)
 
@@ -235,8 +231,8 @@ class Player(models.Model):
     )
 
     class Meta:
-        verbose_name = "Player profile"
-        description = "Player profile"
+        verbose_name = "Player"
+        description = "Player"
 
     def __unicode__(self):
         return self.name
@@ -247,7 +243,6 @@ class Player(models.Model):
         FieldPanel('bio'),
         ImageChooserPanel('image'),
     ]
-
 
 class TeamPlayer(Orderable, Player):
     parent = ParentalKey(to='Team', related_name='players')
@@ -263,7 +258,7 @@ class TeamManager(models.Manager):
 class Team(ClusterableModel):
 
     """
-    Team for player
+    Team for players
     """
     name = models.CharField(max_length=255, blank=False)
     url = models.URLField(blank=True)
@@ -275,38 +270,47 @@ class Team(ClusterableModel):
         on_delete=models.SET_NULL,
         related_name='+'
     )
+    region = models.ForeignKey(
+        'business.CompIndexPage',
+        null=True,
+        blank=False,
+        on_delete=models.SET_NULL,
+        related_name='region_teams'
+    )
 
     @property
     def get_wins(self):
-        wins_one = self.competitions_as_one.all().aggregate(Sum('team_one_games'))
+        wins_one = self.competitions_as_one.all().aggregate(models.Sum('team_one_games'))
         if wins_one['team_one_games__sum'] is None:
             wins_one['team_one_games__sum'] = 0
-        wins_two = self.competitions_as_two.all().aggregate(Sum('team_two_games'))
+        wins_two = self.competitions_as_two.all().aggregate(models.Sum('team_two_games'))
         if wins_two['team_two_games__sum'] is None:
             wins_two['team_two_games__sum'] = 0
         return wins_one['team_one_games__sum'] + wins_two['team_two_games__sum']
 
     @property
     def get_losts(self):
-        losts_one = self.competitions_as_one.all().aggregate(Sum('team_two_games'))
+        losts_one = self.competitions_as_one.all().aggregate(models.Sum('team_two_games'))
         if losts_one['team_two_games__sum'] is None:
             losts_one['team_two_games__sum'] = 0
-        losts_two = self.competitions_as_two.all().aggregate(Sum('team_one_games'))
+        losts_two = self.competitions_as_two.all().aggregate(models.Sum('team_one_games'))
         if losts_two['team_one_games__sum'] is None:
             losts_two['team_one_games__sum'] = 0
         return losts_one['team_two_games__sum'] + losts_two['team_one_games__sum']
 
     class Meta:
-        verbose_name = "Team profile"
-        description = "Team profile"
+        verbose_name = "Team"
+        description = "Team"
+        ordering = ['region__title', 'name']
 
     def __unicode__(self):
-        return self.name
+        return '%s - %s' % (self.name, self.region.title if self.region else '')
 
     panels = [
         FieldPanel('name'),
         FieldPanel('url'),
         FieldPanel('bio'),
+        FieldPanel('region'),
         ImageChooserPanel('image'),
         InlinePanel('players', label="Players", help_text='Set the players for this team.')
     ]

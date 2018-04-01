@@ -27,7 +27,7 @@ urlpatterns = patterns(
     url(r'^django-admin/', include(admin.site.urls)),
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^search/', include(wagtailsearch_urls)),
-    url(r'^documents/(?P<document_id>\d+)/(.*)$', S3DocumentServe.as_view(), name='wagtaildocs_serve'),
+    url(r'^documents/(?P<document_id>\d+)/(.*)$', S3DocumentServe.as_view(permanent=True), name='wagtaildocs_serve'),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^images/', include(wagtailimages_urls)),
     url('^sitemap\.xml$', sitemap),

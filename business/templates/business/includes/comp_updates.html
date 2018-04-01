@@ -1,0 +1,49 @@
+{% load wagtailcore_tags wagtailimages_tags static wagtailroutablepage_tags %}
+
+<div class="container spacer-top">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>{% if home %}{{ current_comp.get_parent.title|upper }} - {% endif %}{{ current_comp.title|upper }}</h4>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h6>{{ current_comp.get_next_results_by_date.0.date|date:"j M Y" }}</h6>
+
+                <table class="table table-striped">
+                    <thead>
+                    </thead>
+                    {% for team in current_comp.get_next_results_by_date %}
+                        <tr>
+                            <td>{% if team.team_one.image %}{% image team.team_one.image fill-50x50 class="img-circle" %}{% else %}<img class="img-circle" src="{% static 'images/placeholder.png' %}" width="50" height="50"> {% endif %}</td>
+                            <td class="hidden-xs">{{ team.team_one.name }}</td>
+                            <td>vs</td>
+                            <td>{% if team.team_two.image %}{% image team.team_two.image fill-50x50 class="img-circle" %}{% else %}<img class="img-circle" src="{% static 'images/placeholder.png' %}" width="50" height="50"> {% endif %}</td>
+                            <td class="hidden-xs">{{ team.team_two.name }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    {% if current_comp.winner %}
+                        {% include "business/includes/finals_table.html" with items=current_comp.get_finals_stats.items class="col-md-6" simple=True only %}
+                    {% else %}
+                    {% include "business/includes/classification_table.html" with items=current_comp.get_stats.items class="col-md-6" simple=True only %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <a href="{% pageurl current_comp %}" class="pull-right btn btn-primary">See competition details</a>
+            </div>
+        </div>
+
+    </div>
+</div>

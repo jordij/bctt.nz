@@ -10,7 +10,6 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 from os.path import abspath, basename, dirname, join, normpath
 from sys import path
-from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
 # Absolute filesystem path to the Django project directory:
 DJANGO_ROOT = dirname(dirname(dirname(abspath(__file__))))
@@ -78,6 +77,7 @@ INSTALLED_APPS = (
     'widget_tweaks',
     'wagtail.contrib.wagtailsitemaps',
     'wagtail.contrib.wagtailroutablepage',
+    'wagtail.contrib.modeladmin',
     'wagtail.wagtailcore',
     'wagtail.wagtailadmin',
     'wagtail.wagtaildocs',
@@ -105,7 +105,7 @@ MIDDLEWARE_CLASSES = (
 
 # Name and email addresses of recipients
 ADMINS = (
-    ('Jordi', 'jordi@springload.co.nz'),
+    ('Jordi', 'hello@jordi.nz'),
 )
 
 # Default from address for CMS auto email messages (logs, errors..)
@@ -170,23 +170,39 @@ COMPRESS_PRECOMPILERS = (
 
 # Template configuration
 
-# Template configuration
-TEMPLATE_CONTEXT_PROCESSORS += (
-    'django.core.context_processors.request',
-    'business.context_processors.baseurl',
-    'business.context_processors.google_analytics',
-    'django.contrib.messages.context_processors.messages',
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+           normpath(join(DJANGO_ROOT, 'business/templates')),
+        ],
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.request',
 
-
-TEMPLATE_DIRS = (
-    normpath(join(DJANGO_ROOT, 'business/templates')),
-)
+                'business.context_processors.google_analytics',
+                'business.context_processors.baseurl',
+            ],
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
+            ],
+        },
+    },
+]
 
 # Wagtail settings
 
 LOGIN_URL = 'wagtailadmin_login'
 LOGIN_REDIRECT_URL = 'wagtailadmin_home'
+WAGTAIL_AUTO_UPDATE_PREVIEW = True
 
 # Pagination
 

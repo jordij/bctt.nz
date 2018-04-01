@@ -4,9 +4,7 @@ from memcacheify import memcacheify
 
 from .base import *
 
-
-GOOGLE_ANALYTICS_KEY = 'UA-24461191-2'
-
+GOOGLE_ANALYTICS_KEY = False
 NOCAPTCHA = True
 
 INSTALLED_APPS += (
@@ -27,7 +25,7 @@ RECAPTCHA_PRIVATE_KEY = env['RECAPTCHA_PRIVATE_KEY']
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-#SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = True
 
 # Allow domain host headers
 ALLOWED_HOSTS = [
@@ -44,7 +42,6 @@ EMAIL_USE_TLS = False
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-TEMPLATE_DEBUG = False
 
 BASE_DIR = os.path.abspath(os.path.dirname(__name__))
 STATICFILES_DIRS = (
@@ -56,9 +53,6 @@ DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
 
 # Use Amazon S3 for static files storage.
 STATICFILES_STORAGE = DEFAULT_FILE_STORAGE
-# "require_s3.storage.OptimizedCachedStaticFilesStorage"
-#STATICFILES_STORAGE = "require_s3.storage.OptimizedCachedStaticFilesStorage"
-
 STATIC_ROOT = 'staticfiles'
 
 # Amazon S3 settings.
@@ -82,6 +76,7 @@ AWS_REDUCED_REDUNDANCY = True
 AWS_IS_GZIPPED = False
 
 CACHES = memcacheify()
+CACHE_MIDDLEWARE_SECONDS = 1200
 
 # Compress static files offline
 COMPRESS_CSS_FILTERS = [
@@ -116,20 +111,8 @@ WAGTAILSEARCH_BACKENDS = {
     }
 }
 
-# Use the cached template loader
-TEMPLATE_LOADERS = (
-    ('django.template.loaders.cached.Loader', (
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-    )),
-)
-
-
 MIDDLEWARE_CLASSES = (
     'django.middleware.cache.UpdateCacheMiddleware',
 ) + MIDDLEWARE_CLASSES + (
     'django.middleware.cache.FetchFromCacheMiddleware',
 )
-
-# Excluding logged in (admin) requests
-CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True

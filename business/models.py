@@ -1,42 +1,35 @@
 from datetime import date
 
 from django.db import models
+import django.db.models.options as options
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
 from django.conf import settings
 
-import django.db.models.options as options
-
+from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailcore.fields import RichTextField
 from wagtail.wagtailcore.models import Page, Orderable
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, InlinePanel, StreamFieldPanel
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailcore.fields import StreamField
+from wagtail.wagtailcore import blocks
 from wagtail.wagtailembeds.blocks import EmbedBlock
 from wagtail.wagtailsnippets.edit_handlers import SnippetChooserPanel
 from wagtail.wagtailadmin.edit_handlers import TabbedInterface, ObjectList
-from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
-
-
 from wagtail.wagtailsearch import index
 
 from modelcluster.fields import ParentalKey
-from modelcluster.tags import ClusterTaggableManager
+from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 
-from .utilities import *
 from .snippets import *
-from .blocks import *
+from .blocks import QuoteBlock, CaptionImageBlock
 from .forms import *
 
 options.DEFAULT_NAMES = options.DEFAULT_NAMES + ('description',)
 
 
 class CarouselItem(LinkFields):
-
-    """
-    A set of carousel images
-    """
     image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -60,10 +53,6 @@ class CarouselItem(LinkFields):
 
 
 class HomePage(Page):
-
-    """
-    HomePage class
-    """
     feed_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -74,32 +63,23 @@ class HomePage(Page):
     subpage_types = [
         'SimplePage',
         'BlogIndexPage',
-        'CompIndexPage',
+        'RegionalIndexPage',
         'SubmitFormPage',
     ]
-    search_fields = ()
+    search_fields = []
 
     def blogs(self):
-        # Get latest blogs
         return BlogPage.objects.live().order_by('-date')[:3]
 
     def get_context(self, request):
-
         context = super(HomePage, self).get_context(request)
-
-        # Get current comp
-        try:
-            current_comp = CompPage.objects.live().filter(current=True)[0]
-        except:
-            return context
-
-        # Update template context
-        context['current_comp'] = current_comp
+        context['current_comps'] = CompPage.objects.descendant_of(self).live().filter(current=True)
         return context
 
     class Meta:
-        description = "The top level homepage for your site"
-        verbose_name = "Homepage"
+        description = "Home"
+        verbose_name = "Home"
+
 
 HomePage.content_panels = [
     FieldPanel('title', classname="full title"),
@@ -118,12 +98,9 @@ HomePage.promote_panels = [
 ]
 
 
-#  Some classes to use as fields (Carousel, Related links and Tags)
 class PageCarouselItem(Orderable, CarouselItem):
     page = ParentalKey('HomePage', related_name='carousel_items')
 
-
-# BlogIndex page
 
 class BlogIndexPage(Page):
     intro = RichTextField(blank=True)
@@ -135,48 +112,41 @@ class BlogIndexPage(Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('intro'),
         index.SearchField('subtitle'),
-    )
+    ]
     subpage_types = [
         'BlogPage',
     ]
 
     @property
     def blogs(self):
-        # Get list of live blog pages that are descendants of this page
-        blogs = BlogPage.objects.live().descendant_of(self)
-
-        # Order by most recent date first
-        blogs = blogs.order_by('-date')
-
-        return blogs
+        return BlogPage.objects.live().descendant_of(self).order_by('-date')
 
     def get_context(self, request):
-        # Get blogs
         blogs = self.blogs
-
         # Filter by tag
         tag = request.GET.get('tag')
         if tag:
             blogs = blogs.filter(tags__name=tag)
-
         # Pagination
         page = request.GET.get('page')
         paginator = Paginator(blogs, settings.PAGINATION_PER_PAGE)
-
         try:
             blogs = paginator.page(page)
         except PageNotAnInteger:
             blogs = paginator.page(1)
         except EmptyPage:
             blogs = paginator.page(paginator.num_pages)
-
-        # Update template context
         context = super(BlogIndexPage, self).get_context(request)
         context['blogs'] = blogs
         return context
+
+    class Meta:
+        description = "Blog"
+        verbose_name = "Blog"
+
 
 BlogIndexPage.content_panels = [
     FieldPanel('title', classname="full title"),
@@ -192,8 +162,6 @@ BlogIndexPage.promote_panels = [
 ]
 
 
-# Blog page
-
 class BlogPageRelatedLink(Orderable):
     link_page = models.ForeignKey(
         'BlogPage',
@@ -201,7 +169,6 @@ class BlogPageRelatedLink(Orderable):
         related_name='+',
     )
     page = ParentalKey('BlogPage', related_name='related_links')
-
     panels = [
         PageChooserPanel('link_page', 'business.BlogPage')
     ]
@@ -215,7 +182,7 @@ class BlogPage(Page):
     subtitle = models.CharField(max_length=255, blank=True, null=True)
     date = models.DateField("Post date", default=date.today)
     body = StreamField([
-        ('paragraph', SimpleRichTextBlock()),
+        ('paragraph', blocks.RichTextBlock()),
         ('image', CaptionImageBlock()),
         ('embed', EmbedBlock(icon='media')),
         ('quote', QuoteBlock()),
@@ -240,20 +207,22 @@ class BlogPage(Page):
         on_delete=models.SET_NULL,
         related_name='articles'
     )
-
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('body'),
         index.SearchField('intro'),
         index.SearchField('excerpt'),
         index.SearchField('subtitle'),
-    )
-
+    ]
     subpage_types = []
 
     @property
     def blog_index(self):
-        # Find closest ancestor which is a blog index
-        return self.get_ancestors().type(BlogIndexPage).last()
+        return self.get_parent().specific
+
+    class Meta:
+        description = "Blog post"
+        verbose_name = "Blog post"
+
 
 BlogPage.content_panels = [
     FieldPanel('title', classname="full title"),
@@ -261,7 +230,7 @@ BlogPage.content_panels = [
     FieldPanel('date'),
     FieldPanel('excerpt'),
     FieldPanel('intro', classname="full"),
-    SnippetChooserPanel('author', Author),
+    SnippetChooserPanel('author'),
     StreamFieldPanel('body'),
     FieldPanel('tags'),
     InlinePanel('related_links', label="Related links"),
@@ -285,38 +254,21 @@ class CompIndexPage(Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('intro'),
         index.SearchField('subtitle'),
-    )
+    ]
     subpage_types = [
         'CompPage',
     ]
 
     @property
     def pages(self):
-        # Get list of live comp pages that are descendants of this page
-        pages = CompPage.objects.live().descendant_of(self)
-
-        # Order by most recent date first
-        pages = pages.order_by('-year')
-
-        return pages
-
-    def serve(self, request, *args, **kwargs):
-        """
-        Override if there's a current comp
-        """
-        try:
-            current_comp = CompPage.objects.live().descendant_of(self).filter(current=True)[0]
-            return redirect(current_comp.url, *args, **kwargs)
-        except:
-            return super(CompIndexPage, self).serve(request, *args, **kwargs)
+        return CompPage.objects.live().descendant_of(self).filter(current=False).order_by('-year')
 
     def get_context(self, request):
         # Get pages
         pages = self.pages
-
         # Pagination
         page = request.GET.get('page')
         paginator = Paginator(pages, 10)  # Show 10 pages per page
@@ -326,11 +278,20 @@ class CompIndexPage(Page):
             pages = paginator.page(1)
         except EmptyPage:
             pages = paginator.page(paginator.num_pages)
-
         # Update template context
         context = super(CompIndexPage, self).get_context(request)
         context['pages'] = pages
+        context['current_comp'] = None
+        try:
+            context['current_comp'] = CompPage.objects.live().descendant_of(self).filter(current=True).first()
+        except:
+            pass
         return context
+
+    class Meta:
+        description = "Regional page"
+        verbose_name = "Regional page"
+
 
 CompIndexPage.content_panels = [
     FieldPanel('title', classname="full title"),
@@ -346,7 +307,51 @@ CompIndexPage.promote_panels = [
 ]
 
 
-# Comp page
+class RegionalIndexPage(Page):
+    subpage_types = ['CompIndexPage']
+    subtitle = models.CharField(max_length=255, blank=True, null=True)
+    intro = RichTextField(blank=True)
+    body = StreamField([
+        ('paragraph', blocks.RichTextBlock()),
+        ('image', CaptionImageBlock()),
+        ('embed', EmbedBlock(icon='media')),
+        ('quote', QuoteBlock()),
+    ], blank=True)
+    feed_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    search_fields = Page.search_fields + [
+        index.SearchField('body'),
+        index.SearchField('subtitle'),
+    ]
+
+    @property
+    def pages(self):
+        return CompIndexPage.objects.live().descendant_of(self).order_by('title')
+
+    class Meta:
+        description = "Regional Competitions"
+        verbose_name = "Regions"
+        verbose_name_plural = "Regions"
+
+
+RegionalIndexPage.content_panels = [
+    FieldPanel('title', classname="full title"),
+    FieldPanel('subtitle', classname="full"),
+    FieldPanel('intro', classname="full"),
+]
+
+RegionalIndexPage.promote_panels = [
+    FieldPanel('slug'),
+    FieldPanel('seo_title'),
+    ImageChooserPanel('feed_image'),
+    FieldPanel('search_description'),
+]
+
 
 class CompPage(RoutablePageMixin, Page):
     subpage_types = []
@@ -361,11 +366,11 @@ class CompPage(RoutablePageMixin, Page):
         related_name='winner_of'
     )
     body = StreamField([
-        ('paragraph', SimpleRichTextBlock()),
+        ('paragraph', blocks.RichTextBlock()),
         ('image', CaptionImageBlock()),
         ('embed', EmbedBlock(icon='media')),
         ('quote', QuoteBlock()),
-    ])
+    ], blank=True)
     feed_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
@@ -373,31 +378,26 @@ class CompPage(RoutablePageMixin, Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('body'),
         index.SearchField('subtitle'),
-    )
+    ]
+
+    @property
+    def full_title(self):
+        return '%s %s' % (self.get_parent().title, self.title)
 
     @route(r'^$')
     def current_page(self, request):
-
-        context = {}
-        context['self'] = self
-
-        return render(request, self.template, context)
+        return render(request, self.template, {'self': self})
 
     @route(r'^teams/$')
     def teams(self, request):
-
-        context = {}
-        context['self'] = self
-
-        return render(request, 'business/comp_page_teams.html', context)
+        return render(request, 'business/comp_page_teams.html', {'self': self})
 
     @property
     def get_next_results_by_date(self):
-        cur_date = self.get_next_date
-        return self.related_results.all().filter(date=cur_date[0])
+        return self.related_results.all().filter(date=self.get_next_date[0])
 
     @property
     def get_next_date(self):
@@ -427,7 +427,7 @@ class CompPage(RoutablePageMixin, Page):
 
     @property
     def get_grouped_teams(self):
-        groups = self.get_related_teams().values('group').annotate(models.Count('group'))
+        groups = self.get_related_teams().order_by('group').values('group').annotate(models.Count('group'))
         values = dict(((str(group['group']), self.get_related_teams().filter(group=group['group']))
                        for group in groups if group['group__count']))
         return values
@@ -438,7 +438,6 @@ class CompPage(RoutablePageMixin, Page):
         Get team total classification finals separated
         """
         teams = self.related_teams.all().order_by('group', 'final_classification')
-
         groups = teams.values('group').annotate(models.Count('group'))
         results_group = dict()
 
@@ -506,12 +505,16 @@ class CompPage(RoutablePageMixin, Page):
         # Find closest ancestor which is a comp index
         return self.get_ancestors().type(CompIndexPage).last()
 
+    class Meta:
+        description = "Competition"
+        verbose_name = "Competition"
+
     content_panels = [
         FieldPanel('title', classname="full title"),
         FieldPanel('subtitle', classname="full"),
         FieldPanel('current'),
         FieldPanel('year'),
-        SnippetChooserPanel('winner', Team),
+        SnippetChooserPanel('winner'),
         StreamFieldPanel('body'),
     ]
 
@@ -557,7 +560,7 @@ class TeamGroup(models.Model):
     final_classification = models.IntegerField(default=0, help_text='To set once the comp is finished')
     panels = [
         FieldPanel('group'),
-        SnippetChooserPanel('team', Team),
+        SnippetChooserPanel('team'),
         FieldPanel('final_classification')
     ]
 
@@ -588,7 +591,6 @@ class MatchResult(models.Model):
     team_one_games = models.IntegerField(default=0)
     team_two_games = models.IntegerField(default=0)
     is_final = models.BooleanField(default=False, null=False)
-
     panels = [
         FieldPanel('date'),
         FieldPanel('team_one'),
@@ -603,19 +605,31 @@ class MatchResult(models.Model):
 
 
 class CompPageResult(Orderable, MatchResult):
-
     page = ParentalKey('CompPage', related_name='related_results')
 
+    @property
+    def team_one_name(self):
+        return self.team_one.name
 
-# Simple page
+    @property
+    def team_two_name(self):
+        return self.team_two.name
+
+    @property
+    def title(self):
+        return self.page.get_parent().title
+
+    class Meta:
+        description = "Result"
+        verbose_name = "Result"
+
 
 class SimplePage(Page):
     subpage_types = []
-
     subtitle = models.CharField(max_length=255, blank=True, null=True)
     intro = RichTextField(blank=True)
     body = StreamField([
-        ('paragraph', SimpleRichTextBlock()),
+        ('paragraph', blocks.RichTextBlock()),
         ('image', CaptionImageBlock()),
         ('embed', EmbedBlock(icon='media')),
         ('quote', QuoteBlock()),
@@ -627,16 +641,19 @@ class SimplePage(Page):
         on_delete=models.SET_NULL,
         related_name='+'
     )
-    search_fields = Page.search_fields + (
+    search_fields = Page.search_fields + [
         index.SearchField('intro'),
         index.SearchField('body'),
         index.SearchField('subtitle'),
-    )
+    ]
 
     @property
     def pages(self):
-        # Get list of live comp pages that are descendants of this page
         return SimplePage.objects.live().descendant_of(self)
+
+    class Meta:
+        description = "Plain page"
+        verbose_name = "Plain page"
 
 
 SimplePage.content_panels = [

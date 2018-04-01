@@ -1,7 +1,5 @@
 from django.conf import settings
 
-import wagtail
-
 
 def google_analytics(request):
     """
@@ -29,7 +27,3 @@ def baseurl(request):
         scheme = 'http://'
 
     return {'BASE_URL': scheme + request.get_host(), }
-
-
-def wagtail_version(request):
-    return {'wagtail_version': wagtail.VERSION}

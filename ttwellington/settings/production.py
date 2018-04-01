@@ -46,7 +46,6 @@ EMAIL_USE_TLS = False
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-TEMPLATE_DEBUG = False
 
 BASE_DIR = os.path.abspath(os.path.dirname(__name__))
 STATICFILES_DIRS = (
@@ -81,6 +80,7 @@ AWS_REDUCED_REDUNDANCY = True
 AWS_IS_GZIPPED = False
 
 CACHES = memcacheify()
+CACHE_MIDDLEWARE_SECONDS = 1200
 
 # Compress static files offline
 COMPRESS_CSS_FILTERS = [
@@ -116,12 +116,12 @@ WAGTAILSEARCH_BACKENDS = {
 }
 
 # Use the cached template loader
-TEMPLATE_LOADERS = (
+TEMPLATES[0]['OPTIONS']['loaders'] = [
     ('django.template.loaders.cached.Loader', (
         'django.template.loaders.filesystem.Loader',
         'django.template.loaders.app_directories.Loader',
     )),
-)
+]
 
 
 MIDDLEWARE_CLASSES = (
@@ -130,6 +130,3 @@ MIDDLEWARE_CLASSES = (
 ) + MIDDLEWARE_CLASSES + (
     'django.middleware.cache.FetchFromCacheMiddleware',
 )
-
-# Excluding logged in (admin) requests
-CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
