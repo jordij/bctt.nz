@@ -27,8 +27,6 @@ INSTALLED_APPS += (
     'wagtail.contrib.wagtailstyleguide',
 )
 
-CACHE_MIDDLEWARE_SECONDS = 0
-
 RECAPTCHA_PUBLIC_KEY = 'set_your_key'
 RECAPTCHA_PRIVATE_KEY = 'set_your_key'
 NOCAPTCHA = True

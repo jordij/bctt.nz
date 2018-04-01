@@ -76,6 +76,7 @@ AWS_REDUCED_REDUNDANCY = True
 AWS_IS_GZIPPED = False
 
 CACHES = memcacheify()
+CACHE_MIDDLEWARE_SECONDS = 1200
 
 # Compress static files offline
 COMPRESS_CSS_FILTERS = [
@@ -110,19 +111,8 @@ WAGTAILSEARCH_BACKENDS = {
     }
 }
 
-# Use the cached template loader
-# TEMPLATES[0]['OPTIONS']['loaders'] = [
-#     ('django.template.loaders.cached.Loader', (
-#         'django.template.loaders.filesystem.Loader',
-#         'django.template.loaders.app_directories.Loader',
-#     )),
-# ]
-
 MIDDLEWARE_CLASSES = (
     'django.middleware.cache.UpdateCacheMiddleware',
 ) + MIDDLEWARE_CLASSES + (
     'django.middleware.cache.FetchFromCacheMiddleware',
 )
-
-# Excluding logged in (admin) requests
-CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True

@@ -80,6 +80,7 @@ AWS_REDUCED_REDUNDANCY = True
 AWS_IS_GZIPPED = False
 
 CACHES = memcacheify()
+CACHE_MIDDLEWARE_SECONDS = 1200
 
 # Compress static files offline
 COMPRESS_CSS_FILTERS = [
