@@ -24,14 +24,12 @@
             <div class="row">
                     {% for page in self.pages %}
                         <div class="col-xs-12 col-sm-4">
-                            <div class="thumbnail">
-                              <a href="{% pageurl page %}" class="">
-                                {% image page.feed_image max-175x125 %}
+                            <div class="text-center">
+                              <a href="{% pageurl page %}" title="{{ page.title }}">
+                                {% image page.feed_image fill-175x175  class="img-circle" %}
                               </a>
                               <div class="caption">
                                 <h3>{{ page.title }}</h3>
-                                <div class="hidden-xs">{{ page.intro|richtext }}</div>
-                                <p><a href="{% pageurl page %}" class="btn btn-primary" role="button">Details</a></p>
                               </div>
                             </div>
                         </div>
