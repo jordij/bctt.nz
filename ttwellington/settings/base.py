@@ -176,7 +176,6 @@ TEMPLATES = [
         'DIRS': [
            normpath(join(DJANGO_ROOT, 'business/templates')),
         ],
-        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.contrib.auth.context_processors.auth',
@@ -190,6 +189,10 @@ TEMPLATES = [
 
                 'business.context_processors.google_analytics',
                 'business.context_processors.baseurl',
+            ],
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
             ],
         },
     },
