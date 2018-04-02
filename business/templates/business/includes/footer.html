@@ -1,11 +1,11 @@
-{% load static core_tags %}
+{% load core_tags %}
 
 <footer>
   <div class="container">
     <div class="row">
       <div class="col-md-6">
 
-        {% sponsors_menu %}
+        {% sponsors_menu current_page=current_page %}
 
         <p class="footer-brand">
           Built with <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> by <a href="https://jordi.nz" target="_blank">@jordi.nz</a>
@@ -22,8 +22,8 @@
               <h3 class="footer-title">Contact</h3>
               <ul>
                   <li><a href="mailto:info@bctt.nz"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>  Email us</a></li>
-                  <li><a href="https://www.facebook.com/BusinessClassTT/"><svg class="icon-facebook-square"><use xlink:href="{% static 'images/icons.svg' %}#icon-facebook-square"></use></svg></a></li>
-                  <li><a href="https://www.instagram.com/businessclasstt/"><svg class="icon-instagram"><use xlink:href="{% static 'images/icons.svg' %}#icon-instagram"></use></svg></a></li>
+                  <li><a href="https://www.facebook.com/BusinessClassTT/"><svg class="icon-facebook-square"><use xlink:href="#icon-facebook-square"></use></svg></a></li>
+                  <li><a href="https://www.instagram.com/businessclasstt/"><svg class="icon-instagram"><use xlink:href="#icon-instagram"></use></svg></a></li>
               </ul>
             </div>
           </div>

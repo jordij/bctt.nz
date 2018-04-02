@@ -42,34 +42,33 @@
                             
                             <div class="panel-body">
 
-                            <div class="row">
+                                <div class="row">
 
-                                {% for team in groups %}
+                                    {% for team in groups %}
+                                        {% if team.team %}   
+                                            <div class="col-sm-2 text-center">
+                                                <a href="{% routablepageurl self 'teams' %}#{{ team.team.name|slugify }}" role="button">
 
-                                    <div class="col-sm-2 text-center">
-                                        <a href="{% routablepageurl self 'teams' %}#{{ team.team.name|slugify }}" role="button">
+                                                    {% if team.team.image%}
+                                                        {% image team.team.image fill-75x75 class="img-circle" %}
+                                                    {% else %}
+                                                        <img width="75" height="75" src="{% static 'images/placeholder.png' %}" class="img-circle">
+                                                    {% endif %}
+                                                </a>
+                                                <h6 class="">{{ team.team.name }}</h6>
+                                            </div>
 
-                                            {% if team.team.image%}
-                                                {% image team.team.image fill-75x75 class="img-circle" %}
-                                            {% else %}
-                                                <img width="75" height="75" src="{% static 'images/placeholder.png' %}" class="img-circle">
-                                            {% endif %}
-                                        </a>
-                                        <h6 class="">{{ team.team.name }}</h6>
-                                    </div>
-
-                                     {% if forloop.counter|divisibleby:6 %}
-                    
-                                        </div>
-                                        
-                                        <div class="row">
-                                        
-                                        {% endif %}
-
-                                {% endfor %}
-
-                            </div>
+                                            {% if forloop.counter|divisibleby:6 %}
                             
+                                                </div>
+                                                
+                                                <div class="row">
+                                                
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+    
                             </div>
                         
                         </div>
