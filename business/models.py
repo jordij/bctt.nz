@@ -2,9 +2,10 @@ from datetime import date
 
 from django.db import models
 import django.db.models.options as options
+from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
-from django.conf import settings
+from django.utils.functional import cached_property
 
 from wagtail.contrib.wagtailroutablepage.models import RoutablePageMixin, route
 from wagtail.wagtailcore.fields import RichTextField
@@ -288,6 +289,13 @@ class CompIndexPage(Page):
             pass
         return context
 
+    @cached_property
+    def sponsors(self):
+        sponsors = [n.sponsor for n in self.related_sponsors.all()]
+        if not sponsors:
+            return Sponsor.objects.filter(regions=None)
+        return sponsors
+
     class Meta:
         description = "Regional page"
         verbose_name = "Regional page"
@@ -297,6 +305,7 @@ CompIndexPage.content_panels = [
     FieldPanel('title', classname="full title"),
     FieldPanel('subtitle', classname="full"),
     FieldPanel('intro', classname="full"),
+    InlinePanel('related_sponsors', label="Sponsors",),
 ]
 
 CompIndexPage.promote_panels = [
@@ -305,6 +314,21 @@ CompIndexPage.promote_panels = [
     ImageChooserPanel('feed_image'),
     FieldPanel('search_description'),
 ]
+
+
+class CompIndexSponsor(models.Model):
+    region = ParentalKey(
+        'CompIndexPage',
+        related_name='related_sponsors'
+    )
+    sponsor = models.ForeignKey(
+        'Sponsor',
+        related_name="regions"
+    )
+
+    panels = [
+        FieldPanel('sponsor')
+    ]
 
 
 class RegionalIndexPage(Page):

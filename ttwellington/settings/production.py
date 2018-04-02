@@ -33,6 +33,8 @@ SECURE_SSL_REDIRECT = True
 ALLOWED_HOSTS = [
     'bctt.nz',
     'www.bctt.nz',
+    'businessclass.nz',
+    'www.businessclass.nz',
     'bctt.herokuapp.com',
     'www.bctt.herokuapp.com',
 ]
