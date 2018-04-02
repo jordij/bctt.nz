@@ -67,7 +67,6 @@
                 fill: #8dd1df;
             }       
         </style>
-
     </head>
     <body class="{% block body_class %}{% endblock %}">
 
@@ -80,7 +79,7 @@
         {% block content %}{% endblock %}
 
         {% block footer %}
-            {% include "business/includes/footer.html" only %}
+            {% include "business/includes/footer.html" with current_page=self %}
         {% endblock %}
 
         {% compress js %}

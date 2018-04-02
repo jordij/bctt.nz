@@ -333,7 +333,7 @@ class Sponsor(models.Model):
     )
 
     class Meta:
-        verbose_name = "Sponsor profile"
+        verbose_name = "Sponsor"
         description = "Business class sponsor"
 
     def __unicode__(self):

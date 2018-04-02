@@ -52,13 +52,15 @@ def footer_menu(name=None):
     }
 
 
-@register.inclusion_tag('business/includes/sponsors.html')
-def sponsors_menu():
+@register.inclusion_tag('business/includes/sponsors.html', takes_context=True)
+def sponsors_menu(context, current_page=None):
     """
-    Retrieves all the sponsors
+    Retrieves the sponsors
     """
-    sponsors = Sponsor.objects.all()
-
+    if hasattr(current_page, 'sponsors'):
+        sponsors = current_page.sponsors
+    else:
+        sponsors = Sponsor.objects.filter(regions=None)
     return {
         'sponsors': sponsors,
     }
