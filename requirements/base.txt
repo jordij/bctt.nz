@@ -1,10 +1,10 @@
 Django==1.11.26
-psycopg2==2.7.4
+psycopg2-binary==2.7.4
 django-compressor==2.2
 django-modelcluster==3.1
 django-taggit==0.22.2
 wagtail==1.13.4
-beautifulsoup4==4.4.1
+beautifulsoup4==4.8.1
 django-widget-tweaks==1.4.1
 django-libsass==0.7
 libsass==0.9.1
