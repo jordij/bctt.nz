@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 from django.views.generic import TemplateView
+from django.views.static import serve
 
 from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtailcore import urls as wagtail_urls
@@ -40,7 +41,7 @@ else:
     urlpatterns += [
         url(r'^robots\.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
         url(r'^humans\.txt', TemplateView.as_view(template_name='humans.txt', content_type='text/plain')),
-        url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT})
+        url(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT})
     ]
 
 urlpatterns.append(url(r'', include(wagtail_urls)))  # This must always be the last one since it's a catch all.
