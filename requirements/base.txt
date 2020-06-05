@@ -1,4 +1,4 @@
-Django==1.11.26
+Django==1.11.29
 psycopg2-binary==2.7.4
 django-compressor==2.2
 django-modelcluster==3.1
